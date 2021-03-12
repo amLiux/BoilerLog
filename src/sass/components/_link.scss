@@ -1,0 +1,13 @@
+.link{
+    color: $primary;
+    border-bottom: 1px solid transparent;
+    text-decoration: none;
+    transition: all ease-in-out 450ms;
+    font-size: .82rem;
+    padding: .2rem;
+
+    &:hover{
+        color: darken($primary, 20);
+        border-bottom: 1px solid $primary;
+    }
+}
