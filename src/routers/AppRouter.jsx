@@ -8,6 +8,7 @@ import { login } from '../actions/auth'
 import { Spinner } from '../components/ui/Spinner'
 import { PrivateRoute } from './PrivateRoute'
 import { PublicRoute } from './PublicRoute'
+import { ScheduleScreen } from '../components/screens/ScheduleScreen'
 
 export const AppRouter = () => {
 
@@ -48,6 +49,7 @@ export const AppRouter = () => {
             <div>
                 <Switch>
                     <PublicRoute path="/auth" isAuthenticated={logged} component={AuthRouter}/>
+                    <PublicRoute path="/public/schedule" isAuthenticated={logged} component={ScheduleScreen}/>
                     <PrivateRoute exact path="/" isAuthenticated={logged} component={JournalScreen} />
                 </Switch>
             </div>

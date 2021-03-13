@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { startRegularRegister } from '../../actions/auth'
 import { Input } from '../ui/Input'
 import { ErrorHelp } from '../ui/ErrorHelp'
+import { Button } from '../ui/Button'
 
 export const RegisterScreen = () => {
                  
@@ -49,7 +50,8 @@ export const RegisterScreen = () => {
                 {
                     errors.confPwd && (<ErrorHelp message={errors.confPwd} />)
                 }
-                <button className="btn btn__primary btn__block pointer mt-1 mb-5" type="submit">Registrar</button>
+
+                <Button text="Registrar"/>
             </form>
             <Link className="link" to="/auth/login">Ya estás registrado?</Link>
         </>
