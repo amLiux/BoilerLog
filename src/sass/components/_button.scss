@@ -34,7 +34,7 @@
         transition: all ease-in-out 220ms;
 
         &:hover{
-            background-color: darken($primary, 15);
+            background-color: darken(red, 10);
         }
 
         &:disabled{

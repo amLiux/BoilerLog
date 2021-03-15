@@ -1,56 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
-import { JournalScreen } from '../components/screens/JournalScreen'
+import React, { useEffect } from 'react'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { AuthRouter } from './AuthRouter'
-import {firebase} from '../firebase/firebase.config'
-import { useDispatch } from 'react-redux'
-import { login } from '../actions/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { startChecking } from '../actions/auth'
 import { Spinner } from '../components/ui/Spinner'
 import { PrivateRoute } from './PrivateRoute'
 import { PublicRoute } from './PublicRoute'
 import { ScheduleScreen } from '../components/screens/ScheduleScreen'
+import { DashboardRoutes } from './DashboardRoutes'
 
 export const AppRouter = () => {
 
     const dispatch = useDispatch()
 
-    const [checking, setChecking] = useState(true)
-    const [logged, setLogged] = useState(false)
-
-
+    const {checking, uid} = useSelector(state => state.auth)
 
     useEffect(()=> {
-        firebase.auth().onAuthStateChanged( (user) => {
-            if (user?.uid) {
-                dispatch(login(user.uid, user.displayName))
-                setLogged(true)
-            }
-            else{
-                setLogged(false)
-            }
-            setTimeout(() => {
-                setChecking(false)
-            }, 3000);
-        })
-    }, [dispatch, setChecking, setLogged])
-
-
+        dispatch(startChecking())
+    }, [dispatch])
 
     if (checking){
         return(
             <div style={{display: 'flex', height: '100vh', alignItems: 'center'}}>
-                    <Spinner size="big"/>
+                <Spinner size="big"/>
             </div>
         )
     }
-        
+
     return (
         <Router>
             <div>
                 <Switch>
-                    <PublicRoute path="/auth" isAuthenticated={logged} component={AuthRouter}/>
-                    <PublicRoute path="/public/schedule" isAuthenticated={logged} component={ScheduleScreen}/>
-                    <PrivateRoute exact path="/" isAuthenticated={logged} component={JournalScreen} />
+                    <Route path="/public/schedule" component={ScheduleScreen}/>
+                    <PrivateRoute isAuthenticated={!!uid} path="/dentaltask" component={DashboardRoutes} />
+                    <PublicRoute path="/" isAuthenticated={!!uid} component={AuthRouter}/>
                 </Switch>
             </div>
         </Router>

@@ -4,9 +4,11 @@
 @import './base/animations';
 
 @import './layout/auth';
-@import './layout/journal';
+@import './layout/main';
 @import './layout/nothing';
 @import './layout/schedule';
+@import './layout/calendar';
+
 
 
 @import './components/button';
@@ -14,3 +16,7 @@
 @import './components/note';
 @import './components/spinner';
 @import './components/radio-button';
+@import './components/checkbox';
+@import './components/nav';
+
+

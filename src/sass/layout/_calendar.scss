@@ -1,0 +1,72 @@
+.calendar{ 
+    width: 70%;
+    background-color: $color-white;
+    border-radius: 19px;
+    height: 83vh;
+    box-shadow: -4px 0px 1px rgba(whitesmoke, 0.5);
+    color: $dark-grey;
+
+    &__header{
+        display: flex;
+        font-weight: 600;
+        margin: 0 auto;
+        font-size: 1.4rem;
+        justify-content: space-between;
+        padding: 1rem 0;
+        align-items: center;
+        width: 40%;
+    }
+
+    &__weekdays{
+        display: flex;
+        margin: 0 auto;
+        justify-content: space-between;
+        width: 78%;
+        
+        div{
+            font-weight: 600;
+            text-align: center;
+            width: 10%;
+        }
+
+    }
+    
+    &__content{
+        width: 90%;
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 7.4rem;
+    }
+
+    &__day{
+        width: 11.6%;
+        padding: 10px;
+        height: 113px;
+        border-radius: 19px;
+        cursor: pointer;
+        box-sizing: border-box;
+        box-shadow: -4px 0px 1px rgba(whitesmoke, 0.5);
+        background-color: lighten($light-grey, 10);
+        border: 1px solid $light-grey;
+        margin: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        &-group{
+            display: flex;
+            padding: 8px;
+            justify-content: space-around;
+        }
+
+        &-event{
+            width: 14px;
+            height: 14px;
+            background-color: rgba(green, 0.6);
+            border-radius: 50%;
+        }
+
+    }
+
+
+}

@@ -1,21 +1,29 @@
 import { useState, useEffect } from 'react'
+// import {  generateUser } from '../../services/generateUsername'
 export const useForm = ( initialState = {}, validate, callback, errorCallback ) => {
 
     const [values, setValues] = useState(initialState)
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [userCheck, setUserCheck] = useState(false)
 
 
-    useEffect(() => errors.length === 0 && isSubmitting && callback()    
+    useEffect(() => {
+        if(Object.keys(errors).length > 0 && isSubmitting){
+            setIsSubmitting(false)
+        }
+
+        if(Object.keys(errors).length === 0 && isSubmitting){
+            callback()
+        }
+
+    }    
     , [errors, isSubmitting, callback, errorCallback])    
 
     const handleSubmit = (e) => {
         e && e.preventDefault()
+        setErrors(validate(values))
         setIsSubmitting(true)
-        setTimeout(() => {
-            setErrors(validate(values))
-            setIsSubmitting(false)
-        }, 2400);
     }
 
     const handleInputChange = ({ target }) => {
@@ -25,6 +33,6 @@ export const useForm = ( initialState = {}, validate, callback, errorCallback ) 
         })
     }
 
-    return [ values, handleInputChange, handleSubmit, errors, isSubmitting ]
+    return [ values, handleInputChange, handleSubmit, errors, userCheck, setUserCheck ]
 
 }

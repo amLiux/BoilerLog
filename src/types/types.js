@@ -1,8 +1,15 @@
 export const types = {
-    login: '[Auth] Login',
+
+    uiOpenModal: '[ui] Open modal',
+    uiCloseModal: '[ui] Close modal',
+
     logout: '[Auth] Logout',
-    
-    uiStartLoad: '[UI] Loading Started',
-    uiStopLoad: '[UI] Loading stopped',
+
+    authCheckingFinished: '[Auth] Finished checking JWT state',
+    authRenewToken: '[Auth] Checking JWT state',
+    authStartLogin: '[Auth] Start login',
+    authLogin: '[Auth] Login',
+    authStartRegister: '[Auth] Start Register',
+    authLogout: '[Auth] Logout',
 
 }

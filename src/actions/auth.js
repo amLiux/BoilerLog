@@ -1,45 +1,71 @@
 import {types} from '../types/types'
-import {firebase} from '../firebase/firebase.config'
-import Swal from 'sweetalert2'
+import { fetchRegister, fetchLogin, fetchValidateJWT } from '../services/fetch'
+
+
+// TODO manejar errores de respuestas del back-end
 
 export const login = (uid, displayName) => ({
-    type: types.login,
+    type: types.authLogin,
     payload: {
         uid,
         displayName
     }
 })
 
-export const logout = () => ({type: types.logout})
+export const startLogin = ({user, pwd}) => {
+    return async (dispatch)=> {
+        const resp = await fetchLogin(user, pwd)
+        const body = await resp.json()
 
-export const startLogin = ({email, pwd}) => {
-    return (dispatch)=> {
-        firebase.auth().signInWithEmailAndPassword(email, pwd)    
-        .then(({user}) => dispatch(login(user.uid, user.email)))
-        .catch(err => 
-            err.code === 'auth/wrong-password' 
-                && Swal.fire('Error!', 'Contraseña incorrecta', 'error')
-        )
+        if(body.ok){
+            localStorage.setItem('token', body.token)
+            localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(login(body.uid, body.name))
+        }
+        
     }
 }
 
-export const startRegularRegister = ({email, pwd, name}) => {
-    return (dispatch) =>{
-        firebase.auth().createUserWithEmailAndPassword(email, pwd)
-            .then(async ({user}) => {
-                await user.updateProfile({displayName: name})
-                dispatch(login(user.uid, user.displayName))
-            })
-            .catch(err => {
-                err.code === 'auth/email-already-in-use' 
-                    && Swal.fire('Error!', 'Este correo electrónico ya está siendo utilizado', 'error')
-            })
+export const startRegularRegister = ({email, pwd, name, lastName, user}) => {
+    return async (dispatch) => {
+        const resp = await fetchRegister(email, pwd, name, lastName, user)
+        const body = await resp.json()
+
+        console.log(resp)
+
+        if(body.ok){
+            localStorage.setItem('token', body.token)
+            localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(login(body.uid, body.name))
+        }
     }
 }
 
 export const startLogout = () => {
     return async (dispatch) => {
-        await firebase.auth().signOut()
+        localStorage.clear()
         dispatch(logout())
     }
 }
+
+export const logout = () => ({type: types.logout})
+
+
+export const startChecking = () => {
+    return async (dispatch) => {
+        const token = localStorage.getItem('token')
+        const resp = await fetchValidateJWT(token)
+        const body = await resp.json()
+
+        if(body.ok){
+            localStorage.setItem('token', body.token)
+            localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(login(body.uid, body.name))
+        }else{
+            dispatch(checkingFinished())
+        }
+
+    }
+}
+
+export const checkingFinished = () => ({type: types.authCheckingFinished})

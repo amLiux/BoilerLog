@@ -7,7 +7,7 @@ export const PublicRoute = ({isAuthenticated, component: Component, ...rest}) =>
             component={ (props) =>
                 (!isAuthenticated)
                 ? <Component {...props}/> 
-                : <Redirect to="/"/>
+                : <Redirect to="/dentaltask"/>
             }
         />
     )
