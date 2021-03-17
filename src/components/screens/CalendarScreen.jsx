@@ -1,87 +1,44 @@
 import React, {useState, useEffect} from 'react'
 import {fetchGetCitas} from '../../services/fetch'
+import { useCalendar } from '../hooks/useCalendar'
 import { CalendarHeader } from '../ui/calendar/CalendarHeader'
 import { Dia } from '../ui/calendar/Dia'
+import { useDispatch } from 'react-redux'
+import { setDiaActivo, setModalActivo } from '../../actions/ui'
 
 export const CalendarScreen = () => {
 
+    const dispatch = useDispatch()
 
     const [nav, setNav] = useState(0)
-    const [dias, setDias] = useState([])
-    const [dateDisplay, setDateDisplay] = useState('')
-    const [clicked, setClicked] = useState(false)
     const [citas, setCitas] = useState([])
 
     const token = localStorage.getItem('token')
-    const citasPorDia = (diaActual) => 
-        citas.filter( cita => new Date(cita.fechaDeseada).toDateString() === new Date(diaActual).toDateString() && cita )
 
     useEffect(() => {
         async function fetchData() {
             const response = await fetchGetCitas(token)
             const {citas} = await response.json()
 
+            console.log(citas)
+
             citas.length > 0 ? setCitas(citas) : setCitas([])
         }
         fetchData()
     }, [token]);
 
-    useEffect(()=>{
-        const capitalizar = word => word.charAt(0).toUpperCase() + word.slice(1)
-        const semana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+    const [dias, dateDisplay] = useCalendar(citas, nav)
 
-        const fecha = new Date()
-        nav !== 0 && fecha.setMonth(new Date().getMonth() + nav)
-        
-        const 
-            dia = fecha.getDate(),
-            mes = fecha.getMonth(),
-            anho = fecha.getFullYear()
-    
-        const primerDiaDelMes = new Date(anho, mes, 1)
-        const diasEnMes = new Date(anho, mes + 1, 0).getDate()
-        const dateString = primerDiaDelMes.toLocaleDateString('es-us', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
-        })
-    
-
-        const nombreDelPrimerDia = capitalizar(dateString.split(', ')[0])
-        const diasComodinInicio = semana.indexOf(nombreDelPrimerDia)
-
-        setDateDisplay(`${capitalizar(fecha.toLocaleDateString('es', {month:'long'}))} ${anho}`)
-
-        const daysArr = []
-
-        for(let i = 1; i<=diasComodinInicio + diasEnMes; i++){
-            const diaActual = `${mes+1}/${i - diasComodinInicio}/${anho}`
-            if(i > diasComodinInicio){
-                daysArr.push({
-                    value: i - diasComodinInicio,
-                    event: citasPorDia(diaActual),
-                    esHoy: diaActual.split('/')[1] === dia.toString() && nav === 0 ? true : false,
-                    date: diaActual
-                })
-            }else{
-                daysArr.push({
-                    value: 'padding',
-                    event: null,
-                    esHoy: false,
-                    date: ''
-                })
-            }
+    const handleDiaClick = (dia) => {
+        if(dia.value !== 'padding'){
+            dispatch(setModalActivo())
+            dispatch(setDiaActivo(dia))
         }
+    }
 
-        setDias(daysArr)
-
-    }, [citas, nav])
-
-    console.log(citas)
     return (
         <div className="calendar">
-            <CalendarHeader setNav={setNav}/>
+            <CalendarHeader onNext={()=> setNav(nav + 1)} onBack={()=> setNav(nav - 1)} dateDisplay={dateDisplay} />
             <div className="calendar__weekdays">
                 <div>Domingo</div>
                 <div>Lunes</div>
@@ -92,11 +49,11 @@ export const CalendarScreen = () => {
                 <div>Sábado</div>
             </div>
             <div className="calendar__content">
-                {dias.map((day, i) => 
+                {dias.map((dia, i) => 
                     <Dia 
                         key={i} 
-                        day={day} 
-                        onClick={()=> day.value !== 'padding' && setClicked(day.date)}/>)
+                        day={dia} 
+                        onClick={() => handleDiaClick(dia)}/>)
                 }
             </div>
         </div>

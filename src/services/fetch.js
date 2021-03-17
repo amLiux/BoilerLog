@@ -19,7 +19,7 @@ export const fetchValidateJWT = (token) =>
 	})
 
 export const fetchGetCitas = (token) => 
-	fetch(`http://localhost:3000/`, {
+	fetch(`http://localhost:3000/citas`, {
 		method: 'GET',
 		headers: {'Authorization': token},
 	})

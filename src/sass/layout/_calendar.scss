@@ -1,8 +1,10 @@
 .calendar{ 
+    
     width: 70%;
     background-color: $color-white;
     border-radius: 19px;
-    height: 83vh;
+    position: relative;
+    height: 80vh;
     box-shadow: -4px 0px 1px rgba(whitesmoke, 0.5);
     color: $dark-grey;
 
@@ -41,7 +43,7 @@
     &__day{
         width: 11.6%;
         padding: 10px;
-        height: 113px;
+        height: 90px;
         border-radius: 19px;
         cursor: pointer;
         box-sizing: border-box;
@@ -52,6 +54,16 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        transition: .5s ease-in-out;
+        &:hover{
+            background-color: darken($light-grey, 5);
+            border: 1px solid darken($light-grey, 20);
+        }
+
+        &-active{
+            background-color: darken($light-grey, 5);
+            border: 1px solid darken($light-grey, 20);
+        }
 
         &-group{
             display: flex;

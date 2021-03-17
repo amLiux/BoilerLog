@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { AuthRouter } from './AuthRouter'
 import { useDispatch, useSelector } from 'react-redux'
 import { startChecking } from '../actions/auth'

@@ -1,5 +1,13 @@
 import {types} from '../types/types'
-    
-export const setError = (err) => ({type: types.uiSetErr, payload: err})
 
-export const remError = () => ({type: types.uiRemErr})
+export const setModalActivo = () => ({type: types.uiOpenModal})
+
+export const setModalInactivo = () => ({type: types.uiCloseModal})
+
+export const setDiaActivo = (dia) => ({
+    type: types.uiSetDiaActivo,
+    payload:{
+        dia
+    }
+})
+

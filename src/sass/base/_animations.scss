@@ -42,3 +42,36 @@
         transform: translateY(0);
     }
 }
+
+@keyframes fadeIn{
+    0%{
+        opacity: 0;
+    }
+    10%{
+        opacity: 0.04;
+    }
+    15%{
+        opacity: 0.09;
+    }
+    25%{
+        opacity: 0.12;
+    }
+    35%{
+        opacity: 0.25;
+    }
+    45%{
+        opacity: 0.39;
+    }
+    65%{
+        opacity: 0.54;
+    }
+    75%{
+        opacity: 0.68;
+    }
+    85%{
+        opacity: 0.84;
+    }
+    100%{
+        opacity: 0.91;
+    }
+}

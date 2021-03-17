@@ -1,7 +1,9 @@
 export const types = {
 
-    uiOpenModal: '[ui] Open modal',
-    uiCloseModal: '[ui] Close modal',
+    uiOpenModal: '[UI] Open modal',
+    uiCloseModal: '[UI] Close modal',
+    uiSetDiaActivo: '[UI] Set clicked day',
+    uiRemoveDiaActivo: '[UI] Remove current day',
 
     logout: '[Auth] Logout',
 

@@ -1,14 +1,9 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 export const Dia = ({day, onClick}) => {
 
-    // const [multipleEvents, setMultipleEvents] = useState(false)
-
-    // if(day.event?.length > 1){
-    //     setMultipleEvents(true)
-    // }
     return (
-        <div onClick={()=> console.log(`Hola`)} className="calendar__day">
+        <div onClick={onClick} className={`calendar__day ${day?.esHoy ? 'calendar__day-active' : ''}`}>
             <span>{day.value !== 'padding' && day.value}</span>
             <div className="calendar__day-group">
                 {day.event?.length > 0 && 
