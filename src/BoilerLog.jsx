@@ -5,7 +5,7 @@ import { store } from './store/store'
 
 
 
-export const TestingApp = () => {
+export const BoilerLog = () => {
     return (
         <Provider store={store}>
             <AppRouter/>

@@ -27,11 +27,10 @@
         margin: auto;
         margin-top: 7.6rem;
         max-width: calc(100% - 60px);
-        position: relative;
         width: 1275px;
     }
 
-    &-citas{
+    &-form{
         width: 900px;
         display: flex;
         justify-content: center;
@@ -39,13 +38,22 @@
         align-items: center;
         flex-direction: column;
         color: white;
-        position: relative;
 
         h1{
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             margin-top: 3rem;
-            font-weight: 400;
+            font-weight: 500;
         }
+
+        i{
+            font-size: 6.5rem;
+            transition: .3s ease-in-out;
+            cursor: pointer;
+            &:hover{
+                color: $primary;
+            }
+        }
+
     }
 
 }

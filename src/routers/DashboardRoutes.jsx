@@ -8,7 +8,9 @@ import { HomeScreen } from '../components/screens/HomeScreen'
 import { PacientesScreen } from '../components/screens/PacientesScreen'
 import { Modal } from '../components/ui/calendar/Modal'
 import { Navbar } from '../components/ui/Navbar'
-import {setModalInactivo} from '../actions/ui'
+import {setModalInactivo, removeDiaActivo} from '../actions/ui'
+import {removeCitaActiva} from '../actions/citas'
+
 
 export const DashboardRoutes = () => {
 
@@ -16,10 +18,17 @@ export const DashboardRoutes = () => {
 
     const dispatch = useDispatch()
 
+    const handleClose = () => {
+        dispatch(setModalInactivo())
+        dispatch(removeDiaActivo())
+        dispatch(removeCitaActiva())
+    }
+
+
     return (
         <div className="main">
             <Navbar/>
-            { modalAbierto && Object.keys(diaActivo).length !== 0 && <Modal dia={diaActivo} handleClose={()=> dispatch(setModalInactivo())} showing={modalAbierto} /> }
+            { modalAbierto && Object.keys(diaActivo).length !== 0 && <Modal dia={diaActivo} handleClose={()=> handleClose()} modalAbierto={modalAbierto} /> }
             <div className="main__main-content">
                 <Switch>
                     <Route exact path="/dentaltask/" component={HomeScreen} />

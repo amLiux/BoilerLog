@@ -43,14 +43,14 @@ export const useCalendar = (citas, nav) => {
             if(i > diasComodinInicio){
                 daysArr.push({
                     value: i - diasComodinInicio,
-                    event: citasPorDia(diaActual),
+                    citas: citasPorDia(diaActual),
                     esHoy: diaActual.split('/')[1] === dia.toString() && nav === 0 ? true : false,
                     date: diaActual
                 })
             }else{
                 daysArr.push({
                     value: 'padding',
-                    event: null,
+                    citas: null,
                     esHoy: false,
                     date: ''
                 })

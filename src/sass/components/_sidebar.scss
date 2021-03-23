@@ -13,13 +13,13 @@
     box-shadow: 0 0 30px rgb(27, 27, 27);
 
 
-    &-navbar {
+    &__navbar {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         font-size: 1.3rem;
-        padding: .4rem;
+        padding: .2rem;
         cursor: pointer;
-        border-bottom: 3px solid rgba($light-grey, 0.6);
+        border-bottom: 2px solid rgba($light-grey, 0.6);
 
         h1{
             transition: .3s ease-in-out;
@@ -31,16 +31,25 @@
 
     }
 
-    &-actions{
+    &__citas{
         width: 100%;
         padding-left: 5.5rem;
     }
 
-    &-title{
+    &__title{
         font-weight: 400;
         font-size: 1.5rem;
         margin-top: 0.3rem;
         padding-right: 1.4rem;
+        
+        p{
+            padding-left: 1rem;
+        }
+
+        &-date{
+            font-weight: 500;
+        }
+
     }
 
     

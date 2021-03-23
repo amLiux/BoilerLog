@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import { areInputsValid } from '../controllers/auth.controller'
@@ -7,17 +7,15 @@ import { startRegularRegister } from '../../actions/auth'
 import { Input } from '../ui/Input'
 import { ErrorHelp } from '../ui/ErrorHelp'
 import { Button } from '../ui/Button'
-import { Checkbox } from '../ui/Checkbox'
-import { generateUser } from '../../services/generateUsername'
+import { setToastActivo } from '../../actions/ui'
 
 export const RegisterScreen = () => {
                  
     const dispatch = useDispatch()
 
-    
     const handleRegister = () => dispatch(startRegularRegister(values))
     
-    const [values, handleInputChange, handleSubmit, errors, userCheck, setUserCheck] = useForm({
+    const [values, handleInputChange, handleSubmit, errors] = useForm({
         email: '',
         user: '',
         name: '',
@@ -25,33 +23,34 @@ export const RegisterScreen = () => {
         pwd: '',
         confPwd: '',
     }, areInputsValid, handleRegister)
-    
-    const handleCheck = useCallback(() => setUserCheck(!userCheck), [userCheck, setUserCheck])
-
+        
     let {email, pwd, confPwd, name, lastName, user} = values
     
+    useEffect(() => {
+        if (Object.keys(errors).length === 1 ) {
+            const errorMessage = errors[Object.keys(errors)[0]]
+            dispatch(setToastActivo(errorMessage))
+        }
+    }, [errors, dispatch])
+
+
     return (
         <>
             <h3 className="auth__title mb-5">Crea tu cuenta <i className="fas fa-user-plus"></i></h3>
             <form onSubmit={handleSubmit}>
-                <Input handleInputChange={handleInputChange} placeholder="Email" errors={errors} type="email" value={email}  name="email"/>
+                <Input 
+                    handleInputChange={handleInputChange} 
+                    placeholder="Email" 
+                    errors={errors} 
+                    type="email" 
+                    value={email}  
+                    name="email"/>
                 {
                     errors.email && (<ErrorHelp message={errors.email} />)
                 }
+                <Input handleInputChange={handleInputChange} placeholder="Usuario" errors={errors} type="text" value={user}  name="user"/>   
                 {
-                    !userCheck 
-                        ? <Input handleInputChange={handleInputChange} placeholder="Usuario" errors={errors} type="text" value={user}  name="user"/>
-                        : <Input 
-                            handleInputChange={handleInputChange} 
-                            placeholder="Usuario" 
-                            errors={errors} 
-                            hidden={true} 
-                            type="text" 
-                            value={generateUser(name, lastName)} 
-                            name="user"/>
-                }
-                {
-                    !userCheck && errors.user && (<ErrorHelp message={errors.user} />)
+                    errors.user && (<ErrorHelp message={errors.user} />)
                 }
                 <Input handleInputChange={handleInputChange} errors={errors} placeholder="Nombre" type="text" value={name} name="name"/>
                 {
@@ -69,8 +68,6 @@ export const RegisterScreen = () => {
                 {
                     errors.confPwd && (<ErrorHelp message={errors.confPwd} />)
                 }
-                {/* TODO check how to use this to assign generateUser response to values.user */}
-                <Checkbox handleCheck={handleCheck} />
                 <Button text="Registrar"/>
             </form>
             <Link className="link" to="/auth/login">Ya estás registrado?</Link>

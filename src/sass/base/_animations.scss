@@ -75,3 +75,33 @@
         opacity: 0.91;
     }
 }
+
+@keyframes show_toast {
+    0% {
+        transform: translateX(-100%);
+    }
+    40% {
+        transform: translateX(10%);
+    }
+    80%,
+    100% {
+        transform: translateX(20px);
+    }
+}
+
+
+
+@keyframes hide_toast {
+    0% {
+        transform: translateX(20px);
+    }
+    40% {
+        transform: translateX(10%);
+    }
+    80%,
+    100% {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-100%);
+    }
+}

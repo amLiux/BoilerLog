@@ -2,16 +2,23 @@ export const types = {
 
     uiOpenModal: '[UI] Open modal',
     uiCloseModal: '[UI] Close modal',
+
+    uiShowToast: '[UI] Open toast',
+    uiRemoveToast: '[UI] Close toast',
+
     uiSetDiaActivo: '[UI] Set clicked day',
     uiRemoveDiaActivo: '[UI] Remove current day',
 
-    logout: '[Auth] Logout',
+    citasSetCitaActiva: '[Citas] Set active cita',
+    citasRemoveCitaActiva: '[Citas] Remove active cita',
+    citasUpdateCitaActiva: '[Citas] Update active cita',
 
+    citasSetCitas: '[Citas] Set all citas',
+    citasActualizarCitas: '[Citas] Set updated citas',
+    citasLimpiarCitas : '[Citas] Remove citas',
+    
     authCheckingFinished: '[Auth] Finished checking JWT state',
-    authRenewToken: '[Auth] Checking JWT state',
-    authStartLogin: '[Auth] Start login',
     authLogin: '[Auth] Login',
-    authStartRegister: '[Auth] Start Register',
-    authLogout: '[Auth] Logout',
+    logout: '[Auth] Logout',
 
 }

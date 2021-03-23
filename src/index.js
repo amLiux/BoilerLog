@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { TestingApp } from './TestingApp';
+import { BoilerLog } from './BoilerLog';
 import './sass/styles.scss'
 
 ReactDOM.render(
-    <TestingApp />,
+  <BoilerLog />,
   document.getElementById('root')
 );

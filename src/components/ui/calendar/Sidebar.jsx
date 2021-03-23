@@ -1,33 +1,33 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCitaActiva } from '../../../actions/citas'
 import { RadioButton } from '../RadioButton'
 
-export const Sidebar = ({dia, handleClose}) => {
+export const Sidebar = ({handleClose}) => {
 
-    const {date, event} = dia.dia
+    const {diaActivo} = useSelector(state => state.ui)
 
-    if (event?.length > 0 ){
-        const date2 = new Date(event?.fechaDeseada)
-        const dateString = date2.toLocaleDateString('es-us', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'numeric',
-            day: 'numeric'
-        })
+    const {date, citas} = diaActivo
+
+    const dispatch = useDispatch()
+
+    const handleCitaChange = (cita) => {
+        dispatch(setCitaActiva(cita))
     }
-
+    
     return (
         <aside className="sidebar">
-            <div onClick={handleClose} className="sidebar-navbar">
+            <div onClick={handleClose} className="sidebar__navbar">
                 <h1><i className="far fa-window-close"></i></h1>
-                <div className="sidebar-title">
-                    <p>Citas para el {date}</p>
+                <div className="sidebar__title">
+                    <p>Citas para el <span className="sidebar__title-date">{date}</span></p>
                 </div>
             </div>
 
-            <div className="sidebar-actions mt-5">
+            <div className="sidebar__citas mt-5">
                 {
-                    event?.map(cita => 
-                        <RadioButton key={cita._id} id={cita._id} label={cita.nombre}/>
+                    citas?.map(cita => 
+                        <RadioButton onChange={() => handleCitaChange(cita)} key={cita._id} id={cita._id} label={cita.nombre}/>
                     )
                 }
             </div>

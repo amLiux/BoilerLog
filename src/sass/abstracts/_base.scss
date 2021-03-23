@@ -1,5 +1,5 @@
 *{
-    font-family: 'Noto Sans JP', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
 }
 
@@ -43,4 +43,14 @@ main{
 
 .pointer{
     cursor: pointer;
+}
+
+.main-container{
+    width: 70%;
+    background-color: $color-white;
+    border-radius: 19px;
+    position: relative;
+    height: 80vh;
+    box-shadow: -4px 0px 1px rgba(whitesmoke, 0.5);
+    color: $dark-grey;
 }

@@ -1,33 +1,24 @@
 import React, {useState, useEffect} from 'react'
-import {fetchGetCitas} from '../../services/fetch'
 import { useCalendar } from '../hooks/useCalendar'
 import { CalendarHeader } from '../ui/calendar/CalendarHeader'
 import { Dia } from '../ui/calendar/Dia'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setDiaActivo, setModalActivo } from '../../actions/ui'
+import { startLoadingCitas } from '../../actions/citas'
 
 export const CalendarScreen = () => {
 
     const dispatch = useDispatch()
 
     const [nav, setNav] = useState(0)
-    const [citas, setCitas] = useState([])
 
-    const token = localStorage.getItem('token')
+    const {totalCitas} = useSelector(state => state.citas)
+
+    const [dias, dateDisplay] = useCalendar(totalCitas, nav)
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await fetchGetCitas(token)
-            const {citas} = await response.json()
-
-            console.log(citas)
-
-            citas.length > 0 ? setCitas(citas) : setCitas([])
-        }
-        fetchData()
-    }, [token]);
-
-    const [dias, dateDisplay] = useCalendar(citas, nav)
+        dispatch(startLoadingCitas())
+    }, [dispatch]);
 
     const handleDiaClick = (dia) => {
         if(dia.value !== 'padding'){
@@ -37,7 +28,7 @@ export const CalendarScreen = () => {
     }
 
     return (
-        <div className="calendar">
+        <div className="main-container">
             <CalendarHeader onNext={()=> setNav(nav + 1)} onBack={()=> setNav(nav - 1)} dateDisplay={dateDisplay} />
             <div className="calendar__weekdays">
                 <div>Domingo</div>
