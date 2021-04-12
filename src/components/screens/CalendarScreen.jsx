@@ -18,7 +18,7 @@ export const CalendarScreen = () => {
 
     useEffect(() => {
         dispatch(startLoadingCitas())
-    }, [dispatch]);
+    }, [dispatch, totalCitas])
 
     const handleDiaClick = (dia) => {
         if(dia.value !== 'padding'){
