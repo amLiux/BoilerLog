@@ -1,33 +1,39 @@
-// const url = `https://boiler-log-be.herokuapp.com/`
-const url = `http://localhost:3000`
+//Prod
+const url = `https://drsmaroto.com`
 
-export const fetchRegister = (email, pwd, name, lastName, user) => 
+//staging
+// const url = `https://boiler-log-be.herokuapp.com`
+
+//dev
+// const url = `http://192.168.100.34:3000`
+
+export const fetchRegister = (email, pwd, name, lastName, user) =>
 	fetch(`${url}/new`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ email, pwd, name, lastName, user })
 	})
-   
-export const fetchLogin = (user, pwd) => 
+
+export const fetchLogin = (user, pwd) =>
 	fetch(`${url}/login`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ user, pwd })
 	})
 
-export const fetchValidateJWT = (token) => 
+export const fetchValidateJWT = (token) =>
 	fetch(`${url}/renew`, {
 		method: 'GET',
 		headers: {'Authorization': token},
 	})
 
-export const fetchGetCitas = (token) => 
+export const fetchGetCitas = (token) =>
 	fetch(`${url}/citas`, {
 		method: 'GET',
 		headers: {'Authorization': token},
 	})
 
-export const fetchPutCitas = (token, cita) => 
+export const fetchPutCitas = (token, cita) =>
 	fetch(`${url}/citas`, {
 		method: 'PUT',
 		headers: {
@@ -36,3 +42,89 @@ export const fetchPutCitas = (token, cita) =>
 		},
 		body: JSON.stringify(cita)
 	})
+
+export const fetchPostCitas = (token, paciente, horario) =>
+	fetch(`${url}/citas`, {
+		method: 'POST',
+		headers: {
+			'Authorization': token,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({paciente, horario})
+	})
+
+
+export const fetchDeleteCitas = (token, id) =>
+	fetch(`${url}/citas/${id}`, {
+		method: 'DELETE',
+		headers: {
+			'Authorization': token,
+		}
+	})
+
+export const fetchPostPaciente = (token, paciente) =>
+	fetch(`${url}/pacientes`, {
+		method: 'POST',
+		headers: {
+			'Authorization': token,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(paciente)
+	})
+
+export const fetchSearchPaciente = (token, searchString) =>
+	fetch(`${url}/pacientes/search/${searchString}`, {
+		method: 'GET',
+		headers: {'Authorization': token}
+	})
+
+
+export const fetchGetPacientes = (token) =>
+	fetch(`${url}/pacientes`, {
+		method: 'GET',
+		headers: {'Authorization': token}
+	})
+
+export const fetchGetCitasDePacientes = (token, _id) =>
+	fetch(`${url}/citas/paciente/${encodeURIComponent(_id)}`, {
+		method: 'GET',
+		headers: {
+			'Authorization': token
+		}
+	})
+
+
+export const fetchPutPacientes = (token, paciente) =>
+	fetch(`${url}/pacientes`, {
+		method: 'PUT',
+		headers: {
+			'Authorization': token,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(paciente)
+	})
+
+export const fetchGetHorarios = (_id) =>
+	fetch(`${url}/citas/${_id}`, {method: 'GET'})
+
+export const fetchGetHorariosByDate = (date, token) =>
+	fetch(`${url}/citas/date/${encodeURIComponent(date)}`,
+		{
+			method: 'GET',
+			headers: {
+			'Authorization': token,
+			'Content-Type': 'application/json'
+			}
+
+		}
+		)
+
+export const fetchPutHorarioCita = (_id, horario) =>
+	fetch(`${url}/citas/${_id}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify({horario})
+		}
+	)

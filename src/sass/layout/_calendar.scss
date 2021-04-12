@@ -69,7 +69,17 @@
             height: 14px;
             background-color: rgba(green, 0.6);
             border-radius: 50%;
+            
+            &.pending{
+                background-color: rgba(darken($color-pending, 8), 0.7);
+            }
+
+            &.canceled{
+                background-color: rgba(lighten(red, 22), 0.8);
+            }
         }
+
+
 
     }
 

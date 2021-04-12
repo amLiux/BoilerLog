@@ -22,7 +22,7 @@ export const CalendarScreen = () => {
 
     const handleDiaClick = (dia) => {
         if(dia.value !== 'padding'){
-            dispatch(setModalActivo())
+            dispatch(setModalActivo('CALENDARIO'))
             dispatch(setDiaActivo(dia))
         }
     }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Input = ({hidden=false, type, handleInputChange, errors, value, name, placeholder}) => {
+export const Input = ({ type, handleInputChange, errors, value, name, placeholder}) => {
     return (
         <input 
             className={`auth__input ${name === 'email' && 'mt-5'} ${errors[`${name}`] ? 'auth__input-hasError' : 'mb-5'}`} 

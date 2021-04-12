@@ -1,11 +1,23 @@
 .sidebar{
 
-    background: rgba($dark-grey, 0.8);
+    background: rgba($dark-grey, 0.6);
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    &::-webkit-scrollbar{
+        width: .5rem;
+        background: rgba($light-grey, 1);
+    }
+
+    &::-webkit-scrollbar-thumb{
+        background: rgba(black, 0.6);;
+    }
 
     color: white;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: 82.9vh;
     padding-right: 10px;
     padding-left: 10px;
     width: 400px;

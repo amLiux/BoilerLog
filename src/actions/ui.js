@@ -1,6 +1,9 @@
 import {types} from '../types/types'
 
-export const setModalActivo = () => ({type: types.uiOpenModal})
+export const setModalActivo = (tipoModal) => ({
+    type: types.uiOpenModal,
+    payload: tipoModal
+})
 
 export const setToastActivo = (error) => ({
     type: types.uiShowToast,

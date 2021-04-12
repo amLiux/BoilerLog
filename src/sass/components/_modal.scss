@@ -25,9 +25,10 @@
         box-shadow: 0 0 30px rgb(27, 27, 27);
         display: flex;
         margin: auto;
-        margin-top: 7.6rem;
+        height: 82.9vh;
+        margin-top: 6.1rem;
         max-width: calc(100% - 60px);
-        width: 1275px;
+        width: 1460px;
     }
 
     &-form{
@@ -39,6 +40,19 @@
         flex-direction: column;
         color: white;
 
+        &__banner{
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            i:hover{
+                color: $primary;
+            }
+        }
+
         h1{
             font-size: 1.1rem;
             margin-top: 3rem;
@@ -48,10 +62,6 @@
         i{
             font-size: 6.5rem;
             transition: .3s ease-in-out;
-            cursor: pointer;
-            &:hover{
-                color: $primary;
-            }
         }
 
     }

@@ -3,8 +3,6 @@ import { fetchRegister, fetchLogin, fetchValidateJWT } from '../services/fetch'
 import { setToastActivo } from './ui'
 
 
-// TODO manejar errores de respuestas del back-end
-
 export const login = (uid, displayName, rol) => ({
     type: types.authLogin,
     payload: {
@@ -41,7 +39,6 @@ export const startRegularRegister = ({email, pwd, name, lastName, user}) => {
             dispatch(login(body.uid, body.name))
         }else{
             const {errors} = body
-            console.log(errors)
             errors 
                 ? dispatch(setToastActivo(errors[Object.keys(errors)[0]].msg))
                 : dispatch(setToastActivo(body.msg))

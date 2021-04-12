@@ -9,6 +9,8 @@ export const Sidebar = ({handleClose}) => {
 
     const {date, citas} = diaActivo
 
+
+
     const dispatch = useDispatch()
 
     const handleCitaChange = (cita) => {
@@ -27,7 +29,7 @@ export const Sidebar = ({handleClose}) => {
             <div className="sidebar__citas mt-5">
                 {
                     citas?.map(cita => 
-                        <RadioButton onChange={() => handleCitaChange(cita)} key={cita._id} id={cita._id} label={cita.nombre}/>
+                        <RadioButton estado={cita.estado} date={cita.fechaDeseada} onChange={() => handleCitaChange(cita)} key={cita._id} id={cita._id} label={cita.nombre}/>
                     )
                 }
             </div>

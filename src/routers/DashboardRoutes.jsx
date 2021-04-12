@@ -6,29 +6,40 @@ import { CitasScreen } from '../components/screens/CitasScreen'
 import { ConfigScreen } from '../components/screens/ConfigScreen'
 import { HomeScreen } from '../components/screens/HomeScreen'
 import { PacientesScreen } from '../components/screens/PacientesScreen'
-import { Modal } from '../components/ui/calendar/Modal'
+import { CalendarModal } from '../components/ui/calendar/CalendarModal'
 import { Navbar } from '../components/ui/Navbar'
-import {setModalInactivo, removeDiaActivo} from '../actions/ui'
+import {setModalInactivo, removeDiaActivo, setToastInactivo} from '../actions/ui'
 import {removeCitaActiva} from '../actions/citas'
+import { PacientesModal } from '../components/ui/pacientes/PacientesModal'
+import { removePacienteActivo } from '../actions/pacientes'
 
 
 export const DashboardRoutes = () => {
 
-    const {modalAbierto, diaActivo} = useSelector(state => state.ui)
+    const {modalAbierto, diaActivo, tipoModal} = useSelector(state => state.ui)
 
     const dispatch = useDispatch()
 
-    const handleClose = () => {
+    const handleCloseCalendar = () => {
         dispatch(setModalInactivo())
         dispatch(removeDiaActivo())
         dispatch(removeCitaActiva())
+        dispatch(setToastInactivo())
     }
+
+    const handleClosePacientes = () => {
+        dispatch(setModalInactivo())
+        dispatch(removePacienteActivo())
+        dispatch(setToastInactivo())
+    }
+
 
 
     return (
         <div className="main">
             <Navbar/>
-            { modalAbierto && Object.keys(diaActivo).length !== 0 && <Modal dia={diaActivo} handleClose={()=> handleClose()} modalAbierto={modalAbierto} /> }
+            { modalAbierto && Object.keys(diaActivo).length !== 0 && tipoModal === "CALENDARIO" && <CalendarModal dia={diaActivo} handleClose={()=> handleCloseCalendar()} modalAbierto={modalAbierto} /> }
+            { modalAbierto && tipoModal === "PACIENTES" && <PacientesModal handleClose={()=> handleClosePacientes()} modalAbierto={modalAbierto} /> }
             <div className="main__main-content">
                 <Switch>
                     <Route exact path="/dentaltask/" component={HomeScreen} />

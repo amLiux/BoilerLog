@@ -1,0 +1,72 @@
+.dashboard{
+    height: 83vh;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    animation: fadeIn 0.6s ease-in-out;
+    border-left: 1px solid $light-grey;
+
+    &__main-content{
+        height: calc(100% - 20px);
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        transition: all .6s ease-in-out;
+
+        i{
+            color: rgba($primary, .8);
+            transform: scale(1.4);
+            font-style: none!important;
+            transition: all .4s ease-in-out;
+            font-weight: 600;
+            &:hover{
+                transform: scale(1.8);
+            }
+
+        }
+
+    }
+
+    &__heading{
+        font-size: 1.3rem;
+        text-align: left;
+        font-weight: 500;
+        color: rgba($primary, .8);
+        padding-top: 1rem;
+        padding-left: 1.4rem;
+        
+        i{
+            font-size: 1.6rem;
+            color: rgba($primary, .7);
+        }
+
+
+    }
+
+    &__input-file{
+        display: none;
+    }
+
+    &__input-label{
+        width: 100%;
+        justify-content: center;
+        display: flex;
+        text-align: center;
+    }
+
+    &__files{
+        width: 100%;
+        height: calc(50% - 34px);
+
+    }
+
+    &__appointments{
+        width: 100%;
+        border-top: 1px solid $light-grey;
+        height: calc(50% - 34px); 
+        border-radius: 0 0 19px 0;
+    }
+
+}

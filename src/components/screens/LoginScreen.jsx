@@ -21,17 +21,16 @@ export const LoginScreen = () => {
 
     return (
         <>
-
             <h3 className="auth__title mb-5">Ingresá <i className="fas fa-sign-in-alt"></i></h3>
             <form onSubmit={handleSubmit}>
-            <Input handleInputChange={handleInputChange} placeholder="Usuario" errors={errors} type="text" value={user}  name="user"/>
+                <Input handleInputChange={handleInputChange} placeholder="Usuario" errors={errors} type="text" value={user}  name="user"/>
                 {
-                    errors.user && (<ErrorHelp message={errors.user} />)
+                    errors.user && (<ErrorHelp isAuth={true} message={errors.user} />)
                 }
-                
+                    
                 <Input handleInputChange={handleInputChange} errors={errors} placeholder="Contraseña" type="password" value={pwd} name="pwd"/>
                 {
-                    errors.pwd && (<ErrorHelp message={errors.pwd} />)
+                    errors.pwd && (<ErrorHelp isAuth={true} message={errors.pwd} />)
                 }
                 <button className="btn btn__primary btn__block pointer mb-5" type="submit">Login</button>
             </form>

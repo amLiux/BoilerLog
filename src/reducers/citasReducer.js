@@ -3,7 +3,7 @@ import {types} from '../types/types'
 const initialState = {
     isCitaActive: false,
     cita: {},
-    totalCitas: []
+    totalCitas: [],
 }
 
 export const citasReducer = (state=initialState, action) =>{
@@ -42,6 +42,15 @@ export const citasReducer = (state=initialState, action) =>{
             }
         }
 
+        case types.citasCancelarCita:{
+            return {
+                ...state,
+                isCitaActive: false,
+                cita: {},
+            }
+        }
+
+
         case types.citasActualizarCitas:{
             return {
                 ...state,
@@ -50,6 +59,13 @@ export const citasReducer = (state=initialState, action) =>{
                     ? action.payload
                     : cita
                 )
+            }
+        }
+
+        case types.citasAgregarCita:{
+            return {
+                ...state,
+                totalCitas: [...state.totalCitas, action.payload]
             }
         }
         

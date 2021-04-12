@@ -31,7 +31,7 @@ export const AppRouter = () => {
         <Router>
             <div>
                 <Switch>
-                    <Route path="/public/schedule" component={ScheduleScreen}/>
+                    <Route path="/public/schedule/:_id" component={ScheduleScreen}/>
                     <PrivateRoute isAuthenticated={!!uid} path="/dentaltask" component={DashboardRoutes} />
                     <PublicRoute path="/" isAuthenticated={!!uid} component={AuthRouter}/>
                 </Switch>

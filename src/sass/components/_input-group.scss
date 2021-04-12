@@ -1,7 +1,7 @@
 .input-group{   
     
     font: inherit;
-
+    
     &__main{
         display: flex;
         justify-content: center;
@@ -13,6 +13,12 @@
     }
 
     input[type="text"]{
+
+        &.search{
+            width: 60%;
+        }
+
+
         border: none;
         border-bottom: 2px solid $light-grey;
         font-size: 16px;

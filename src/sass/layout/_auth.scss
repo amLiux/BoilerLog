@@ -1,5 +1,6 @@
 .auth{
 
+
     margin: 0;
 
     &__main{
@@ -9,6 +10,7 @@
         justify-content: center;
         height: 100vh;
         width: 100vw;
+
     }
 
     &__title{
@@ -45,6 +47,13 @@
             font-size: .7rem;
 
             animation: fadeInAndMoveFromBotton 0.8s ease-in;
+
+            &.edit{
+                width: 61%;
+                margin-top: -1rem;
+                margin-bottom: .3rem;
+            }
+
         }
 
         &-hasError{
@@ -71,6 +80,8 @@
         padding: 20px;
         width: 360px;
         text-align: center;
+        animation: fadeIn 0.8s ease-in-out;
+
     }
 
     &__errorPill{

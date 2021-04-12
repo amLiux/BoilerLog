@@ -2,6 +2,7 @@ import {types} from '../types/types'
 
 const estadoInicial = {
     modalAbierto: false,
+    tipoModal: '',
     diaActivo: {},
     toastAbierto: false,
     mensajeToast: ''
@@ -12,7 +13,9 @@ export const uiReducer = (state=estadoInicial, action) =>{
         case types.uiOpenModal: 
             return {
                 ...state,
-                modalAbierto: true
+                modalAbierto: true,
+                tipoModal: action.payload
+
             }
 
         case types.uiCloseModal: 

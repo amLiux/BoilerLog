@@ -7,7 +7,7 @@ export const Dia = ({day, onClick}) => {
             <span>{day.value !== 'padding' && day.value}</span>
             <div className="calendar__day-group">
                 {day.citas?.length > 0 && 
-                    day.citas.map( (cita, i) => (<div className="calendar__day-event" key={i} ></div>))
+                    day.citas.map( ({estado}, i) => (<div className={`calendar__day-event ${estado === 'PENDIENTE_CONFIRMACION' ? 'pending' : estado === 'CANCELADA' ? 'canceled' : ''}`} key={i} ></div>))
                 }
             </div>
         </div>
