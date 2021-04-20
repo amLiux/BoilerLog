@@ -33,7 +33,11 @@ export const useCita = ([cita], callback) => {
     }, [cita, estado])
     
 
-    const getEstadoString = (estado) => estado === 'CANCELADA' ? 'Cancelada' : estado === 'AGENDADA' ? 'Agendada' : estado === 'PENDIENTE_CONFIRMACION' ? 'Pendiente' : ''
+    const getEstadoString = (estado) => 
+        estado === 'CANCELADA' ? 'Cancelada' : 
+        estado === 'AGENDADA' ? 'Agendada' : 
+        estado === 'PENDIENTE_CONFIRMACION' ? 'Pendiente' : 
+        estado === 'COMPLETADA' ? 'Completada' : ''
     
 
     return [ editNote, handleEditClick, nota, handleInputChange, stringEstado, estado, newFecha ]

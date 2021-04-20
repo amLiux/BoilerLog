@@ -16,6 +16,7 @@ export const startUpdateCita = (cita) => {
     return async (dispatch, getState) => {
 
         const {citasPorPaciente} = getState().pacientes
+        const {diaActivo} = getState().ui
 
         const newCitas = citasPorPaciente.map(
             v => v._id === cita._id
@@ -23,14 +24,21 @@ export const startUpdateCita = (cita) => {
             : v
         )
 
+        if(Object.keys(diaActivo).length > 0) {
+            diaActivo.citas = diaActivo.citas.map( val => val._id === cita._id ? cita : val)
+            dispatch(setDiaActivo(diaActivo))
+        }
+
+
         const token = localStorage.getItem('token')
         const resp = await fetchPutCitas(token, cita)
-        const body = await resp.json()
+        const {ok, msg, newCita} = await resp.json()
 
-        if(body?.ok){
-            dispatch(setToastActivo(body.msg))
-            dispatch(refreshCitas(cita))
+        if(ok){
+            dispatch(setToastActivo(msg))
+            dispatch(refreshCitas(newCita))
             dispatch(setCitasPaciente(newCitas))
+            dispatch(cancelCita())
         }
         
     }
@@ -49,8 +57,6 @@ export const startCancelingCita = (cita) => {
         const token = localStorage.getItem('token')
         const resp = await fetchDeleteCitas(token, cita._id)
         const {ok, msg, cita: updatedCita} = await resp.json()
-        
-        
         const {diaActivo} = getState().ui
 
         diaActivo.citas = diaActivo.citas.map(
@@ -58,8 +64,6 @@ export const startCancelingCita = (cita) => {
             ? updatedCita
             : cita
         )
-
-        console.log( diaActivo )
                         
         if(ok){
             dispatch(cancelCita())

@@ -17,7 +17,7 @@ export const startUpdateCitaConHorario = (_id) => {
 
         const resp = await fetchPutHorarioCita(_id, horarioActivo)
         const body = await resp.json()
-
+        // TODO do something here
         console.log(body)
     }
 }

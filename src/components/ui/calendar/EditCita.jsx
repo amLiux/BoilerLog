@@ -14,6 +14,7 @@ import { SelectHorario } from './SelectHorario'
 export const EditCita = ({isEdit}) => {
 
     const dispatch = useDispatch()
+
     const handleAddPacienteClick = () => {
         dispatch(setModalInactivo())
         dispatch(removeCitaActiva())
@@ -22,14 +23,15 @@ export const EditCita = ({isEdit}) => {
     }
     const [isPaciente, setIsPaciente] = useState(true)
 
-    //TODO update schedule
     const [horario, setHorario] = useState('')
-
-    console.log(horario)
     
-    const handleUpdate = (e) => {
-        e.preventDefault()
-        dispatch(startUpdateCita(cita))
+    const handleUpdate = () => {
+        if (horario !== '') {
+            const update = {...cita, fechaDeseada: new Date(horario).toISOString()}
+            dispatch(startUpdateCita(update))
+        }else{
+            dispatch(startUpdateCita(values))
+        }
     } 
 
     const {cita} = useSelector(state => state.citas)
@@ -56,7 +58,6 @@ export const EditCita = ({isEdit}) => {
 
     useEffect(()=> {
         setIsPaciente(cita.hasOwnProperty('idPaciente'))
-        console.log(cita)
         if(activeCita.current !== cita._id){
             citaAntesDeCambios.current = cita
             reset({...cita})
@@ -147,7 +148,7 @@ export const EditCita = ({isEdit}) => {
                 }    
                 <div style={{width: '70%'}} className="edit-form__action-bar-group">
                     <Button onClick={ isPaciente ? e => handleDelete(e) : e => handleReset(e) } clickable={true} warning="true" text={isPaciente ? 'Cancelar cita' : 'Cancelar cambios'} group={true}/>
-                    <Button onClick={handleSubmit} clickable={true} text="Guardar" group={true}/>
+                    <Button onClick={ handleSubmit } clickable={true} text="Guardar" group={true}/>
                 </div>
                 {
                     !isPaciente 

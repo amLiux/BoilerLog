@@ -38,7 +38,6 @@ export const uiReducer = (state=estadoInicial, action) =>{
                 mensajeToast: ''
             }
 
-
         case types.uiSetDiaActivo: 
             return {
                 ...state,

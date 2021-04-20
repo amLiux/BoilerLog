@@ -14,7 +14,7 @@ export const CitasCard = ({cita}) => {
     
     return (
         <div className="card-container">
-            <div className={`${estado === 'CANCELADA' ? 'cancelada' : estado === 'AGENDADA' ? 'agendada' : 'pendiente'} card-header`}>
+            <div className={`${estado === 'CANCELADA' ? 'cancelada' : estado === 'AGENDADA' ? 'agendada' : estado === 'PENDIENTE' ? 'pendiente' : 'completada'} card-header`}>
                 <span> {`${newFecha} |`} </span><h5>{`| ${stringEstado}  `}</h5>
             </div>
             <div className="card-content">

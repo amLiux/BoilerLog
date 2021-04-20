@@ -22,6 +22,7 @@ export const types = {
     pacienteSetPacienteActivo: '[Pacientes] Set active paciente',
     pacienteRemovePacienteActivo: '[Pacientes] Remove active paciente',
     pacienteSetCitasPaciente: '[Pacientes] Set citas of specific paciente',
+    pacienteSetArchivosPaciente: '[Pacientes] Set archivos of specific paciente',
     pacienteClearPacientes: '[Pacientes] Remove pacientes',
     
     horariosSetHorario: '[Horarios] Set selected horario',

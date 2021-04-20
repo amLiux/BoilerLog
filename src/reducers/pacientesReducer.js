@@ -4,7 +4,8 @@ const initialState = {
     isPacienteActive: false,
     pacienteActivo: {},
     totalPacientes: [],
-    citasPorPaciente: []
+    citasPorPaciente: [],
+    archivosPorPaciente: []
 }
 
 export const pacientesReducer = (state=initialState, action) =>{
@@ -44,6 +45,13 @@ export const pacientesReducer = (state=initialState, action) =>{
                 ...state,
                 citasPorPaciente: [...action.payload]
             }
+
+        case types.pacienteSetArchivosPaciente:
+            return{
+                ...state,
+                archivosPorPaciente: [...action.payload]
+            }
+        
 
         case types.pacienteClearPacientes: 
             return{

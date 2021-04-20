@@ -77,6 +77,11 @@
             &.canceled{
                 background-color: rgba(lighten(red, 22), 0.8);
             }
+
+            &.complete{
+                background-color: rgba(lighten($color-black, 60), 0.8);
+            }
+
         }
 
 

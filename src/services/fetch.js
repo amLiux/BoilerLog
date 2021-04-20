@@ -1,11 +1,11 @@
 //Prod
-const url = `https://drsmaroto.com`
+// const url = `https://drsmaroto.com`
 
 //staging
 // const url = `https://boiler-log-be.herokuapp.com`
 
 //dev
-// const url = `http://192.168.100.34:3000`
+const url = `http://192.168.100.34:3000`
 
 export const fetchRegister = (email, pwd, name, lastName, user) =>
 	fetch(`${url}/new`, {
@@ -127,4 +127,21 @@ export const fetchPutHorarioCita = (_id, horario) =>
 			},
 			body: JSON.stringify({horario})
 		}
+	)
+
+export const fetchPostFiles = (_id, file, token) =>
+	fetch(`${url}/files/${_id}`, {
+			method: 'POST',
+			headers: {
+				'Authorization': token,
+			},
+			body: file
+		}
+	)
+
+export const fetchGetArchivosDePacientes = (_id, token) =>
+	fetch(`${url}/files/${_id}`, {
+		method: 'GET',
+		headers: {'Authorization': token}
+	}
 	)

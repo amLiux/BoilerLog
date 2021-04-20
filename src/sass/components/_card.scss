@@ -4,7 +4,7 @@
         height: 90%;
         border-radius: 8px;
         text-align: center;
-        border: 1px solid darken($light-grey, 20);
+        border: 1px solid $light-grey;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -16,7 +16,7 @@
         display: flex;
         justify-content: space-evenly;
         padding: 1rem 0;
-        border-bottom: 1px solid darken($light-grey, 20);
+        border-bottom: 1px solid $light-grey;
         h5{
             font-size: 1rem;
             font-weight: 300;
@@ -40,6 +40,11 @@
         }
 
 
+        &.completada h5{
+            color: rgba(lighten($color-black, 70), 1);
+        }
+
+
     }
 
     &-content{
@@ -59,7 +64,7 @@
 
 
     &-actions{
-        border-top: 1px solid darken($light-grey, 20);
+        border-top: 1px solid $light-grey;
         padding: 1rem 0;
     }
 

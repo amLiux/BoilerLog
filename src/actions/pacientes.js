@@ -1,4 +1,4 @@
-import { fetchGetCitasDePacientes, fetchGetPacientes, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/fetch'
+import { fetchGetArchivosDePacientes, fetchGetCitasDePacientes, fetchGetPacientes, fetchPostFiles, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/fetch'
 import {types} from '../types/types'
 import { setModalInactivo, setToastActivo } from './ui'
 
@@ -40,6 +40,11 @@ export const setCitasPaciente = (citas) => ({
     payload: citas
 })
 
+export const setArchivosPaciente = (archivos) => ({
+    type: types.pacienteSetArchivosPaciente,
+    payload: archivos
+})
+
 export const startLoadingCitasPaciente = (_id) => {
     return async (dispatch) => {
         const token = localStorage.getItem('token')
@@ -47,6 +52,18 @@ export const startLoadingCitasPaciente = (_id) => {
         const {ok, citas} = await response.json()
         if(ok){
             dispatch(setCitasPaciente(citas))
+        }
+    }
+}
+
+export const startLoadingArchivosPaciente = (_id) => {
+    return async (dispatch) => {
+        const token = localStorage.getItem('token')
+        const response = await fetchGetArchivosDePacientes(_id, token)
+        const {ok, archivos} = await response.json()
+
+        if(ok){
+            dispatch(setArchivosPaciente(archivos))
         }
     }
 }
@@ -104,3 +121,22 @@ export const setPacienteActivo = (paciente) => ({
 })
 
 export const removePacienteActivo = () => ({type: types.pacienteRemovePacienteActivo})
+
+export const startUploadingFile = (file, id) => {
+    return async (dispatch, getState) => {
+
+        const {archivosPorPaciente} = getState().pacientes
+
+        const token = localStorage.getItem('token')
+        const data = new FormData()
+        data.append('file', file)
+
+        const resp = await fetchPostFiles(id, data, token)
+        const {ok, msg, archivo} = await resp.json()
+
+        if(ok){
+            dispatch(setArchivosPaciente([...archivosPorPaciente, archivo]))
+            dispatch(setToastActivo(msg))
+        }
+    }
+}
