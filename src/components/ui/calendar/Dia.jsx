@@ -5,7 +5,6 @@ export const Dia = ({day, onClick}) => {
     const config = JSON.parse(localStorage.getItem('config')) || {
         citasCanceladasEnCalendario: false,
         citasCompletadasEnCalendario: false,
-        datosEnHomeMensuales: false
     }
 
     return (
@@ -14,7 +13,7 @@ export const Dia = ({day, onClick}) => {
             <div className="calendar__day-group">
                 {day.citas?.length > 0 && 
                     day.citas.map( ({estado}, i) => 
-                        !((!config.citasCanceladasEnCalendario && estado === 'CANCELADA') || (!config.citasCompletadasEnCalendario && estado === 'COMPLETADA')) && <div className={`calendar__day-event ${estado === 'PENDIENTE_CONFIRMACION' ? 'pending' : estado === 'CANCELADA' ? 'canceled' : estado === 'COMPLETADA' ? 'complete' : ''}`} key={i} ></div>
+                        !((!config.citasCanceladasEnCalendario && estado === 'CANCELADA') || (!config.citasCompletadasEnCalendario && estado === 'COMPLETADA')) && <div className={`calendar__day-event ${estado === 'PENDIENTE' ? 'pending' : estado === 'CANCELADA' ? 'canceled' : estado === 'COMPLETADA' ? 'complete' : ''}`} key={i} ></div>
                     )
                 }
             </div>

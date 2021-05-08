@@ -1,5 +1,6 @@
 import { fetchDeleteArchivo, fetchDownloadArchivo, fetchGetArchivosDePacientes, fetchGetCitasDePacientes, fetchGetPacientes, fetchPostFiles, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/fetch'
 import {types} from '../types/types'
+import { startLoadingCitas } from './citas'
 import { setModalInactivo, setToastActivo } from './ui'
 
 export const startSearchingPaciente = (searchString) => {
@@ -18,16 +19,21 @@ export const startSearchingPaciente = (searchString) => {
 }
 
 export const startAddingPaciente = (paciente) => {
-    return async (dispatch) => {
-
+    return async (dispatch, getState) => {
+        const {totalPacientes} = getState().pacientes
         const token = localStorage.getItem('token')
         const resp = await fetchPostPaciente(token, paciente)
         const body = await resp.json()
 
+        console.log(totalPacientes)
+
         if(body?.ok){
             dispatch(setToastActivo(body.msg))
             dispatch(refreshPaciente(body.createdUser))
+            dispatch(setPacientes([...totalPacientes, body.createdUser]))
+            dispatch(removePacienteActivo())
             dispatch(setModalInactivo())
+            dispatch(startLoadingCitas())
         }
         
     }
@@ -133,7 +139,8 @@ export const startUploadingFile = (file, id) => {
 
         const resp = await fetchPostFiles(id, data, token)
         const {ok, msg, archivo} = await resp.json()
-
+        console.log(ok)
+        console.log(archivosPorPaciente)
         if(ok){
             dispatch(setArchivosPaciente([...archivosPorPaciente, archivo]))
             dispatch(setToastActivo(msg))

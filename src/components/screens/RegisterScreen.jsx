@@ -1,21 +1,26 @@
-import React, { useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useForm } from '../hooks/useForm'
 import { areInputsValid } from '../controllers/auth.controller'
 import { useDispatch } from 'react-redux'
-import { startRegularRegister } from '../../actions/auth'
+import { startRegularRegister } from '../../actions/users'
 import { Input } from '../ui/Input'
 import { ErrorHelp } from '../ui/ErrorHelp'
 import { Button } from '../ui/Button'
 import { setToastActivo } from '../../actions/ui'
+import { Checkbox } from '../ui/Checkbox'
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({isEdit}) => {
                  
+    const [admin, setAdmin] = useState(false)
+
     const dispatch = useDispatch()
 
-    const handleRegister = () => dispatch(startRegularRegister(values))
+    const handleRegister = () => {
+        dispatch(startRegularRegister(values, admin))
+        reset()
+    }
     
-    const [values, handleInputChange, handleSubmit, errors] = useForm({
+    const [values, handleInputChange, handleSubmit, errors, reset] = useForm({
         email: '',
         user: '',
         name: '',
@@ -33,10 +38,9 @@ export const RegisterScreen = () => {
         }
     }, [errors, dispatch])
 
-
     return (
         <>
-            <h3 className="auth__title mb-5">Crea tu cuenta <i className="fas fa-user-plus"></i></h3>
+            <h3 className="auth__title mb-5">{isEdit ? 'Editar' : 'Crea una cuenta'}<i className="fas fa-user-plus"></i></h3>
             <form onSubmit={handleSubmit}>
                 <Input 
                     handleInputChange={handleInputChange} 
@@ -64,13 +68,13 @@ export const RegisterScreen = () => {
                 {
                     errors.pwd && (<ErrorHelp message={errors.pwd} />)
                 }
-                <Input handleInputChange={handleInputChange} errors={errors} placeholder="Confirma tu contraseña" type="password" value={confPwd} name="confPwd"/>
+                <Input handleInputChange={handleInputChange} errors={errors} placeholder="Confirma la contraseña" type="password" value={confPwd} name="confPwd"/>
                 {
                     errors.confPwd && (<ErrorHelp message={errors.confPwd} />)
                 }
-                <Button text="Registrar"/>
+                <Checkbox setting="Administrador?" checked={setAdmin} handleCheck={() => setAdmin(!admin)}/>
+                <Button text="Crear"/>
             </form>
-            <Link className="link" to="/auth/login">Ya estás registrado?</Link>
         </>
     )
 }

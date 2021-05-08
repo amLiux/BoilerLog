@@ -1,4 +1,4 @@
-Prod
+// Prod
 const url = `https://drsmaroto.com`
 
 //staging
@@ -7,11 +7,11 @@ const url = `https://drsmaroto.com`
 //dev
 // const url = `http://localhost:3000`
 
-export const fetchRegister = (email, pwd, name, lastName, user) =>
+export const fetchRegister = (email, pwd, name, lastName, user, admin) =>
 	fetch(`${url}/new`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ email, pwd, name, lastName, user })
+		body: JSON.stringify({ email, pwd, name, lastName, user, admin })
 	})
 
 export const fetchLogin = (user, pwd) =>
@@ -143,7 +143,6 @@ export const fetchGetArchivosDePacientes = (_id, token) =>
 		headers: {'Authorization': token}
 	})
 
-
 export const fetchDeleteArchivo = (_id, name, token) => 
 	fetch(`${url}/files/${_id}&${name}`, {
 		method: 'DELETE',
@@ -162,7 +161,6 @@ export const fetchDownloadArchivo = (_id, name, token) =>
 		}
 	})
 
-
 export const fetchPostReporte = (reporte, detallesFecha, token) => 
 	fetch(`${url}/reportes/${reporte}`, {
 		method: 'POST',
@@ -171,4 +169,18 @@ export const fetchPostReporte = (reporte, detallesFecha, token) =>
 			'Content-Type' : 'application/json'
 		},
 		body: JSON.stringify(detallesFecha)
+	})
+
+
+export const fetchGetUsers = (token) =>
+	fetch(`${url}/users`, {
+		method: 'GET',
+		headers: {'Authorization': token}
+	})
+
+export const fetchPutUser = (token, id, update) =>
+	fetch(`${url}/users/${id}`, {
+		method: 'POST',
+		headers: {'Authorization': token, 'Content-Type': 'application/json'},
+		body: JSON.stringify(update)
 	})

@@ -32,7 +32,7 @@ export const SelectHorario = ({handleState}) => {
 
     const amOrPm = (hora) => hora < 12 ? 'am' : 'pm'
 
-    const createHorario = (hora) => `${hora}:00 ${amOrPm(hora)} - ${hora+1}:00 ${amOrPm(hora+1)}`
+    const createHorario = (hora) => `${hora}:00 - ${hora+1}:00 ${amOrPm(hora+1)}`
 
     return (
         <div style={{width:'70%'}} className="select__box">

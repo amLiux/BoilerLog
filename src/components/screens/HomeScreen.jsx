@@ -22,7 +22,7 @@ export const HomeScreen = () => {
 
 
     const citasEstaSemana = totalCitas.filter(cita => new Date(cita.fechaDeseada) >= firstDayOfWeek && new Date(cita.fechaDeseada) <= lastDayOfWeek && cita.estado === 'AGENDADA' && cita)
-    const citasSinConfirmar = totalCitas.filter( cita =>  new Date(cita.fechaDeseada) >= firstDayOfWeek && new Date(cita.fechaDeseada) <= lastDayOfWeek && cita.estado === 'PENDIENTE_CONFIRMACION')
+    const citasSinConfirmar = totalCitas.filter( cita =>  new Date(cita.fechaDeseada) >= firstDayOfWeek && new Date(cita.fechaDeseada) <= lastDayOfWeek && cita.estado === 'PENDIENTE')
     const citasCanceladas = totalCitas.filter( cita =>  new Date(cita.fechaDeseada) >= firstDayOfWeek && new Date(cita.fechaDeseada) <= lastDayOfWeek && cita.estado === 'CANCELADA')
 
 

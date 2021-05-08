@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { removeCitaActiva, setCitaActiva, startCancelingCita, startUpdateCita } from '../../../actions/citas'
-import { clearPacientes } from '../../../actions/pacientes'
+import { clearPacientes, setPacienteActivo } from '../../../actions/pacientes'
 import { setModalActivo, setModalInactivo } from '../../../actions/ui'
 import { areCitaInputsValid } from '../../controllers/citas.controller'
 import { useForm } from '../../hooks/useForm'
@@ -15,11 +15,16 @@ export const EditCita = ({isEdit}) => {
 
     const dispatch = useDispatch()
 
+
     const handleAddPacienteClick = () => {
         dispatch(setModalInactivo())
         dispatch(removeCitaActiva())
         dispatch(clearPacientes())
+        delete values.estado 
+        delete values._id 
+        dispatch(setPacienteActivo({...values}))
         dispatch(setModalActivo('PACIENTES'))
+         
     }
     const [isPaciente, setIsPaciente] = useState(true)
 
@@ -27,7 +32,11 @@ export const EditCita = ({isEdit}) => {
     
     const handleUpdate = () => {
         if (horario !== '') {
-            const update = {...cita, fechaDeseada: new Date(horario).toISOString()}
+            const update = cita.estado === "PENDIENTE" 
+                ? 
+                    {...cita, estado: "AGENDADA", fechaDeseada: new Date(horario).toISOString()}
+                :
+                    {...cita, fechaDeseada: new Date(horario).toISOString()}
             dispatch(startUpdateCita(update))
         }else{
             dispatch(startUpdateCita(values))
@@ -73,7 +82,7 @@ export const EditCita = ({isEdit}) => {
     return (
         <div className="edit-form__box-container create">
             <div className="edit-form__action-bar">
-                <div className="edit-form__action-bar-group">
+                {/* <div className="edit-form__action-bar-group">
                     <div className="edit-form__action-bar-item">
                         <i className="fab fa-whatsapp"></i>
                     </div>
@@ -83,7 +92,7 @@ export const EditCita = ({isEdit}) => {
                     <div className="edit-form__action-bar-item">
                         <i className="fas fa-phone-alt"></i>
                     </div>
-                </div>
+                </div> */}
             </div>
             <form className="edit-form__form-container">
                 <div className="edit-form__form-container-title">
@@ -98,7 +107,7 @@ export const EditCita = ({isEdit}) => {
                     ? <> 
                         <div style={{display: 'flex', width: '70%', justifyContent:'space-between'}}>
                             <h2>{nombre} {apellido}</h2>
-                            <Link to="/mypadre" className="link link-suc mb-5">Paciente <i className="fas fa-check"></i> </Link>
+                            <Link to="#" className="link link-suc mb-5">Paciente <i className="fas fa-check"></i> </Link>
                         </div>
                         <span style={{paddingLeft:'6px', textAlign: 'left', width: '70%', marginBottom: '-10px', fontSize: '9.5px', fontWeight: '500'}}> &#8592; Puedes encontrar el horario actual de la cita de {nombre} en la barra de la izquierda. </span>
                         <SelectHorario handleState={setHorario}/>

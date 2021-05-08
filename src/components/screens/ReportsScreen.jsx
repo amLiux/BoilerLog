@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { saveAs } from 'file-saver'; 
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 import { BarChart } from '../ui/reports/BarChart'
@@ -12,6 +13,11 @@ export const ReportsScreen = () => {
     const [hasta, setHasta] = useState('')
     const [mes, setMes] = useState('')
 
+    const handleReportDownload = async () => {
+        let canvasReport = document.getElementById("report")
+        canvasReport.toBlob((blob) => saveAs(blob, 'testing.jpeg'), 'image/jpeg', 1)
+    }
+ 
 
     const handleMonthInput = ({target}) => {
         const [year, month] = target.value.split('-')
@@ -21,12 +27,10 @@ export const ReportsScreen = () => {
             ? setDesde(dateToSet) 
             : (dateToSet) > desde && setHasta(dateToSet)
 
-        console.log(dateToSet)
             target.name === 'mes' && setMes(dateToSet)
     }
 
     const activeReporte = useRef(reporte)
-
 
     useEffect(()=> {
         if(activeReporte?.current !== reporte){
@@ -63,7 +67,7 @@ export const ReportsScreen = () => {
                                 {
                                     desde && hasta &&
                                         <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
-                                            <Button text="Descargar reporte" group={true}/>
+                                            <Button clickable={true} onClick={() => handleReportDownload()} text="Descargar reporte" group={true}/>
                                         </div>
                                 }
 
@@ -79,7 +83,7 @@ export const ReportsScreen = () => {
                                 {
                                     mes &&
                                         <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
-                                            <Button text="Descargar reporte" group={true}/>
+                                            <Button clickable={true} onClick={() => handleReportDownload()} text="Descargar reporte" group={true}/>
                                         </div>
                                 }
 
@@ -89,7 +93,7 @@ export const ReportsScreen = () => {
             </div>
             {
                 ((reporte && hasta) || (reporte && mes)) &&
-                    <div style={{display: 'flex'}}>
+                    <div className={`${reporte === 'Detalle de citas mensual' && 'mt-5'}`} style={{display: 'flex' }}>
                         {
                             reporte === 'Cantidad de citas' || reporte === 'Pacientes nuevos'
                                 ? <BarChart desde={desde} hasta={hasta} reporte={reporte}/>

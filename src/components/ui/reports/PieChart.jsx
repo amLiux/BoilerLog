@@ -22,6 +22,7 @@ export const PieChart = ({reporte, mes}) => {
     return (
         <div style={{margin: 'auto'}}>
             <Pie 
+                id="report"
                 data={{
                     labels: data.map(({estado}) => estado),
                     datasets: [{

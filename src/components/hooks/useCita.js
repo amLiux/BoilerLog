@@ -36,7 +36,7 @@ export const useCita = ([cita], callback) => {
     const getEstadoString = (estado) => 
         estado === 'CANCELADA' ? 'Cancelada' : 
         estado === 'AGENDADA' ? 'Agendada' : 
-        estado === 'PENDIENTE_CONFIRMACION' ? 'Pendiente' : 
+        estado === 'PENDIENTE' ? 'Pendiente' : 
         estado === 'COMPLETADA' ? 'Completada' : ''
     
 

@@ -25,7 +25,7 @@ export const CitaForm = () => {
     return (
         <div className="edit-form__box-container create">
             <div className="edit-form__action-bar">
-                <div className="edit-form__action-bar-group">
+                {/* <div className="edit-form__action-bar-group">
                     <div className="edit-form__action-bar-item">
                         <i className="fab fa-whatsapp"></i>
                     </div>
@@ -35,7 +35,7 @@ export const CitaForm = () => {
                     <div className="edit-form__action-bar-item">
                         <i className="fas fa-phone-alt"></i>
                     </div>
-                </div>
+                </div> */}
             </div>
             <form className="edit-form__form-container">
                 <div className="edit-form__form-container-title">

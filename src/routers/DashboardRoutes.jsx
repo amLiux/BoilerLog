@@ -13,6 +13,7 @@ import {removeCitaActiva} from '../actions/citas'
 import { PacientesModal } from '../components/ui/pacientes/PacientesModal'
 import { removePacienteActivo } from '../actions/pacientes'
 import { ReportsScreen } from '../components/screens/ReportsScreen'
+import { UserManagementScreen } from '../components/screens/UserManagementScreen'
 
 
 export const DashboardRoutes = () => {
@@ -46,9 +47,10 @@ export const DashboardRoutes = () => {
                     <Route exact path="/dentaltask/" component={HomeScreen} />
                     <Route exact path="/dentaltask/calendario" component={CalendarScreen} />
                     <Route exact path="/dentaltask/citas" component={CitasScreen} />
-                    <Route exact path="/dentaltask/configuracion" component={ConfigScreen} />
                     <Route exact path="/dentaltask/pacientes" component={PacientesScreen} />
-                    <Route exact path="/dentaltask/reportes" component={ReportsScreen} />
+                    <Route exact path="/dentaltask/reportes" component={ReportsScreen} />\
+                    <Route exact path="/dentaltask/usuarios" component={UserManagementScreen} />
+                    <Route exact path="/dentaltask/configuracion" component={ConfigScreen} />
                 </Switch>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startLoadingPacientes } from '../../actions/pacientes'
+import { startDeletingFile, startLoadingPacientes } from '../../actions/pacientes'
 import { setModalActivo } from '../../actions/ui'
 import { usePagination } from '../hooks/usePagination'
 import { Button } from '../ui/Button'
@@ -21,6 +21,9 @@ export const PacientesScreen = () => {
 
     const [currentPacientes, currentPage, handleChangePage] = usePagination(totalPacientes, 8)
 
+    const style = currentPacientes.length < 8 ? {justifyContent: 'flex-start'} : {}
+    const style2 = currentPacientes.length < 8 ? {marginBottom: 'auto'} : {}
+
     const checkMsg = (msg) => msg === 'Necesitas buscar algo válido'  ? false : true
 
     useEffect(() => {
@@ -31,13 +34,13 @@ export const PacientesScreen = () => {
         <>
             {toastAbierto && !modalAbierto && <Toast context="screen" success={checkMsg(mensajeToast.error)} error={mensajeToast.error} />}
             <div style={{width: '100%', display: 'flex'}}>
-                <div className="secondary-container">
+                <div style={style} className="secondary-container">
                     <div className="main-container__search-group">
                         <form action="">
                             <InputGroup name="busqueda" search={true}/>
                         </form>
                     </div>
-                    <PacientesList pacientes={currentPacientes}/>
+                    <PacientesList style={style2} pacientes={currentPacientes}/>
                     {
                         totalPacientes.length > 8 &&
                         <div style={{marginTop: '-3rem'}} className="calendar__header">

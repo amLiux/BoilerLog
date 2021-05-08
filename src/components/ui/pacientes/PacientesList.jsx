@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { setPacienteActivo } from '../../../actions/pacientes'
 
-export const PacientesList = ({pacientes}) => {
+export const PacientesList = ({pacientes, style}) => {
 
     const dispatch = useDispatch()
 
@@ -11,13 +11,13 @@ export const PacientesList = ({pacientes}) => {
     }
     
     return (
-        <div className="list">
+        <div style={style} className="list">
             <ul>
                 {
                     pacientes.map( 
                         paciente =>  (
                             <li key={paciente._id} onClick={()=> handlePacienteClick(paciente)} >
-                                <span>{paciente.nombre}</span>
+                                <span>{paciente.nombre} {paciente.apellido}</span>
                             </li>
                         )
                     )

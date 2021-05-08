@@ -1,5 +1,5 @@
 import {types} from '../types/types'
-import { fetchRegister, fetchLogin, fetchValidateJWT } from '../services/fetch'
+import { fetchLogin, fetchValidateJWT } from '../services/fetch'
 import { setToastActivo } from './ui'
 
 
@@ -28,23 +28,6 @@ export const startLogin = ({user, pwd}) => {
     }
 }
 
-export const startRegularRegister = ({email, pwd, name, lastName, user}) => {
-    return async (dispatch) => {
-        const resp = await fetchRegister(email, pwd, name, lastName, user)
-        const body = await resp.json()
-
-        if(body.ok){
-            localStorage.setItem('token', body.token)
-            localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(login(body.uid, body.name))
-        }else{
-            const {errors} = body
-            errors 
-                ? dispatch(setToastActivo(errors[Object.keys(errors)[0]].msg))
-                : dispatch(setToastActivo(body.msg))
-        }
-    }
-}
 
 export const startLogout = () => {
     return async (dispatch) => {

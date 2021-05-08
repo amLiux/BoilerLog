@@ -6,7 +6,7 @@ import { useForm } from '../../hooks/useForm'
 import { Button } from '../Button'
 import { InputGroup } from '../InputGroup'
 
-export const PacientesForm = ({handleClose}) => {
+export const PacientesForm = ({handleClose, isEdit}) => {
 
     const dispatch = useDispatch()
 
@@ -15,7 +15,6 @@ export const PacientesForm = ({handleClose}) => {
     const {pacienteActivo} = useSelector(state => state.pacientes)
     const activePaciente = useRef(pacienteActivo?._id)
 
-    const isEdit = Object.keys(pacienteActivo).length > 0
     
     pacienteActivo ? formState = pacienteActivo : formState = {
         nombre:'', 
@@ -37,9 +36,7 @@ export const PacientesForm = ({handleClose}) => {
         handleSaveClick)
         
     let {nombre, apellido, email, numeroTelefonico, cedula } = values
-    
-    console.log(errors)
-    
+        
     useEffect(()=> {
         if(activePaciente?.current !== pacienteActivo?._id){
             reset({...pacienteActivo})

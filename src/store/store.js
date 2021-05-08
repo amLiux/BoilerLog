@@ -5,6 +5,7 @@ import { uiReducer } from '../reducers/uiReducer'
 import { citasReducer } from '../reducers/citasReducer'
 import { pacientesReducer } from '../reducers/pacientesReducer'
 import { horariosReducer } from '../reducers/horariosReducer'
+import { usersReducer } from '../reducers/usersReducer'
 
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
@@ -13,7 +14,8 @@ const combinedReducers = combineReducers({
     ui: uiReducer,
     citas: citasReducer,
     pacientes: pacientesReducer,
-    horarios: horariosReducer
+    horarios: horariosReducer,
+    usuarios: usersReducer
 })
 
 export const store = createStore(

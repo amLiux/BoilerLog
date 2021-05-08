@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import { useForm } from '../hooks/useForm'
 import {useDispatch} from 'react-redux'
 import { startLogin } from '../../actions/auth'
@@ -34,7 +33,6 @@ export const LoginScreen = () => {
                 }
                 <button className="btn btn__primary btn__block pointer mb-5" type="submit">Login</button>
             </form>
-            <Link className="link" to="/auth/register">Crea una cuenta!</Link>
         </>
     )
 }

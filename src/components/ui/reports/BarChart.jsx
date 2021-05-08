@@ -21,7 +21,8 @@ export const BarChart = ({reporte, desde, hasta}) => {
 
     return (
         <div style={{margin: 'auto'}}>
-            <Bar 
+            <Bar
+                id="report" 
                 data={{
                     labels: data.map(({mes}) => mes),
                     datasets: [{
