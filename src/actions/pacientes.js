@@ -1,4 +1,4 @@
-import { fetchGetArchivosDePacientes, fetchGetCitasDePacientes, fetchGetPacientes, fetchPostFiles, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/fetch'
+import { fetchDeleteArchivo, fetchDownloadArchivo, fetchGetArchivosDePacientes, fetchGetCitasDePacientes, fetchGetPacientes, fetchPostFiles, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/fetch'
 import {types} from '../types/types'
 import { setModalInactivo, setToastActivo } from './ui'
 
@@ -138,5 +138,42 @@ export const startUploadingFile = (file, id) => {
             dispatch(setArchivosPaciente([...archivosPorPaciente, archivo]))
             dispatch(setToastActivo(msg))
         }
+    }
+}
+
+
+export const startDeletingFile = (fileId, fileName,  pacienteId) => {
+    return async (dispatch, getState) => {
+
+        let {archivosPorPaciente} = getState().pacientes
+
+        archivosPorPaciente = archivosPorPaciente.filter(v => v._id !== fileId)
+
+        const token = localStorage.getItem('token')
+        const resp = await fetchDeleteArchivo(pacienteId, fileName, token)
+        const body = await resp.json()
+
+        console.log(archivosPorPaciente)
+
+        if(body?.ok){
+            dispatch(setToastActivo(body.msg))
+            dispatch(setArchivosPaciente(archivosPorPaciente))
+        }
+    }
+}
+
+export const startDownloadingFile = (fileName,  pacienteId) => {
+    return async (dispatch) => {
+
+        const token = localStorage.getItem('token')
+        const resp = await fetchDownloadArchivo(pacienteId, fileName, token)
+        const blob = await resp.blob()
+
+        let url = window.URL.createObjectURL(blob)
+        let a = document.createElement('a')
+        a.href = url
+        a.download = fileName
+        a.click()
+
     }
 }

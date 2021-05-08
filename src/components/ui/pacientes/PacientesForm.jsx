@@ -6,7 +6,7 @@ import { useForm } from '../../hooks/useForm'
 import { Button } from '../Button'
 import { InputGroup } from '../InputGroup'
 
-export const PacientesForm = ({handleClose, isEdit}) => {
+export const PacientesForm = ({handleClose}) => {
 
     const dispatch = useDispatch()
 
@@ -15,6 +15,7 @@ export const PacientesForm = ({handleClose, isEdit}) => {
     const {pacienteActivo} = useSelector(state => state.pacientes)
     const activePaciente = useRef(pacienteActivo?._id)
 
+    const isEdit = Object.keys(pacienteActivo).length > 0
     
     pacienteActivo ? formState = pacienteActivo : formState = {
         nombre:'', 
@@ -25,9 +26,10 @@ export const PacientesForm = ({handleClose, isEdit}) => {
     }
     
     const handleSaveClick = () => 
-    isEdit 
-    ? dispatch(startUpdatePaciente(values))
-    : dispatch(startAddingPaciente(values))
+        isEdit 
+        ? dispatch(startUpdatePaciente(values))
+        : dispatch(startAddingPaciente(values))
+
     
     const [values, handleInputChange, handleSubmit, errors, reset] = useForm(
         formState,

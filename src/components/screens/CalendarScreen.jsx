@@ -20,6 +20,7 @@ export const CalendarScreen = () => {
         dispatch(startLoadingCitas())
     }, [dispatch])
 
+
     const handleDiaClick = (dia) => {
         if(dia.value !== 'padding'){
             dispatch(setModalActivo('CALENDARIO'))

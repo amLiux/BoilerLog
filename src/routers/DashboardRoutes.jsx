@@ -12,6 +12,7 @@ import {setModalInactivo, removeDiaActivo, setToastInactivo} from '../actions/ui
 import {removeCitaActiva} from '../actions/citas'
 import { PacientesModal } from '../components/ui/pacientes/PacientesModal'
 import { removePacienteActivo } from '../actions/pacientes'
+import { ReportsScreen } from '../components/screens/ReportsScreen'
 
 
 export const DashboardRoutes = () => {
@@ -47,6 +48,7 @@ export const DashboardRoutes = () => {
                     <Route exact path="/dentaltask/citas" component={CitasScreen} />
                     <Route exact path="/dentaltask/configuracion" component={ConfigScreen} />
                     <Route exact path="/dentaltask/pacientes" component={PacientesScreen} />
+                    <Route exact path="/dentaltask/reportes" component={ReportsScreen} />
                 </Switch>
             </div>
         </div>

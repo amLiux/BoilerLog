@@ -25,7 +25,6 @@ export const ArchivosList = ({paciente :{_id}}) => {
         dispatch(startUploadingFile(file, _id))
         setFilename('')
     }
-    console.log(archivosPorPaciente)
 
     return (
         <div style={{width: '100%', display:'flex', flexDirection: 'column', justifyContent:'space-around',  alignItems: 'center'}}>
@@ -36,7 +35,7 @@ export const ArchivosList = ({paciente :{_id}}) => {
                 </div>
                 <div className="grid__body">
                     {
-                        archivosPorPaciente.length > 0 && archivosPorPaciente.map( ({nombreArchivo, fechaCreado, _id}) => <Archivo key={_id} id={_id} nombre={nombreArchivo} fecha={fechaCreado}/> )
+                        archivosPorPaciente.length > 0 && archivosPorPaciente.map( ({nombreArchivo, fechaCreado,  idPaciente, _id}) => <Archivo key={_id} fileId={_id} pacienteId={idPaciente} nombre={nombreArchivo} fecha={fechaCreado}/> )
                     }
                     
                 </div>

@@ -4,6 +4,7 @@
     left: 20px;
     animation: show_toast 1s ease forwards;
     font: inherit;
+    z-index: 1000;
     
     .hide {
         animation: hide_toast 1s ease forwards;
@@ -13,6 +14,7 @@
         background: #fff;
         padding: 20px 15px 20px 20px;
         border-radius: 19px;
+        border: 2px solid $light-grey;
         border-left: 5px solid lighten(red, 22);
         box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0.15);
         width: 430px;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { startLogout } from '../../actions/auth'
 import { clearCitas } from '../../actions/citas'
 import { clearPacientes } from '../../actions/pacientes'
@@ -8,6 +8,8 @@ import { clearPacientes } from '../../actions/pacientes'
 export const Navbar = () => {
 
     const dispatch = useDispatch()
+
+    const {rol} = useSelector(state => state.auth)
 
     const handleLogout = (e) => {
         e.preventDefault()
@@ -34,7 +36,7 @@ export const Navbar = () => {
                         activeClassName="nav__links-active"
                         to="/dentaltask/calendario"
                     >
-                        <i className="far fa-calendar-alt"></i>
+                        <i className="fas fa-calendar-alt"></i>
                         <span className="icon-text"> Calendario</span>
                     </NavLink>
                 </li>
@@ -47,6 +49,27 @@ export const Navbar = () => {
                         <span className="icon-text"> Pacientes</span>
                     </NavLink>
                 </li>
+                {
+                    rol === 'ADMIN_ROLE' &&
+                    <>
+                        <li>
+                            <NavLink 
+                                activeClassName="nav__links-active"
+                                to="/dentaltask/reportes">
+                                <i className="fas fa-file-contract"></i>
+                                <span className="icon-text"> Reportes</span>
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink 
+                                activeClassName="nav__links-active"
+                                to="/dentaltask/usuarios">
+                                <i className="fas fa-users"></i>
+                                <span className="icon-text"> Usuarios</span>
+                            </NavLink>
+                        </li>
+                    </>
+                }
                 <li>
                     <NavLink 
                         activeClassName="nav__links-active"

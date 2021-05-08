@@ -1,11 +1,11 @@
 //Prod
-const url = `https://drsmaroto.com`
+//const url = `https://drsmaroto.com`
 
 //staging
 // const url = `https://boiler-log-be.herokuapp.com`
 
 //dev
-// const url = `http://192.168.100.34:3000`
+const url = `http://localhost:3000`
 
 export const fetchRegister = (email, pwd, name, lastName, user) =>
 	fetch(`${url}/new`, {
@@ -78,7 +78,6 @@ export const fetchSearchPaciente = (token, searchString) =>
 		headers: {'Authorization': token}
 	})
 
-
 export const fetchGetPacientes = (token) =>
 	fetch(`${url}/pacientes`, {
 		method: 'GET',
@@ -92,7 +91,6 @@ export const fetchGetCitasDePacientes = (token, _id) =>
 			'Authorization': token
 		}
 	})
-
 
 export const fetchPutPacientes = (token, paciente) =>
 	fetch(`${url}/pacientes`, {
@@ -143,5 +141,34 @@ export const fetchGetArchivosDePacientes = (_id, token) =>
 	fetch(`${url}/files/${_id}`, {
 		method: 'GET',
 		headers: {'Authorization': token}
-	}
-	)
+	})
+
+
+export const fetchDeleteArchivo = (_id, name, token) => 
+	fetch(`${url}/files/${_id}&${name}`, {
+		method: 'DELETE',
+		headers: {
+			'Authorization': token, 
+			'Content-Type': 'application/json' 
+		}
+	})
+
+export const fetchDownloadArchivo = (_id, name, token) => 
+	fetch(`${url}/files/${_id}&${name}`, {
+		method: 'GET',
+		headers: {
+			'Authorization': token,
+			'Content-Disposition': 'attachment'
+		}
+	})
+
+
+export const fetchPostReporte = (reporte, detallesFecha, token) => 
+	fetch(`${url}/reportes/${reporte}`, {
+		method: 'POST',
+		headers: {
+			'Authorization': token,
+			'Content-Type' : 'application/json'
+		},
+		body: JSON.stringify(detallesFecha)
+	})

@@ -7,21 +7,9 @@ export const Toast = ({ context, error, success}) => {
 
     const dispatch = useDispatch()
 
-    const styleToast = context === 'screen' ? {
-        width: '300px',
-        height: '60px',
-        padding: '1rem',
-    } : {}
-
-    const styleWrapper = context === 'screen' ? {
-        top: '12px',
-        left: '-15px'
-    } : {}
-
-
     return (
-        <div style={styleWrapper} className="wrapper">
-            <div style={styleToast} className={`toast ${success && 'toast-success'}`}>
+        <div className="wrapper">
+            <div className={`toast ${success && 'toast-success'}`}>
                 <div className="content">
                     <div className={`icon ${success && 'icon-success'}`} >
                         {success 
