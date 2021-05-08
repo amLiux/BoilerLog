@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 export const SelectReport = ({handleState}) => {
 
-    const reportes = ['Cantidad de citas', 'Pacientes nuevos']
+    const reportes = ['Cantidad de citas', 'Pacientes nuevos', 'Detalle de citas mensual']
     const [dropdownActive, setDropdownActive] = useState(false)
     const [placeholder, setPlaceholder] = useState('Seleccione un reporte')
 

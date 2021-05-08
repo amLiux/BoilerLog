@@ -13,15 +13,9 @@ export const Dia = ({day, onClick}) => {
             <span>{day.value !== 'padding' && day.value}</span>
             <div className="calendar__day-group">
                 {day.citas?.length > 0 && 
-                    day.citas.map( ({estado}, i) => {
-                        if(!config.citasCanceladasEnCalendario && estado === 'CANCELADA') 
-                            return 
-                        else if(!config.citasCompletadasEnCalendario && estado === 'COMPLETADA') 
-                            return 
-                            
-                            
-                        return (<div className={`calendar__day-event ${estado === 'PENDIENTE_CONFIRMACION' ? 'pending' : estado === 'CANCELADA' ? 'canceled' : estado === 'COMPLETADA' ? 'complete' : ''}`} key={i} ></div>)
-                    })
+                    day.citas.map( ({estado}, i) => 
+                        !((!config.citasCanceladasEnCalendario && estado === 'CANCELADA') || (!config.citasCompletadasEnCalendario && estado === 'COMPLETADA')) && <div className={`calendar__day-event ${estado === 'PENDIENTE_CONFIRMACION' ? 'pending' : estado === 'CANCELADA' ? 'canceled' : estado === 'COMPLETADA' ? 'complete' : ''}`} key={i} ></div>
+                    )
                 }
             </div>
         </div>

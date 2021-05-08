@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
 import { BarChart } from '../ui/reports/BarChart'
+import { PieChart } from '../ui/reports/PieChart'
 import { SelectReport } from '../ui/reports/SelectReport'
 
 export const ReportsScreen = () => {
@@ -9,6 +10,8 @@ export const ReportsScreen = () => {
     const [reporte, setReporte] = useState('')
     const [desde, setDesde] = useState('')
     const [hasta, setHasta] = useState('')
+    const [mes, setMes] = useState('')
+
 
     const handleMonthInput = ({target}) => {
         const [year, month] = target.value.split('-')
@@ -17,6 +20,9 @@ export const ReportsScreen = () => {
         target.name === 'desde' 
             ? setDesde(dateToSet) 
             : (dateToSet) > desde && setHasta(dateToSet)
+
+        console.log(dateToSet)
+            target.name === 'mes' && setMes(dateToSet)
     }
 
     const activeReporte = useRef(reporte)
@@ -27,6 +33,7 @@ export const ReportsScreen = () => {
             activeReporte.current = reporte
             setDesde('')
             setHasta('')
+            setMes('')
         }
     }, [reporte])
 
@@ -37,36 +44,61 @@ export const ReportsScreen = () => {
                     <SelectReport handleState={setReporte} />
                 </div>
                 {
-                    reporte &&
-                        <>
-                            <form style={{display:'flex', flex: '0 0 40%', justifyContent:'space-between', marginRight: '1rem'}}>
-                                <div style={{marginRight: '2rem'}}>
-                                    <label style={{fontWeight: '500'}} htmlFor="start">Desde:</label>
-                                    <Input name="desde" handleInputChange={handleMonthInput} errors={{}} type="month" placeholder="El mes" />
-                                </div>
+                    reporte && reporte !== 'Detalle de citas mensual' 
+                        ?
+                            <>
+                                <form style={{display:'flex', flex: '0 0 40%', justifyContent:'space-between', marginRight: '1rem'}}>
+                                    <div style={{marginRight: '2rem'}}>
+                                        <label style={{fontWeight: '500'}} htmlFor="start">Desde:</label>
+                                        <Input name="desde" handleInputChange={handleMonthInput} errors={{}} type="month" placeholder="El mes" />
+                                    </div>
+                                    {
+                                        desde &&
+                                            <div>
+                                                <label style={{fontWeight: '500'}} htmlFor="start">Hasta:</label>
+                                                <Input name="hasta" handleInputChange={handleMonthInput} errors={{}} type="month" />
+                                            </div>
+                                    }
+                                </form>
                                 {
-                                    desde &&
-                                        <div>
-                                            <label style={{fontWeight: '500'}} htmlFor="start">Hasta:</label>
-                                            <Input name="hasta" handleInputChange={handleMonthInput} errors={{}} type="month" />
+                                    desde && hasta &&
+                                        <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
+                                            <Button text="Descargar reporte" group={true}/>
                                         </div>
                                 }
-                            </form>
-                            {
-                                desde && hasta &&
-                                    <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
-                                        <Button text="Descargar reporte" group={true}/>
-                                    </div>
-                            }
 
-                        </>
+                            </>
+                        : reporte && 
+                            <>
+                                <form style={{display:'flex', flex: '0 0 40%', justifyContent:'center', marginRight: '1rem'}}>
+                                    <div style={{width: '70%'}}>
+                                        <label style={{fontWeight: '500'}} htmlFor="start">Mes:</label>
+                                        <Input name="mes" handleInputChange={handleMonthInput} errors={{}} type="month" placeholder="El mes" />
+                                    </div>
+                                </form>
+                                {
+                                    mes &&
+                                        <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
+                                            <Button text="Descargar reporte" group={true}/>
+                                        </div>
+                                }
+
+                            </>
                 }
 
             </div>
             {
-                reporte && desde && hasta &&
+                ((reporte && hasta) || (reporte && mes)) &&
                     <div style={{display: 'flex'}}>
-                        <BarChart desde={desde} hasta={hasta} reporte={reporte}/>
+                        {
+                            reporte === 'Cantidad de citas' || reporte === 'Pacientes nuevos'
+                                ? <BarChart desde={desde} hasta={hasta} reporte={reporte}/>
+                                : reporte === 'Detalle de citas mensual' 
+                                    &&
+                                        <PieChart mes={mes} reporte={reporte} />
+                                    
+
+                        }
                     </div>
             }
 

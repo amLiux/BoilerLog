@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import {Bar} from 'react-chartjs-2'
+import {Pie} from 'react-chartjs-2'
 import { fetchPostReporte } from '../../../services/fetch'
 
 
-export const BarChart = ({reporte, desde, hasta}) => {
+export const PieChart = ({reporte, mes}) => {
 
     const [data, setData] = useState([])
 
     useEffect(()=>{
         async function fetchReport() {
             const token = localStorage.getItem('token')
-            const response = await fetchPostReporte(reporte, {desde, hasta}, token)
+            const response = await fetchPostReporte(reporte, {mes}, token)
             const parsedResponse = await response.json()
             setData(parsedResponse.data)
           }
           fetchReport();
-    }, [reporte, desde, hasta])
+    }, [reporte, mes])
 
     console.log(data)
 
     return (
         <div style={{margin: 'auto'}}>
-            <Bar 
+            <Pie 
                 data={{
-                    labels: data.map(({mes}) => mes),
+                    labels: data.map(({estado}) => estado),
                     datasets: [{
                         label: `${reporte}`,
-                        data: reporte === 'Cantidad de citas' ? data.map(({citas}) => citas) :  data.map(({pacientes}) => pacientes),
+                        data: data.map(({conteo}) => conteo),
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
@@ -43,11 +43,11 @@ export const BarChart = ({reporte, desde, hasta}) => {
                             'rgba(153, 102, 255, 1)',
                             'rgba(255, 159, 64, 1)'
                         ],
-                        borderWidth: 1
+                        borderWidth: 1,
                     }]
                 }}
 
-                height={630}
+                height={600}
                 width={1200}
                 options={{
                     maintainAspectRatio: true
