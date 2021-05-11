@@ -174,7 +174,11 @@ export const startDownloadingFile = (fileName,  pacienteId) => {
 
         const token = localStorage.getItem('token')
         const resp = await fetchDownloadArchivo(pacienteId, fileName, token)
+        console.log(resp.body)
         const blob = await resp.blob()
+
+        console.log(blob)
+        console.log(`estoy llegando aca`)
 
         let url = window.URL.createObjectURL(blob)
         let a = document.createElement('a')

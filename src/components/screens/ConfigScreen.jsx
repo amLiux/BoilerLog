@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startUpdatingUser } from '../../actions/users'
 import { Checkbox } from '../ui/Checkbox'
@@ -7,9 +7,16 @@ import { Toast } from '../ui/Toast'
 
 export const ConfigScreen = () => {
 
+    const config = JSON.parse(localStorage.getItem('config')) || {
+        citasCanceladasEnCalendario: false,
+        citasCompletadasEnCalendario: false,
+    }
+
+    const firstUpdate = useRef(true);
     const [pwd, setPwd] = useState('')
 
     const {uid} = useSelector(state => state.auth)
+
     const dispatch = useDispatch()
 
     const {mensajeToast, toastAbierto, modalAbierto} = useSelector(state => state.ui)
@@ -19,20 +26,25 @@ export const ConfigScreen = () => {
         setPwd('')
     }
 
+    const [canceled, setCanceled] = useState(config.citasCanceladasEnCalendario)
+    const [completed, setCompleted] = useState(config.citasCompletadasEnCalendario)
+
     const handlePwdChange = ({target}) => setPwd(target.value)
 
-    const config = JSON.parse(localStorage.getItem('config')) || {
-        citasCanceladasEnCalendario: false,
-        citasCompletadasEnCalendario: false,
-    }
+    const handleCitasCanceladas = () => setCanceled(!canceled)
+    const handleCitasCompletadas = () => setCompleted(!completed)
 
-    const handleCitasCanceladas = () => {
-        localStorage.setItem('config', JSON.stringify({...config, citasCanceladasEnCalendario: !config.citasCanceladasEnCalendario}))
-    }
-
-    const handleCitasCompletadas = () => {
-        localStorage.setItem('config', JSON.stringify({...config, citasCompletadasEnCalendario: !config.citasCompletadasEnCalendario}))
-    }
+    useEffect(()=> {
+        if (firstUpdate.current) {
+            firstUpdate.current = false;
+            return;
+        }
+        localStorage.setItem('config', JSON.stringify({
+            citasCompletadasEnCalendario: completed, 
+            citasCanceladasEnCalendario: canceled
+        }))
+    },
+    [canceled, completed])
 
     return (
         <>

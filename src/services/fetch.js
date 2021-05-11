@@ -2,7 +2,7 @@
 const url = `https://drsmaroto.com`
 
 //staging
-// const url = `https://boiler-log-be.herokuapp.com`
+const url = `https://boiler-log-be.herokuapp.com`
 
 //dev
 // const url = `http://localhost:3000`
@@ -153,7 +153,7 @@ export const fetchDeleteArchivo = (_id, name, token) =>
 	})
 
 export const fetchDownloadArchivo = (_id, name, token) => 
-	fetch(`${url}/files/${_id}&${name}`, {
+	fetch(`${url}/files/${encodeURI(_id)}&${encodeURI(name)}`, {
 		method: 'GET',
 		headers: {
 			'Authorization': token,

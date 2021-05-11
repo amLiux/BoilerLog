@@ -31,7 +31,9 @@ export const startLogin = ({user, pwd}) => {
 
 export const startLogout = () => {
     return async (dispatch) => {
-        localStorage.clear()
+        localStorage.removeItem('token')
+        localStorage.removeItem('token-init-date')
+
         dispatch(logout())
     }
 }

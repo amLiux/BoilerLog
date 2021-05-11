@@ -54,7 +54,7 @@ export const CalendarModal = ({dia, modalAbierto, handleClose}) => {
                             :   <>
                                     {
                                         create 
-                                            ? <CitaForm cita={{}}/>
+                                            ? <CitaForm/>
                                             :
                                             <div className="modal-form__banner">
                                                 <div>

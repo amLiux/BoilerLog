@@ -49,6 +49,8 @@ export const PacientesForm = ({handleClose, isEdit}) => {
         dispatch(setPacienteActivo(values))
     }, [values, dispatch])
 
+    console.log(errors)
+    //TODO add error handling
     return (
         <div className={`edit-form__box-container ${isEdit ? 'edit' : ''} `}>
             <div className={`edit-form__action-bar ${isEdit ? 'edit' : ''} `}>

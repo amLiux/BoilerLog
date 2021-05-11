@@ -6,28 +6,24 @@ export const RadioButton = ({estado, date, horario, label, onChange}) => {
 
     const dispatch = useDispatch()
     const [canceled, setCanceled] = useState(false)
-    const amOrPm = (hora) => hora < 12 ? 'am' : 'pm'
+    // const amOrPm = (hora) => hora < 12 ? 'am' : 'pm'
 
     if(date && new Date(date).getHours() !== 0 && !canceled ){
         const hour = new Date(date).getHours()
-        const sufix = amOrPm(hour)
-        date = `${hour}:00 ${sufix} - ${hour + 1}:00 ${sufix}`
+        // const sufix = amOrPm(hour)
+        date = `${hour}:00 - ${hour + 1}:00`
     }
-
-    const primero = amOrPm(horario)
-    const segundo = amOrPm(horario + 1)
 
     useEffect(()=>{
         estado === 'CANCELADA' && setCanceled(true)
-    },
-    [estado])
+    }, [estado])
 
     const estadoString = (estado) => {
         switch (estado) {
             case 'CANCELADA':
                 return 'Cancelada'
 
-            case 'PENDIENTE_CONFIRMACION':
+            case 'PENDIENTE':
                 return 'Pendiente'
 
             default:
@@ -49,7 +45,7 @@ export const RadioButton = ({estado, date, horario, label, onChange}) => {
                         date && new Date(date).getHours() !== 0 && estado !== 'CANCELADA'
                             ? date 
                             : horario 
-                                ? `${horario}:00 ${primero} - ${horario+1}:00 ${segundo}` 
+                                ? `${horario}:00 - ${horario+1}:00` 
                                 : estadoString(estado)
                     }
                 </h6>
