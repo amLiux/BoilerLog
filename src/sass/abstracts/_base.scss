@@ -95,6 +95,10 @@ kbd {
     box-shadow: -4px 0px 1px rgba(whitesmoke, 0.5);
     color: $dark-grey;
 
+    @media only screen and(max-width: $bp-small){
+        width: 100%;
+    }
+
     &__search-group{
         display: flex;
         justify-content: center;

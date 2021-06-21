@@ -17,6 +17,7 @@ export const Dashboard = ({data, heading, time, text}) => {
                 </div>
                 <div className="dashboard-table__features">
                     <ul>
+
                         {
                             data.map((cita, ind) => <li key={ind}>{`${new Date(cita.fechaDeseada).toLocaleDateString('es-us')} - ${cita.nombre} ${cita.apellido}` }</li> )
                         }
