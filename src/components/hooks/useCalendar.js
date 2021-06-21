@@ -57,6 +57,18 @@ export const useCalendar = (citas, nav) => {
             }
         }
 
+
+        const paddingDaysToAppend = 7 - daysArr.length % 7
+        
+        for(let i = paddingDaysToAppend; i>=1 && i!==7; i--){
+            daysArr.push({
+                value: 'padding',
+                citas: null,
+                esHoy: false,
+                date: ''
+            })
+        }
+
         setDias(daysArr)
 
     }, [citas, nav])

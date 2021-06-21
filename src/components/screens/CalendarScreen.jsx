@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useCalendar } from '../hooks/useCalendar'
 import { CalendarHeader } from '../ui/calendar/CalendarHeader'
 import { Dia } from '../ui/calendar/Dia'
@@ -12,7 +12,7 @@ export const CalendarScreen = () => {
 
     const [nav, setNav] = useState(0)
 
-    const {totalCitas} = useSelector(state => state.citas)
+    const { totalCitas } = useSelector(state => state.citas)
 
     const [dias, dateDisplay] = useCalendar(totalCitas, nav)
 
@@ -22,7 +22,7 @@ export const CalendarScreen = () => {
 
 
     const handleDiaClick = (dia) => {
-        if(dia.value !== 'padding'){
+        if (dia.value !== 'padding') {
             dispatch(setModalActivo('CALENDARIO'))
             dispatch(setDiaActivo(dia))
         }
@@ -30,22 +30,44 @@ export const CalendarScreen = () => {
 
     return (
         <div className="main-container">
-            <CalendarHeader onNext={()=> setNav(nav + 1)} onBack={()=> setNav(nav - 1)} dateDisplay={dateDisplay} />
+            <CalendarHeader onNext={() => setNav(nav + 1)} onBack={() => setNav(nav - 1)} dateDisplay={dateDisplay} />
             <div className="calendar__weekdays">
-                <div>Domingo</div>
-                <div>Lunes</div>
-                <div>Martes</div>
-                <div>Miércoles</div>
-                <div>Jueves</div>
-                <div>Viernes</div>
-                <div>Sábado</div>
+                <div>
+                    <span className="fullday">Domingo</span>
+                    <span className="firstLetter">D</span>
+                </div>
+                <div>
+                    <span className="fullday">Lunes</span>
+                    <span className="firstLetter">L</span>
+                </div>
+                <div>
+                    <span className="fullday">Martes</span>
+                    <span className="firstLetter">K</span>
+                </div>
+                <div>
+                    <span className="fullday">Miercoles</span>
+                    <span className="firstLetter">M</span>
+                </div>
+                <div>
+                    <span className="fullday">Jueves</span>
+                    <span className="firstLetter">J</span>
+                </div>
+                <div>
+                    <span className="fullday">Viernes</span>
+                    <span className="firstLetter">S</span>
+                </div>
+                <div>
+                    <span className="fullday">Sabado</span>
+                    <span className="firstLetter">S</span>
+                </div>
             </div>
             <div className="calendar__content">
-                {dias.map((dia, i) => 
-                    <Dia 
-                        key={i} 
-                        day={dia} 
-                        onClick={() => handleDiaClick(dia)}/>)
+                {dias.map((dia, i, arr) => {
+                    return(<Dia
+                    key={i}
+                    day={dia}
+                    onClick={() => handleDiaClick(dia)} />)
+                })
                 }
             </div>
         </div>

@@ -2,7 +2,7 @@
     margin: 0 auto;
     max-width: 70%;
 
-    @media only screen and(max-width: $bp-largest){
+    @media only screen and(max-width: $bp-large){
         max-width: 100%;
     }
 
@@ -17,7 +17,7 @@
         padding: 1.3rem 0;
         transition: 0.5s;
 
-        @media only screen and(max-width: $bp-small){
+        @media only screen and(max-width: $bp-large){
             border-radius: 0;
         }
         
@@ -53,8 +53,9 @@
                 font-size: 2.6rem;
 
                 & .icon-text{
-                    @media only screen and(max-width: $bp-small){
+                    @media only screen and(max-width: $bp-medium){
                         display: none;
+                        font-size: 1rem;
                     }
                 }
             }

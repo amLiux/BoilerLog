@@ -2,7 +2,7 @@
 // const url = `https://drsmaroto.com`
 
 //staging
-const url = `https://boiler-log-be.herokuapp.com`
+// const url = `https://boiler-log-be.herokuapp.com`
 
 //dev
 const url = `http://192.168.100.41:3000`
