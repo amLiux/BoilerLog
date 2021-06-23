@@ -1,6 +1,6 @@
 import {types} from '../types/types'
 import { fetchLogin, fetchValidateJWT } from '../services/fetch'
-import { setToastActivo } from './ui'
+import { setToastActivo, setToastInactivo } from './ui'
 
 
 export const login = (uid, displayName, rol) => ({
@@ -20,6 +20,7 @@ export const startLogin = ({user, pwd}) => {
         if(body.ok){
             localStorage.setItem('token', body.token)
             localStorage.setItem('token-init-date', new Date().getTime())
+            dispatch(setToastInactivo())
             dispatch(login(body.uid, body.user, body.rol))
         }else{
             dispatch(setToastActivo(body.msg))
