@@ -17,15 +17,11 @@ export const CalendarModal = ({dia, modalAbierto, handleClose}) => {
     const {mensajeToast, toastAbierto} = useSelector(state => state.ui)
 
 
-    useEffect( () => {
-        if(citas && citas.length === 0) {
-            setEmpty(true) 
-        } else{
-            setEmpty(false)
-            setCreate(false)     
-        } 
-            
-    } , [citas])
+    useEffect( () => 
+        citas && citas.length === 0 
+            ? setEmpty(true) 
+            : setEmpty(false) && setCreate(false)     
+    , [citas])
     
     
     return (

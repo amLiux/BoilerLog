@@ -8,6 +8,7 @@ import { areCitaInputsValid } from '../../controllers/citas.controller'
 import { useForm } from '../../hooks/useForm'
 import { Button } from '../Button'
 import { ErrorHelp } from '../ErrorHelp'
+import { Input } from '../Input'
 import { InputGroup } from '../InputGroup'
 import { SelectHorario } from './SelectHorario'
 
@@ -82,17 +83,6 @@ export const EditCita = ({isEdit}) => {
     return (
         <div className="edit-form__box-container create">
             <div className="edit-form__action-bar">
-                {/* <div className="edit-form__action-bar-group">
-                    <div className="edit-form__action-bar-item">
-                        <i className="fab fa-whatsapp"></i>
-                    </div>
-                    <div className="edit-form__action-bar-item">
-                        <i className="far fa-envelope"></i>
-                    </div>
-                    <div className="edit-form__action-bar-item">
-                        <i className="fas fa-phone-alt"></i>
-                    </div>
-                </div> */}
             </div>
             <form className="edit-form__form-container">
                 <div className="edit-form__form-container-title">
@@ -114,7 +104,14 @@ export const EditCita = ({isEdit}) => {
 
 
                       </> 
-                    : <> 
+                    : <div className="edit-form__form"> 
+                        <Input handleInputChange={handleInputChange} placeholder="Nombre" errors={errors} type="text" value={nombre}  name="nombre"/>
+                        <Input handleInputChange={handleInputChange} placeholder="Apellido" errors={errors} type="text" value={apellido}  name="apellido"/>
+                        <Input handleInputChange={handleInputChange} placeholder="Nombre" errors={errors} type="text" value={email}  name="email"/>
+                        <Input handleInputChange={handleInputChange} placeholder="Nombre" errors={errors} type="text" value={numeroTelefonico}  name="numeroTelefonico"/>
+
+                        {/* 
+                        
                         <InputGroup 
                             isEdit={isEdit}
                             name="nombre"
@@ -152,8 +149,9 @@ export const EditCita = ({isEdit}) => {
                             label="Número telefónico"/>
                             {
                                 errors.numeroTelefonico && (<ErrorHelp message={errors.numeroTelefonico} />)
-                            }
-                      </>                      
+                            } 
+                        */}
+                      </div>                      
                 }    
                 <div style={{width: '70%'}} className="edit-form__action-bar-group">
                     <Button onClick={ isPaciente ? e => handleDelete(e) : e => handleReset(e) } clickable={true} warning="true" text={isPaciente ? 'Cancelar cita' : 'Cancelar cambios'} group={true}/>
