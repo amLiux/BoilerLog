@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { fetchGetHorariosByDate } from '../../../services/fetch';
+import { fetchGetHorariosByDate } from '../../../../services/fetch';
 
 export const SelectHorario = ({handleState}) => {
 
@@ -10,15 +10,18 @@ export const SelectHorario = ({handleState}) => {
     const [dropdownActive, setDropdownActive] = useState(false)
     const [placeholder, setPlaceholder] = useState('Seleccione el horario')
 
-    useEffect(()=>{
+    useEffect(()=> {
+        // estaba recibiendo este error https://stackoverflow.com/questions/53949393/cant-perform-a-react-state-update-on-an-unmounted-component y le agregue el flag isMounted, al parecer evita memory leaks por re-renders del useEffect
+        let isMounted = true;
         async function fetchHorariosDisponibles() {
-            const token = localStorage.getItem('token')
-            const response = await fetchGetHorariosByDate(date, token)
-            const {horariosDisponibles} = await response.json()
-            horariosDisponibles.sort((a,b) => a-b)
-            setHorarios(horariosDisponibles)
+            const token = localStorage.getItem('token');
+            const response = await fetchGetHorariosByDate(date, token);
+            const {horariosDisponibles} = await response.json();
+            horariosDisponibles.sort((a,b) => a-b);
+            if (isMounted) setHorarios(horariosDisponibles);
           }
           fetchHorariosDisponibles();
+          return () => {isMounted = false}
     }, [date]);
 
 
@@ -29,8 +32,6 @@ export const SelectHorario = ({handleState}) => {
         date2.setHours(horario)
         handleState(date2)
     }
-
-    // const amOrPm = (hora) => hora < 12 ? 'am' : 'pm'
 
     const createHorario = (hora) => `${hora}:00 - ${hora+1}:00`
 

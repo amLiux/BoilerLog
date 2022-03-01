@@ -1,14 +1,24 @@
 import React from 'react'
 
-export const Button = ({group, warning=false, text, clickable = false, onClick}) => {
+export const Button = ({ group, warning = false, success = false, text, onClick }) => {
 
-    if (clickable){
-        return (
-            <button onClick={onClick} className={`btn pointer mt-1 mb-5 ${warning ? 'btn__warning' : 'btn__primary' } ${group ? 'btn__group' : 'btn__block'} `} type="submit">{text}</button>
-        )
+    let props;
+
+    if (onClick) {
+        props = {
+            onClick
+        }
     }
 
+    const className = `btn pointer mt-1 mb-5 ${warning ? 'btn__warning' : 'btn__primary'} ${success ? 'btn__success' : 'btn__primary'} ${group ? 'btn__group' : 'btn__block'}`
+
     return (
-        <button className={`btn pointer mt-1 mb-5 ${warning ? 'btn__warning' : 'btn__primary' } ${group ? 'btn__group' : 'btn__block'} `} type="submit">{text}</button>
+        <button
+            {...props}
+            className={className}
+            type="submit">
+            {text}
+        </button>
     )
+
 }

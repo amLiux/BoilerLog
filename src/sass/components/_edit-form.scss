@@ -20,6 +20,23 @@
             }
         }
 
+        &-item {
+            font-size: 2.5rem;
+
+            i {
+                font-size: 3rem;
+                margin-right: 2rem;
+                margin-left: 1rem;
+                margin-top: 1rem;
+            }
+
+            &:hover i   {
+                color: $primary;
+                cursor: pointer;
+            }
+
+        }
+
 
     }
 
@@ -29,10 +46,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
-        @media only screen and(max-width: $bp-small){
-            width: 75%;
-        }
 
     }
 
@@ -84,6 +97,40 @@
 
         &.edit{
             border-radius: 0 0 0 19px;
+        }
+
+        &-header{
+            width: 100%;
+            margin: 0 auto;
+
+            div{
+                margin: 0 auto;
+                display: flex; 
+                width: 70%; 
+                justify-content: space-between;
+                @media only screen and(max-width: $bp-largest){
+                    width: 85%;
+                }
+        
+            }
+
+            span{
+                display: block;
+                margin: 0 auto;
+                padding-left:'.6rem'; 
+                text-align: left; 
+                width: 70%; 
+                color: rgba(black, 0.9);
+                margin-bottom: -1rem; 
+                font-size: 1rem; 
+                font-weight: 600;
+
+                @media only screen and(max-width: $bp-largest){
+                    margin-bottom: 1rem;
+                }
+        
+            }
+        
         }
 
         &-title{

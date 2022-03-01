@@ -5,7 +5,7 @@
 // const url = `https://boiler-log-be.herokuapp.com`
 
 //dev
-const url = `http://192.168.100.41:3000`
+const url = `http://192.168.100.95:3000`
 
 export const fetchRegister = (email, pwd, name, lastName, user, admin) =>
 	fetch(`${url}/new`, {

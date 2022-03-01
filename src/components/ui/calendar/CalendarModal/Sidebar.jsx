@@ -1,15 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCitaActiva } from '../../../actions/citas'
-import { RadioButton } from '../RadioButton'
+import { setCitaActiva } from '../../../../actions/citas'
+import { RadioButton } from '../../RadioButton'
 
 export const Sidebar = ({handleClose}) => {
 
     const {diaActivo} = useSelector(state => state.ui)
 
     const {date, citas} = diaActivo
-
-
 
     const dispatch = useDispatch()
 

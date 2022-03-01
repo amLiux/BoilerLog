@@ -67,7 +67,7 @@ export const ReportsScreen = () => {
                                 {
                                     desde && hasta &&
                                         <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
-                                            <Button clickable={true} onClick={() => handleReportDownload()} text="Descargar reporte" group={true}/>
+                                            <Button onClick={() => handleReportDownload()} text="Descargar reporte" group={true}/>
                                         </div>
                                 }
 
@@ -83,7 +83,7 @@ export const ReportsScreen = () => {
                                 {
                                     mes &&
                                         <div style={{marginRight: 'auto', marginLeft: '4rem', flex: '0 0 30%'}}>
-                                            <Button clickable={true} onClick={() => handleReportDownload()} text="Descargar reporte" group={true}/>
+                                            <Button onClick={() => handleReportDownload()} text="Descargar reporte" group={true}/>
                                         </div>
                                 }
 

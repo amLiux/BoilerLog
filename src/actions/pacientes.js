@@ -20,20 +20,20 @@ export const startSearchingPaciente = (searchString) => {
 
 export const startAddingPaciente = (paciente) => {
     return async (dispatch, getState) => {
-        const {totalPacientes} = getState().pacientes
-        const token = localStorage.getItem('token')
-        const resp = await fetchPostPaciente(token, paciente)
-        const body = await resp.json()
+        const {totalPacientes} = getState().pacientes;
+        const token = localStorage.getItem('token');
+        const resp = await fetchPostPaciente(token, paciente);
+        const {ok, msg, payload:createdUser} = await resp.json();
 
-        console.log(totalPacientes)
-
-        if(body?.ok){
-            dispatch(setToastActivo(body.msg))
-            dispatch(refreshPaciente(body.createdUser))
-            dispatch(setPacientes([...totalPacientes, body.createdUser]))
-            dispatch(removePacienteActivo())
-            dispatch(setModalInactivo())
-            dispatch(startLoadingCitas())
+        if(ok){
+            dispatch(setToastActivo(msg, ok));
+            dispatch(refreshPaciente(createdUser));
+            dispatch(setPacientes([...totalPacientes, createdUser]));
+            dispatch(removePacienteActivo());
+            dispatch(setModalInactivo());
+            dispatch(startLoadingCitas());
+        } else {
+            dispatch(setToastActivo(msg, ok));
         }
         
     }
