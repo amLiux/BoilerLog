@@ -1,6 +1,7 @@
 .input-group{   
     
     font: inherit;
+    width: 60%;
     
     &__main{
         display: flex;
@@ -8,7 +9,7 @@
     }
 
     label{
-        font-size: 14px;
+        font-size: 1.6rem;
         font-weight: 500;
     }
 

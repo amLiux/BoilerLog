@@ -14,16 +14,16 @@ export const login = (uid, displayName, rol) => ({
 
 export const startLogin = ({user, pwd}) => {
     return async (dispatch)=> {
-        const resp = await fetchLogin(user, pwd)
-        const body = await resp.json()
-
-        if(body.ok){
-            localStorage.setItem('token', body.token)
-            localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(setToastInactivo())
-            dispatch(login(body.uid, body.user, body.rol))
+        const resp = await fetchLogin(user, pwd);
+        const {ok, payload, msg = ''} = await resp.json();
+        
+        if(ok){
+            localStorage.setItem('token', payload.token);
+            localStorage.setItem('token-init-date', new Date().getTime());
+            dispatch(setToastInactivo());
+            dispatch(login(payload.uid, payload.user, payload.rol));
         }else{
-            dispatch(setToastActivo(body.msg))
+            dispatch(setToastActivo(msg, ok));
         }
         
     }
@@ -46,12 +46,12 @@ export const startChecking = () => {
     return async (dispatch) => {
         const token = localStorage.getItem('token')
         const resp = await fetchValidateJWT(token)
-        const body = await resp.json()
+        const {ok, payload} = await resp.json()
 
-        if(body.ok){
-            localStorage.setItem('token', body.token)
+        if(ok){
+            localStorage.setItem('token', payload.token)
             localStorage.setItem('token-init-date', new Date().getTime())
-            dispatch(login(body.uid, body.name, body.rol))
+            dispatch(login(payload.uid, payload.name, payload.rol))
         }else{
             dispatch(checkingFinished())
         }

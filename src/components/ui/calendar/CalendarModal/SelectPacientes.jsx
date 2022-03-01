@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { startLoadingPacientes } from '../../../actions/pacientes';
+import { startLoadingPacientes } from '../../../../actions/pacientes';
 
 export const SelectPaciente = ({handleState}) => {
 

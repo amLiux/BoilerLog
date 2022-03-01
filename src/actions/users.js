@@ -23,18 +23,18 @@ const setUsers = (users) => ({
 
 export const startRegularRegister = ({email, pwd, name, lastName, user}, admin) => {
     return async (dispatch, getState) => {
-        const resp = await fetchRegister(email, pwd, name, lastName, user, admin)
-        const {ok, newUser, errors, msg} = await resp.json()
+        const resp = await fetchRegister(email, pwd, name, lastName, user, admin);
+        const {ok, payload:newUser, errors = [], msg} = await resp.json();
         
-        const {totalUsers} = getState().usuarios
+        const {totalUsers} = getState().usuarios;
 
         if(ok){
-            dispatch(setUsers([...totalUsers, newUser]))
-            dispatch(setToastActivo(msg))
+            dispatch(setUsers([...totalUsers, newUser]));
+            dispatch(setToastActivo(msg, ok));
         }else{
             errors 
                 ? dispatch(setToastActivo(errors[Object.keys(errors)[0]].msg))
-                : dispatch(setToastActivo(msg))
+                : dispatch(setToastActivo(msg, ok));
         }
     }
 }

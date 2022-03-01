@@ -43,9 +43,9 @@ export const PacientesScreen = () => {
                     {
                         totalPacientes.length > 8 &&
                         <div style={{marginTop: '-3rem'}} className="calendar__header">
-                            <Button clickable={true} onClick={()=> handleChangePage("back")} group={true} text={<i className="fas fa-arrow-left"></i>}/>
+                            <Button onClick={()=> handleChangePage("back")} group={true} text={<i className="fas fa-arrow-left"></i>}/>
                             <div className="mb-5">{currentPage}</div>
-                            <Button clickable={true} onClick={()=> handleChangePage("next")}  group={true} text={<i className="fas fa-arrow-right"></i>}/>
+                            <Button onClick={()=> handleChangePage("next")}  group={true} text={<i className="fas fa-arrow-right"></i>}/>
                         </div>
                     }
                 </div>

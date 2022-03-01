@@ -27,7 +27,7 @@ export const uiReducer = (state=estadoInicial, action) =>{
         case types.uiShowToast: 
             return {
                 ...state,
-                mensajeToast: action.payload,
+                contextoToast: action.payload,
                 toastAbierto: true
             }
         

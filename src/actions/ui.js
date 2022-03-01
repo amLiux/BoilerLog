@@ -5,10 +5,11 @@ export const setModalActivo = (tipoModal) => ({
     payload: tipoModal
 })
 
-export const setToastActivo = (error) => ({
+export const setToastActivo = (mensaje, exito) => ({
     type: types.uiShowToast,
     payload: {
-        error
+        mensaje,
+        exito
     }
 })
 

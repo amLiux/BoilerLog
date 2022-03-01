@@ -45,7 +45,7 @@ export const ScheduleScreen = () => {
                 }
                 <div style={{display: 'flex', justifyContent: 'space-around', paddingTop: '10px'}}>
                     <Button group={true} warning={true} text="Cambiar fecha" />
-                    <Button clickable={true} onClick={handleAgendarClick} group={true} text="Agendar" />
+                    <Button onClick={handleAgendarClick} group={true} text="Agendar" />
                 </div>
             </div>
         </div>

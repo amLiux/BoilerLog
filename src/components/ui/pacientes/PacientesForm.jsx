@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startAddingPaciente, startUpdatePaciente, setPacienteActivo } from '../../../actions/pacientes'
 import { arePacienteInputsValid } from '../../controllers/pacientes.controller'
@@ -6,100 +6,94 @@ import { useForm } from '../../hooks/useForm'
 import { Button } from '../Button'
 import { InputGroup } from '../InputGroup'
 
-export const PacientesForm = ({handleClose, isEdit}) => {
+export const PacientesForm = ({ handleClose, isEdit }) => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     let formState;
-    
-    const {pacienteActivo} = useSelector(state => state.pacientes)
-    const activePaciente = useRef(pacienteActivo?._id)
 
-    
+    const { pacienteActivo } = useSelector(state => state.pacientes);
+    const activePaciente = useRef(pacienteActivo?._id);
+
+    // si el form se renderiza desde el CalendarModal o se edita algun paciente existente ya tiene unos valores, pero si se intenta crear un paciente queremos un form limpio
     pacienteActivo ? formState = pacienteActivo : formState = {
-        nombre:'', 
-        apellido: '', 
+        nombre: '',
+        apellido: '',
         cedula: '',
-        email: '', 
+        email: '',
         numeroTelefonico: ''
-    }
-    
-    const handleSaveClick = () => 
-        isEdit 
-        ? dispatch(startUpdatePaciente(values))
-        : dispatch(startAddingPaciente(values))
+    };
 
-    
-    const [values, handleInputChange, handleSubmit, errors, reset] = useForm(
-        formState,
-        arePacienteInputsValid, 
-        handleSaveClick)
-        
-    let {nombre, apellido, email, numeroTelefonico, cedula } = values
-        
-    useEffect(()=> {
-        if(activePaciente?.current !== pacienteActivo?._id){
-            reset({...pacienteActivo})
-            activePaciente.current = pacienteActivo?._id
+    const handleSaveClick = () =>
+        isEdit
+            ? dispatch(startUpdatePaciente(values))
+            : dispatch(startAddingPaciente(values));
+
+
+    const [values, handleInputChange, handleSubmit, errors, reset] = useForm(formState, arePacienteInputsValid, handleSaveClick);
+
+    let { nombre, apellido, email, numeroTelefonico, cedula } = values;
+
+    useEffect(() => {
+        if (activePaciente?.current !== pacienteActivo?._id) {
+            reset({ ...pacienteActivo });
+            activePaciente.current = pacienteActivo?._id;
         }
-    }, [pacienteActivo, reset])
+    }, [pacienteActivo, reset]);
 
-
-    useEffect(()=>{
-        dispatch(setPacienteActivo(values))
+    useEffect(() => {
+        dispatch(setPacienteActivo(values));
     }, [values, dispatch])
 
-    console.log(errors)
-    //TODO add error handling
     return (
         <div className={`edit-form__box-container ${isEdit ? 'edit' : ''} `}>
             <div className={`edit-form__action-bar ${isEdit ? 'edit' : ''} `}>
                 <div className="edit-form__action-bar-group">
                     {
                         handleClose &&
-                            <div onClick={handleClose} className="edit-form__action-bar-item">
-                                <i className="far fa-window-close"></i>
-                            </div>  
+                        <div onClick={handleClose} className="edit-form__action-bar-item">
+                            <i className="far fa-window-close"></i>
+                        </div>
                     }
                     <div className="edit-form__action-bar-item">
                         <span>{isEdit ? 'Editar Paciente:' : 'Crear Paciente:'}</span>
                     </div>
                 </div>
-                
+
             </div>
             <form className={`edit-form__form-container ${isEdit ? 'edit' : ''}`}>
-                <InputGroup 
-                    isEdit={isEdit}
+                <InputGroup
+                    isEdit={nombre !== ''}
                     name="nombre"
                     label="Nombre"
-                    handleInputChange={handleInputChange} 
+                    handleInputChange={handleInputChange}
                     value={nombre} />
-                <InputGroup 
-                    isEdit={isEdit}
-                    name="apellido" 
-                    label="Apellido"
-                    handleInputChange={handleInputChange} 
-                    value={apellido}/>
-                <InputGroup 
-                    isEdit={isEdit}
-                    name="cedula" 
-                    label="Cédula"
-                    handleInputChange={handleInputChange} 
-                    value={cedula}/>
                 <InputGroup
-                    isEdit={isEdit}
-                    name="email" 
-                    handleInputChange={handleInputChange} 
-                    value={email} 
-                    label="Email"/>
-                <InputGroup 
-                    isEdit={isEdit}
+                    isEdit={apellido !== ''}
+                    name="apellido"
+                    label="Apellido"
+                    handleInputChange={handleInputChange}
+                    value={apellido} />
+                <InputGroup
+                    isEdit={!cedula}
+                    name="cedula"
+                    label="Cédula"
+                    handleInputChange={handleInputChange}
+                    value={cedula} />
+                <InputGroup
+                    isEdit={email !== ''}
+                    name="email"
+                    handleInputChange={handleInputChange}
+                    value={email}
+                    label="Email" />
+                <InputGroup
+                    isEdit={numeroTelefonico !== ''}
                     name="numeroTelefonico"
-                    handleInputChange={handleInputChange} 
-                    value={numeroTelefonico} 
-                    label="Número telefónico"/>
+                    handleInputChange={handleInputChange}
+                    value={numeroTelefonico}
+                    label="Número telefónico" />
                 <div className="edit-form__action-bar-group">
-                    <Button onClick={handleSubmit} clickable={true} text="Guardar"/>
+                    <Button onClick={handleSubmit} text="Guardar" />
                 </div>
             </form>
         </div>
