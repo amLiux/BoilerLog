@@ -1,4 +1,4 @@
-import { fetchGetUsers, fetchPutUser, fetchRegister } from '../services/fetch'
+import { fetchGetUsers, fetchPutUser, fetchRegister } from '../services/processRequest'
 import {types} from '../types/types'
 import { setToastActivo } from './ui'
 

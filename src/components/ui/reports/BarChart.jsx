@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Bar} from 'react-chartjs-2'
-import { fetchPostReporte } from '../../../services/fetch'
+import { fetchPostReporte } from '../../../services/processRequest'
 
 
 export const BarChart = ({reporte, desde, hasta}) => {

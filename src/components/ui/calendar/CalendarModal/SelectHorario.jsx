@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
-import { fetchGetHorariosByDate } from '../../../../services/fetch';
+import { fetchGetHorariosByDate } from '../../../../services/processRequest';
 
 export const SelectHorario = ({handleState}) => {
 

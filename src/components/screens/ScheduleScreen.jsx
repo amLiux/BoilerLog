@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/Button'
 import { RadioButton } from '../ui/RadioButton'
 import {useParams} from 'react-router-dom'
-import { fetchGetHorarios } from '../../services/fetch'
+import { fetchGetHorarios } from '../../services/processRequest'
 import { useDispatch } from 'react-redux'
 import { startUpdateCitaConHorario } from '../../actions/horarios'
 
