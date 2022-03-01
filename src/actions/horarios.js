@@ -1,4 +1,4 @@
-import { fetchPutHorarioCita } from '../services/fetch'
+import { fetchPutHorarioCita } from '../services/processRequest'
 import {types} from '../types/types'
 
 

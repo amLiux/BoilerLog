@@ -1,4 +1,4 @@
-import { fetchDeleteArchivo, fetchDownloadArchivo, fetchGetArchivosDePacientes, fetchGetCitasDePacientes, fetchGetPacientes, fetchPostFiles, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/fetch'
+import { fetchDeleteArchivo, fetchDownloadArchivo, fetchGetArchivosDePacientes, fetchGetCitasDePacientes, fetchGetPacientes, fetchPostFiles, fetchPostPaciente, fetchPutPacientes, fetchSearchPaciente } from '../services/processRequest'
 import {types} from '../types/types'
 import { startLoadingCitas } from './citas'
 import { setModalInactivo, setToastActivo } from './ui'

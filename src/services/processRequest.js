@@ -1,11 +1,51 @@
 // Prod
-// const url = `https://drsmaroto.com`
+// const url = `https://drsmaroto.com`;
 
 //staging
-// const url = `https://boiler-log-be.herokuapp.com`
+// const url = `https://boiler-log-be.herokuapp.com`;
 
 //dev
-const url = `http://192.168.100.95:3000`
+const url = `http://192.168.100.95:3000`;
+
+const processPayload = (payload) => JSON.stringify(payload);
+
+const processResponse = async (url, requestInfo) => {
+	let resp;
+	try {
+		console.log(`Iniciando petición: ${url}`);
+		resp = await fetch(url, requestInfo);
+		return resp;
+	} catch (err) {
+		console.error(
+			`Error executando la petición ${url}. 
+			 Más detalles del error: ${err}.		`
+		);
+	}
+};
+
+export const processRequest = async (template, payload = {}) => {
+	const { path, headers = {}, method } = template;
+
+	const fetchUrl = `${url}${path}`;
+
+	let requestInfo = {
+		method,
+		headers
+	};
+
+	if(template.requiresAuthentication) {
+		const token = localStorage.getItem('token')
+		headers['Authorization'] = token;
+	}
+
+	const emptyPayload = Object.keys(payload).length === 0;
+
+	if (!emptyPayload) {
+		requestInfo.body = processPayload(payload);
+	}
+
+	return processResponse(fetchUrl, requestInfo);
+};
 
 export const fetchRegister = (email, pwd, name, lastName, user, admin) =>
 	fetch(`${url}/new`, {
@@ -14,23 +54,16 @@ export const fetchRegister = (email, pwd, name, lastName, user, admin) =>
 		body: JSON.stringify({ email, pwd, name, lastName, user, admin })
 	})
 
-export const fetchLogin = (user, pwd) =>
-	fetch(`${url}/login`, {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ user, pwd })
-	})
-
 export const fetchValidateJWT = (token) =>
 	fetch(`${url}/renew`, {
 		method: 'GET',
-		headers: {'Authorization': token},
+		headers: { 'Authorization': token },
 	})
 
 export const fetchGetCitas = (token) =>
 	fetch(`${url}/citas`, {
 		method: 'GET',
-		headers: {'Authorization': token},
+		headers: { 'Authorization': token },
 	})
 
 export const fetchPutCitas = (token, cita) =>
@@ -50,7 +83,7 @@ export const fetchPostCitas = (token, paciente, horario) =>
 			'Authorization': token,
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({paciente, horario})
+		body: JSON.stringify({ paciente, horario })
 	})
 
 
@@ -75,13 +108,13 @@ export const fetchPostPaciente = (token, paciente) =>
 export const fetchSearchPaciente = (token, searchString) =>
 	fetch(`${url}/pacientes/search/${searchString}`, {
 		method: 'GET',
-		headers: {'Authorization': token}
+		headers: { 'Authorization': token }
 	})
 
 export const fetchGetPacientes = (token) =>
 	fetch(`${url}/pacientes`, {
 		method: 'GET',
-		headers: {'Authorization': token}
+		headers: { 'Authorization': token }
 	})
 
 export const fetchGetCitasDePacientes = (token, _id) =>
@@ -103,56 +136,56 @@ export const fetchPutPacientes = (token, paciente) =>
 	})
 
 export const fetchGetHorarios = (_id) =>
-	fetch(`${url}/citas/${_id}`, {method: 'GET'})
+	fetch(`${url}/citas/${_id}`, { method: 'GET' })
 
 export const fetchGetHorariosByDate = (date, token) =>
 	fetch(`${url}/citas/date/${encodeURIComponent(date)}`,
 		{
 			method: 'GET',
 			headers: {
-			'Authorization': token,
-			'Content-Type': 'application/json'
+				'Authorization': token,
+				'Content-Type': 'application/json'
 			}
 
 		}
-		)
+	)
 
 export const fetchPutHorarioCita = (_id, horario) =>
 	fetch(`${url}/citas/${_id}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type' : 'application/json'
-			},
-			body: JSON.stringify({horario})
-		}
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ horario })
+	}
 	)
 
 export const fetchPostFiles = (_id, file, token) =>
 	fetch(`${url}/files/${_id}`, {
-			method: 'POST',
-			headers: {
-				'Authorization': token,
-			},
-			body: file
-		}
+		method: 'POST',
+		headers: {
+			'Authorization': token,
+		},
+		body: file
+	}
 	)
 
 export const fetchGetArchivosDePacientes = (_id, token) =>
 	fetch(`${url}/files/${_id}`, {
 		method: 'GET',
-		headers: {'Authorization': token}
+		headers: { 'Authorization': token }
 	})
 
-export const fetchDeleteArchivo = (_id, name, token) => 
+export const fetchDeleteArchivo = (_id, name, token) =>
 	fetch(`${url}/files/${_id}&${name}`, {
 		method: 'DELETE',
 		headers: {
-			'Authorization': token, 
-			'Content-Type': 'application/json' 
+			'Authorization': token,
+			'Content-Type': 'application/json'
 		}
 	})
 
-export const fetchDownloadArchivo = (_id, name, token) => 
+export const fetchDownloadArchivo = (_id, name, token) =>
 	fetch(`${url}/files/${encodeURI(_id)}&${encodeURI(name)}`, {
 		method: 'GET',
 		headers: {
@@ -161,12 +194,12 @@ export const fetchDownloadArchivo = (_id, name, token) =>
 		}
 	})
 
-export const fetchPostReporte = (reporte, detallesFecha, token) => 
+export const fetchPostReporte = (reporte, detallesFecha, token) =>
 	fetch(`${url}/reportes/${reporte}`, {
 		method: 'POST',
 		headers: {
 			'Authorization': token,
-			'Content-Type' : 'application/json'
+			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(detallesFecha)
 	})
@@ -175,12 +208,12 @@ export const fetchPostReporte = (reporte, detallesFecha, token) =>
 export const fetchGetUsers = (token) =>
 	fetch(`${url}/users`, {
 		method: 'GET',
-		headers: {'Authorization': token}
+		headers: { 'Authorization': token }
 	})
 
 export const fetchPutUser = (token, id, update) =>
 	fetch(`${url}/users/${id}`, {
 		method: 'POST',
-		headers: {'Authorization': token, 'Content-Type': 'application/json'},
+		headers: { 'Authorization': token, 'Content-Type': 'application/json' },
 		body: JSON.stringify(update)
 	})

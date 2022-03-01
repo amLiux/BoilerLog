@@ -1,4 +1,4 @@
-import { fetchPutCitas, fetchGetCitas, fetchPostCitas, fetchDeleteCitas } from '../services/fetch'
+import { fetchPutCitas, fetchGetCitas, fetchPostCitas, fetchDeleteCitas } from '../services/processRequest'
 import { types } from '../types/types'
 import { setCitasPaciente } from './pacientes'
 import { setDiaActivo, setToastActivo } from './ui'
