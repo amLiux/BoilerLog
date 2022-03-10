@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { startDeletingFile, startDownloadingFile } from '../../../actions/pacientes'
+import { startDeletingFile, startDownloadingFile } from '../../../actions/patients'
 
 export const Archivo = ({nombre, fecha, pacienteId, fileId}) => {
 

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startAddingPatient, startUpdatingPatient, setActivePatient } from '../../../actions/pacientes';
+import { startAddingPatient, startUpdatingPatient, setActivePatient } from '../../../actions/patients';
 import { arePacienteInputsValid } from '../../controllers/pacientes.controller';
 import { useForm } from '../../hooks/useForm';
 import { Button } from '../Button';

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { startSearchingPatient } from '../../actions/pacientes'
+import { startSearchingPatient } from '../../actions/patients'
 
 export const InputGroup = ({isEdit, search = false, value, label, handleInputChange, name}) => {
 
