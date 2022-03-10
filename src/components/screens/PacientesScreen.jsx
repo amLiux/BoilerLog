@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startLoadingPatients } from '../../actions/pacientes'
+import { startLoadingPatients } from '../../actions/patients'
 import { setModalActivo } from '../../actions/ui'
 import { usePagination } from '../hooks/usePagination'
 import { Button } from '../ui/Button'

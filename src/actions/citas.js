@@ -1,6 +1,6 @@
 import { fetchPutCitas, fetchGetCitas, fetchPostCitas, fetchDeleteCitas } from '../services/processRequest'
 import { types } from '../types/types'
-import { setPatientAppointments } from './pacientes'
+import { setPatientAppointments } from './patients'
 import { setDiaActivo, setToastActivo } from './ui'
 
 export const setCitaActiva = (cita) => ({

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startLoadingPatientAppointments } from '../../../actions/pacientes'
+import { startLoadingPatientAppointments } from '../../../actions/patients'
 import { usePagination } from '../../hooks/usePagination'
 import { CitasCard } from './CitasCard'
 

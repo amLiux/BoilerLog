@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { removeCitaActiva } from '../../../../actions/citas';
-import { clearPatients, setActivePatient } from '../../../../actions/pacientes';
+import { clearPatients, setActivePatient } from '../../../../actions/patients';
 import { setModalActivo, setModalInactivo } from '../../../../actions/ui';
 import { Button } from '../../Button';
 import { Form } from '../../Form';
