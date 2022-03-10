@@ -10,6 +10,7 @@ export const EditCita = ({ cita }) => {
 
     const dispatch = useDispatch();
 
+    // make hook, this looks awful
     const [isPaciente, setIsPaciente] = useState(true);
     const [horario, setHorario] = useState('');
 

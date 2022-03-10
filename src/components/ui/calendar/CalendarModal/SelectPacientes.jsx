@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { startLoadingPacientes } from '../../../../actions/pacientes';
+import { startLoadingPatients } from '../../../../actions/pacientes';
 
 export const SelectPaciente = ({handleState}) => {
 
@@ -11,7 +11,7 @@ export const SelectPaciente = ({handleState}) => {
     const [dropdownActive, setDropdownActive] = useState(false)
 
     useEffect(() => {
-        dispatch(startLoadingPacientes())
+        dispatch(startLoadingPatients())
     }, [dispatch])
 
     const handleOptionClick = (paciente) => {

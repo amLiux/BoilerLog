@@ -7,7 +7,7 @@ export const UsuariosList = ({totalUsers, handleEdit}) => {
             <div className="grid__header" style={{width: '98%'}}>
                 <h5 className="col-1-of-5">Usuario</h5>
                 <h5 className="col-1-of-5">Nombre</h5>
-                <h5 className="col-1-of-5">Correo electronico</h5>
+                <h5 className="col-1-of-5">E-mail</h5>
                 <h5 className="col-1-of-5">Rol</h5>
                 <h5 className="col-1-of-5">Acciones</h5>
             </div>

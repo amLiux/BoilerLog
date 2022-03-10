@@ -1,37 +1,41 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { startSearchingPaciente } from '../../actions/pacientes'
+import { startSearchingPatient } from '../../actions/pacientes'
 
 export const InputGroup = ({isEdit, search = false, value, label, handleInputChange, name}) => {
 
-    const [disabled, setDisabled] = useState(false)
+    const [disabled, setDisabled] = useState(false);
 
-    const [searchString, setSearchString] = useState('')
+    const [searchString, setSearchString] = useState('');
 
-    const handleSearchString = ({target}) => setSearchString(target.value)
+    const handleSearchString = ({target}) => {
+        setSearchString(target.value);
+    };
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        isEdit && setDisabled(true)
+        isEdit && setDisabled(true);
     }, [isEdit])
 
     const inputRef= useRef(null)
 
     useEffect(()=>{
-        inputRef.current.focus()
+        inputRef.current.focus();
     }, [disabled])
 
     const handleDisable = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if(search && !disabled) {
-            dispatch(startSearchingPaciente(searchString))
+            dispatch(startSearchingPatient(searchString));
         }
-        setDisabled(!disabled)
+        setDisabled(!disabled);
     }
 
+    const className =`input-group input-group${search ? '__search' : ''.trim()} ${search ? 'mt-10 ' : ''}`;
+
     return (
-        <div className={`input-group ${search ? 'mt-10' : ''}`}>
+        <div className={className}>
             {!search && <label htmlFor={name}>{label}:</label>}
             <div className="input-group__main">
                 <input 
@@ -42,7 +46,7 @@ export const InputGroup = ({isEdit, search = false, value, label, handleInputCha
                     ref={inputRef} 
                     disabled={disabled} 
                     type="text"
-                    value={value || ''} 
+                    value={value || search ? value : ''} 
                     onChange={ search ? e => handleSearchString(e) : handleInputChange}    
                 />
                 <button className="input-group_button" onClick={(e)=> handleDisable(e)}>

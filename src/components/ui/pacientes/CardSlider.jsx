@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startLoadingCitasPaciente } from '../../../actions/pacientes'
+import { startLoadingPatientAppointments } from '../../../actions/pacientes'
 import { usePagination } from '../../hooks/usePagination'
 import { CitasCard } from './CitasCard'
 
@@ -12,7 +12,7 @@ export const CardSlider = ({paciente: {_id}}) => {
     const [currentCita, currentPage , handleChangePage, maxPage] =  usePagination(citasPorPaciente, 1)
     
     useEffect(()=>{
-        dispatch(startLoadingCitasPaciente(_id))
+        dispatch(startLoadingPatientAppointments(_id))
     }, [_id, dispatch])
 
     return (

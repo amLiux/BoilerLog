@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { setPacienteActivo } from '../../../actions/pacientes'
+import { setActivePatient } from '../../../actions/pacientes'
 
 export const PacientesList = ({pacientes, style}) => {
 
     const dispatch = useDispatch()
 
     const handlePacienteClick = (paciente) => {
-        dispatch(setPacienteActivo(paciente))
+        dispatch(setActivePatient(paciente))
     }
     
     return (

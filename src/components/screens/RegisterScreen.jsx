@@ -1,23 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { useForm } from '../hooks/useForm'
-import { areInputsValid } from '../controllers/auth.controller'
-import { useDispatch } from 'react-redux'
-import { startRegularRegister } from '../../actions/users'
-import { Input } from '../ui/Input'
-import { Button } from '../ui/Button'
-import { setToastActivo } from '../../actions/ui'
-import { Checkbox } from '../ui/Checkbox'
+import React, { useEffect, useState } from 'react';
+import { useForm } from '../hooks/useForm';
+import { areInputsValid } from '../controllers/auth.controller';
+import { useDispatch } from 'react-redux';
+import { startRegularRegister } from '../../actions/users';
+import { Input } from '../ui/Input';
+import { Button } from '../ui/Button';
+import { setToastActivo } from '../../actions/ui';
+import { Checkbox } from '../ui/Checkbox';
 
 export const RegisterScreen = ({isEdit}) => {
                  
-    const [admin, setAdmin] = useState(false)
+    const [admin, setAdmin] = useState(false);
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+    // let formState;
 
     const handleRegister = () => {
-        dispatch(startRegularRegister(values, admin))
-        reset()
-    }
+        dispatch(startRegularRegister({...values, admin}));
+        reset();
+    };
+
+    // isEdit ? formState = pacienteActivo : formState = {
+    //     nombre: '',
+    //     apellido: '',
+    //     cedula: '',
+    //     email: '',
+    //     numeroTelefonico: ''
+    // };
     
     const [values, handleInputChange, handleSubmit, errors, reset] = useForm({
         email: '',
@@ -26,16 +36,16 @@ export const RegisterScreen = ({isEdit}) => {
         lastName: '',
         pwd: '',
         confPwd: '',
-    }, areInputsValid, handleRegister)
+    }, areInputsValid, handleRegister);
         
-    let {email, pwd, confPwd, name, lastName, user} = values
+    let {email, pwd, confPwd, name, lastName, user} = values;
     
     useEffect(() => {
         if (Object.keys(errors).length === 1 ) {
-            const errorMessage = errors[Object.keys(errors)[0]]
-            dispatch(setToastActivo(errorMessage, false))
+            const errorMessage = errors[Object.keys(errors)[0]];
+            dispatch(setToastActivo(errorMessage, false));
         }
-    }, [errors, dispatch])
+    }, [errors, dispatch]);
 
     return (
         <>

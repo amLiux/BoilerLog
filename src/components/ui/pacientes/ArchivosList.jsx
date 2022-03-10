@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startLoadingArchivosPaciente, startUploadingFile } from '../../../actions/pacientes'
+import { startLoadingPatientFiles, startUploadingFile } from '../../../actions/pacientes'
 import { Archivo } from './Archivo'
 
 
@@ -10,7 +10,7 @@ export const ArchivosList = ({paciente :{_id}}) => {
 
     const { archivosPorPaciente } = useSelector(state => state.pacientes)
     
-    useEffect(() => dispatch(startLoadingArchivosPaciente(_id)) , [_id, dispatch])
+    useEffect(() => dispatch(startLoadingPatientFiles(_id)) , [_id, dispatch])
 
     const [file, setFile] = useState('')
     const [filename, setFilename] = useState('')

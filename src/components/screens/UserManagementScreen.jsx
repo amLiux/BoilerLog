@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { startLoadingUsers } from '../../actions/users'
-import { Toast } from '../ui/Toast'
-import { UsuariosList } from '../ui/usuarios/UsuariosList'
-import { RegisterScreen } from './RegisterScreen'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLoadingUsers } from '../../actions/users';
+import { Toast } from '../ui/Toast';
+import { UsuariosList } from '../ui/usuarios/UsuariosList';
+import { RegisterScreen } from './RegisterScreen';
 
 
 export const UserManagementScreen = () => {
 
-    const dispatch = useDispatch()
-    const {mensajeToast, toastAbierto, modalAbierto} = useSelector(state => state.ui)
-    const [edit, setEdit] = useState(false)
+    const dispatch = useDispatch();
+    const {mensajeToast, toastAbierto, modalAbierto} = useSelector(state => state.ui);
+    const [edit, setEdit] = useState(false);
 
-    const {totalUsers} = useSelector(state => state.usuarios)
+    const {totalUsers} = useSelector(state => state.usuarios);
 
     useEffect(() => {
-        dispatch(startLoadingUsers())
+        console.log('estoy aca');
+        dispatch(startLoadingUsers());
     }, [dispatch]);
 
     return (

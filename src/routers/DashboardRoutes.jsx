@@ -11,7 +11,7 @@ import { Navbar } from '../components/ui/Navbar'
 import { setModalInactivo, removeDiaActivo, setToastInactivo } from '../actions/ui'
 import { removeCitaActiva } from '../actions/citas'
 import { PacientesModal } from '../components/ui/pacientes/PacientesModal'
-import { removePacienteActivo } from '../actions/pacientes'
+import { removeActivePatient } from '../actions/pacientes'
 import { ReportsScreen } from '../components/screens/ReportsScreen'
 import { UserManagementScreen } from '../components/screens/UserManagementScreen'
 import { Toast } from '../components/ui/Toast'
@@ -34,7 +34,7 @@ export const DashboardRoutes = () => {
 
     const handleClosePacientes = () => {
         dispatch(setModalInactivo())
-        dispatch(removePacienteActivo())
+        dispatch(removeActivePatient())
         dispatch(setToastInactivo())
     }
 

@@ -1,6 +1,6 @@
 import { fetchPutCitas, fetchGetCitas, fetchPostCitas, fetchDeleteCitas } from '../services/processRequest'
 import { types } from '../types/types'
-import { setCitasPaciente } from './pacientes'
+import { setPatientAppointments } from './pacientes'
 import { setDiaActivo, setToastActivo } from './ui'
 
 export const setCitaActiva = (cita) => ({
@@ -37,7 +37,7 @@ export const startUpdateCita = (cita) => {
         if (ok) {
             dispatch(setToastActivo(msg, ok));
             dispatch(refreshCitas(newCita));
-            dispatch(setCitasPaciente(newCitas));
+            dispatch(setPatientAppointments(newCitas));
             dispatch(cancelCita());
         }
 

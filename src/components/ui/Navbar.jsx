@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { startLogout } from '../../actions/auth'
 import { clearCitas } from '../../actions/citas'
-import { clearPacientes } from '../../actions/pacientes'
+import { clearPatients } from '../../actions/pacientes'
 
 export const Navbar = () => {
 
@@ -14,7 +14,7 @@ export const Navbar = () => {
     const handleLogout = (e) => {
         e.preventDefault()
         dispatch(clearCitas())
-        dispatch(clearPacientes())
+        dispatch(clearPatients())
         dispatch(startLogout())
     }
 

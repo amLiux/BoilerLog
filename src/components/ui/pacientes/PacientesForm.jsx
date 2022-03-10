@@ -1,10 +1,10 @@
-import React, { useRef, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { startAddingPaciente, startUpdatePaciente, setPacienteActivo } from '../../../actions/pacientes'
-import { arePacienteInputsValid } from '../../controllers/pacientes.controller'
-import { useForm } from '../../hooks/useForm'
-import { Button } from '../Button'
-import { InputGroup } from '../InputGroup'
+import React, { useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { startAddingPatient, startUpdatingPatient, setActivePatient } from '../../../actions/pacientes';
+import { arePacienteInputsValid } from '../../controllers/pacientes.controller';
+import { useForm } from '../../hooks/useForm';
+import { Button } from '../Button';
+import { Form } from '../Form';
 
 export const PacientesForm = ({ handleClose, isEdit }) => {
 
@@ -26,13 +26,15 @@ export const PacientesForm = ({ handleClose, isEdit }) => {
 
     const handleSaveClick = () =>
         isEdit
-            ? dispatch(startUpdatePaciente(values))
-            : dispatch(startAddingPaciente(values));
+            ? dispatch(startUpdatingPatient(values))
+            : dispatch(startAddingPatient(values));
 
 
     const [values, handleInputChange, handleSubmit, errors, reset] = useForm(formState, arePacienteInputsValid, handleSaveClick);
 
-    let { nombre, apellido, email, numeroTelefonico, cedula } = values;
+    useEffect(() => {
+        dispatch(setActivePatient(values));
+    }, [values, dispatch]);
 
     useEffect(() => {
         if (activePaciente?.current !== pacienteActivo?._id) {
@@ -40,10 +42,6 @@ export const PacientesForm = ({ handleClose, isEdit }) => {
             activePaciente.current = pacienteActivo?._id;
         }
     }, [pacienteActivo, reset]);
-
-    useEffect(() => {
-        dispatch(setPacienteActivo(values));
-    }, [values, dispatch])
 
     return (
         <div className={`edit-form__box-container ${isEdit ? 'edit' : ''} `}>
@@ -62,36 +60,7 @@ export const PacientesForm = ({ handleClose, isEdit }) => {
 
             </div>
             <form className={`edit-form__form-container ${isEdit ? 'edit' : ''}`}>
-                <InputGroup
-                    isEdit={nombre !== ''}
-                    name="nombre"
-                    label="Nombre"
-                    handleInputChange={handleInputChange}
-                    value={nombre} />
-                <InputGroup
-                    isEdit={apellido !== ''}
-                    name="apellido"
-                    label="Apellido"
-                    handleInputChange={handleInputChange}
-                    value={apellido} />
-                <InputGroup
-                    isEdit={!cedula}
-                    name="cedula"
-                    label="Cédula"
-                    handleInputChange={handleInputChange}
-                    value={cedula} />
-                <InputGroup
-                    isEdit={email !== ''}
-                    name="email"
-                    handleInputChange={handleInputChange}
-                    value={email}
-                    label="Email" />
-                <InputGroup
-                    isEdit={numeroTelefonico !== ''}
-                    name="numeroTelefonico"
-                    handleInputChange={handleInputChange}
-                    value={numeroTelefonico}
-                    label="Número telefónico" />
+                <Form values={values} handleInputChange={handleInputChange} errors={errors} />
                 <div className="edit-form__action-bar-group">
                     <Button onClick={handleSubmit} text="Guardar" />
                 </div>

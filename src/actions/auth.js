@@ -19,12 +19,12 @@ export const login = (uid, displayName, rol) => ({
 export const startLogin = (userPayload) => {
     return async (dispatch) => {
         const resp = await processRequest(requestTemplates.LOGIN, userPayload);
-        const { ok, payload, msg = '' } = await resp.json();
+        const { ok, payload: authContext, msg = '' } = await resp.json();
 
         if (ok) {
-            setOnLocalStorage([{ name: 'token', value: payload.token }, { name: 'token-init-date', value: new Date().getTime() }]);
+            setOnLocalStorage([{ name: 'token', value: authContext.token }, { name: 'token-init-date', value: new Date().getTime() }]);
             dispatch(setToastInactivo());
-            dispatch(login(payload.uid, payload.user, payload.rol));
+            dispatch(login(authContext.uid, authContext.user, authContext.rol));
         } else {
             dispatch(setToastActivo(msg, ok));
         }
