@@ -1,120 +1,124 @@
-import { fetchPutCitas, fetchGetCitas, fetchPostCitas, fetchDeleteCitas } from '../services/processRequest'
-import { types } from '../types/types'
-import { setPatientAppointments } from './patients'
-import { setDiaActivo, setToastActivo } from './ui'
+import { requestTemplates } from '../constants/HTTP';
+import { fetchPutCitas, processRequest } from '../services/processRequest';
+import { types } from '../types/types';
+import { setPatientAppointments } from './patients';
+import { setDiaActivo, setToastActivo } from './ui';
+
+const setAppointments = (citas) => ({
+	type: types.citasSetCitas,
+	payload: {
+		citas: [...citas]
+	}
+});
 
 export const setCitaActiva = (cita) => ({
-    type: types.citasSetCitaActiva,
-    payload: {
-        ...cita
-    }
-})
+	type: types.citasSetCitaActiva,
+	payload: {
+		...cita
+	}
+});
 
-export const removeCitaActiva = () => ({ type: types.citasRemoveCitaActiva })
+export const removeCitaActiva = () => ({ type: types.citasRemoveCitaActiva });
 
 export const startUpdateCita = (cita) => {
-    return async (dispatch, getState) => {
+	return async (dispatch, getState) => {
 
-        const { citasPorPaciente } = getState().pacientes;
-        const { diaActivo } = getState().ui;
+		const { patientAppointments } = getState().pacientes;
+		const { activeDay } = getState().ui;
 
-        const newCitas = citasPorPaciente.map(
-            v => v._id === cita._id
-                ? cita
-                : v
-        );
+		const newCitas = patientAppointments.map(
+			v => v._id === cita._id
+				? cita
+				: v
+		);
 
-        if (Object.keys(diaActivo).length > 0) {
-            diaActivo.citas = diaActivo.citas.map(val => val._id === cita._id ? cita : val);
-            dispatch(setDiaActivo(diaActivo));
-        }
+		if (Object.keys(activeDay).length > 0) {
+			activeDay.citas = activeDay.citas.map(val => val._id === cita._id ? cita : val);
+			dispatch(setDiaActivo(activeDay));
+		}
 
 
-        const token = localStorage.getItem('token');
-        const resp = await fetchPutCitas(token, cita);
-        const { ok, msg, payload: newCita } = await resp.json();
-        console.log(newCita);
-        if (ok) {
-            dispatch(setToastActivo(msg, ok));
-            dispatch(refreshCitas(newCita));
-            dispatch(setPatientAppointments(newCitas));
-            dispatch(cancelCita());
-        }
+		const token = localStorage.getItem('token');
+		const resp = await fetchPutCitas(token, cita);
+		const { ok, msg, payload: newCita } = await resp.json();
+		console.log(newCita);
+		if (ok) {
+			dispatch(setToastActivo(msg, ok));
+			dispatch(refreshCitas(newCita));
+			dispatch(setPatientAppointments(newCitas));
+			dispatch(cancelCita());
+		}
 
-    }
-}
+	};
+};
 
 const refreshCitas = (cita) => ({
-    type: types.citasActualizarCitas,
-    payload: cita
-})
+	type: types.citasActualizarCitas,
+	payload: cita
+});
 
-const cancelCita = () => ({ type: types.citasCancelarCita })
+const cancelCita = () => ({ type: types.citasCancelarCita });
 
-export const startCancelingCita = (cita) => {
-    return async (dispatch, getState) => {
-        const token = localStorage.getItem('token');
-        const resp = await fetchDeleteCitas(token, cita._id);
-        const { ok, msg, payload: updatedCita } = await resp.json();
-        const { diaActivo } = getState().ui;
+export const startCancelingAppointment = (cita) => {
+	return async (dispatch, getState) => {
+		const urlChangers = {
+			dynamicPath: cita?._id
+		};
+		const resp = await processRequest(requestTemplates.DELETE_APPOINTMENT, {}, urlChangers);
+		const { ok, msg, payload: updatedCita } = await resp.json();
+		const { activeDay } = getState().ui;
 
-        // revisamos en nuestras citas del dia para cambiar la cita antigua por la actualizada
-        diaActivo.citas = diaActivo.citas.map(
-            cita => cita._id === updatedCita._id
-                ? updatedCita
-                : cita
-        );
+		// revisamos en nuestras citas del dia para cambiar la cita antigua por la actualizada
+		activeDay.citas = activeDay.citas.map(
+			cita => cita._id === updatedCita._id
+				? updatedCita
+				: cita
+		);
 
-        if (ok) {
-            dispatch(cancelCita());
-            dispatch(setToastActivo(msg, ok));
-            dispatch(refreshCitas(updatedCita));
-            dispatch(setDiaActivo(diaActivo));
-        }
-    }
-}
+		if (ok) {
+			dispatch(cancelCita());
+			dispatch(setToastActivo(msg, ok));
+			dispatch(refreshCitas(updatedCita));
+			dispatch(setDiaActivo(activeDay));
+		}
+	};
+};
 
 const agregarCita = (cita) => ({
-    type: types.citasAgregarCita,
-    payload: {
-        ...cita
-    }
-})
+	type: types.citasAgregarCita,
+	payload: {
+		...cita
+	}
+});
 
 
-export const startAddingCita = (paciente, horario) => {
-    return async (dispatch, getState) => {
-        const token = localStorage.getItem('token')
-        const resp = await fetchPostCitas(token, paciente, horario)
-        const { ok, msg, payload: newCita } = await resp.json()
+export const startAddingAppointment = (paciente, horario) => {
+	return async (dispatch, getState) => {
+		const resp = await processRequest(requestTemplates.CREATE_APPOINTMENT, { paciente, horario });
+		const { ok, msg, payload: newAppointment } = await resp.json();
 
-        const { diaActivo } = getState().ui
+		const { activeDay } = getState().ui;
 
-        if (ok) {
-            diaActivo.citas = [newCita, ...diaActivo.citas]
-            dispatch(setToastActivo(msg, ok))
-            dispatch(agregarCita(newCita))
-            dispatch(setDiaActivo(diaActivo))
-        }
-    }
-}
+		if (ok) {
+			activeDay.citas = [newAppointment, ...activeDay.citas];
+			dispatch(setToastActivo(msg, ok));
+			dispatch(agregarCita(newAppointment));
+			dispatch(setDiaActivo(activeDay));
+		}
+	};
+};
 
-export const clearCitas = () => ({ type: types.citasLimpiarCitas })
+export const clearAppointments = () => ({ type: types.citasLimpiarCitas });
 
-export const startLoadingCitas = () => {
-    return async dispatch => {
-        const token = localStorage.getItem('token')
+export const startLoadingAppointments = () => {
+	return async dispatch => {
+		const resp = await processRequest(requestTemplates.GET_APPOINTMENTS);
+		const { payload: { citas: appointments } } = await resp.json();
 
-        const response = await fetchGetCitas(token)
-        const { citas } = await response.json()
+		appointments.length > 0
+			? dispatch(setAppointments(appointments))
+			: dispatch(setAppointments([]));
+	};
+};
 
-        citas.length > 0 ? dispatch(setCitas(citas)) : dispatch(setCitas([]))
-    }
-}
 
-export const setCitas = (citas) => ({
-    type: types.citasSetCitas,
-    payload: {
-        citas: [...citas]
-    }
-})

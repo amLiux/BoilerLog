@@ -1,5 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const Spinner = ({size}) => {
-    return (<div className={`spinner spinner-${size}`}></div>)
-}
+	return (<div className={`spinner spinner-${size}`}></div>);
+};
