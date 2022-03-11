@@ -8,50 +8,50 @@ export const checkingFinished = () => ({ type: types.authCheckingFinished });
 export const logout = () => ({ type: types.logout });
 
 export const login = (uid, displayName, rol) => ({
-    type: types.authLogin,
-    payload: {
-        uid,
-        displayName,
-        rol
-    }
+	type: types.authLogin,
+	payload: {
+		uid,
+		displayName,
+		rol
+	}
 });
 
 export const startLogin = (userPayload) => {
-    return async (dispatch) => {
-        const resp = await processRequest(requestTemplates.LOGIN, userPayload);
-        const { ok, payload: authContext, msg = '' } = await resp.json();
+	return async (dispatch) => {
+		const resp = await processRequest(requestTemplates.LOGIN, userPayload);
+		const { ok, payload: authContext, msg = '' } = await resp.json();
 
-        if (ok) {
-            setOnLocalStorage([{ name: 'token', value: authContext.token }, { name: 'token-init-date', value: new Date().getTime() }]);
-            dispatch(setToastInactivo());
-            dispatch(login(authContext.uid, authContext.user, authContext.rol));
-        } else {
-            dispatch(setToastActivo(msg, ok));
-        }
+		if (ok) {
+			setOnLocalStorage([{ name: 'token', value: authContext.token }, { name: 'token-init-date', value: new Date().getTime() }]);
+			dispatch(setToastInactivo());
+			dispatch(login(authContext.uid, authContext.user, authContext.rol));
+		} else {
+			dispatch(setToastActivo(msg, ok));
+		}
 
-    }
+	};
 };
 
 export const startLogout = () => {
-    return async (dispatch) => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('token-init-date');
+	return async (dispatch) => {
+		localStorage.removeItem('token');
+		localStorage.removeItem('token-init-date');
 
-        dispatch(logout());
-    }
+		dispatch(logout());
+	};
 };
 
 export const startChecking = () => {
-    return async (dispatch) => {
-        const resp = await processRequest(requestTemplates.VALIDATE_JWT);
-        const { ok, payload } = await resp.json();
+	return async (dispatch) => {
+		const resp = await processRequest(requestTemplates.VALIDATE_JWT);
+		const { ok, payload } = await resp.json();
 
-        if (ok) {
-            setOnLocalStorage([{ name: 'token', value: payload.token }, { name: 'token-init-date', value: new Date().getTime() }]);
-            dispatch(login(payload.uid, payload.name, payload.rol));
-        } else {
-            dispatch(checkingFinished());
-        }
+		if (ok) {
+			setOnLocalStorage([{ name: 'token', value: payload.token }, { name: 'token-init-date', value: new Date().getTime() }]);
+			dispatch(login(payload.uid, payload.name, payload.rol));
+		} else {
+			dispatch(checkingFinished());
+		}
 
-    }
+	};
 };

@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export const CitasScreen = () => {
-    return (
-        <h1>Soy las citas</h1>
-    )
-}
+	return (
+		<h1>Soy las citas</h1>
+	);
+};

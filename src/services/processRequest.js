@@ -6,7 +6,7 @@
 
 //dev
 // TODO we want to pull this from process.env.URL
-const url = `http://192.168.100.95:3000`;
+const url = 'http://192.168.100.95:3000';
 
 const processPayload = (payload) => JSON.stringify(payload);
 
@@ -21,6 +21,7 @@ const processResponse = async (url, requestInfo) => {
 			`Error executando la petición ${url}. 
 			 Más detalles del error: ${err}.		`
 		);
+		// TODO default ok, msg for the front-end not to break if API is down
 	}
 };
 
@@ -35,15 +36,15 @@ export const processRequest = async (template, payload = {}, urlChangers = {}) =
 	};
 
 	if (template.requiresAuthentication) {
-		const token = localStorage.getItem('token')
+		const token = localStorage.getItem('token');
 		headers['Authorization'] = token;
 	}
 
-	if (template.requiresDynamicPath && urlChangers.hasOwnProperty('dynamicPath')) {
+	if (template.requiresDynamicPath && Object.prototype.hasOwnProperty.call(urlChangers, 'dynamicPath')) {
 		fetchUrl = `${fetchUrl}/${urlChangers.dynamicPath}`;
 	}
 
-	if (template.includesQueryParam && urlChangers.hasOwnProperty('queryParams')) {
+	if (template.includesQueryParam && Object.prototype.hasOwnProperty.call(urlChangers, 'queryParams')) {
 		urlChangers.queryParams.forEach((queryParam, index) => {
 			if (index === 0) return fetchUrl = `${fetchUrl}/${encodeURIComponent(queryParam)}`;
 			fetchUrl = `${fetchUrl}&${encodeURIComponent(queryParam)}`;
@@ -66,12 +67,6 @@ export const processRequest = async (template, payload = {}, urlChangers = {}) =
 	return processResponse(fetchUrl, requestInfo);
 };
 
-export const fetchGetCitas = (token) =>
-	fetch(`${url}/citas`, {
-		method: 'GET',
-		headers: { 'Authorization': token },
-	})
-
 export const fetchPutCitas = (token, cita) =>
 	fetch(`${url}/citas`, {
 		method: 'PUT',
@@ -80,18 +75,7 @@ export const fetchPutCitas = (token, cita) =>
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(cita)
-	})
-
-export const fetchPostCitas = (token, paciente, horario) =>
-	fetch(`${url}/citas`, {
-		method: 'POST',
-		headers: {
-			'Authorization': token,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ paciente, horario })
-	})
-
+	});
 
 export const fetchDeleteCitas = (token, id) =>
 	fetch(`${url}/citas/${id}`, {
@@ -99,10 +83,10 @@ export const fetchDeleteCitas = (token, id) =>
 		headers: {
 			'Authorization': token,
 		}
-	})
+	});
 
 export const fetchGetHorarios = (_id) =>
-	fetch(`${url}/citas/${_id}`, { method: 'GET' })
+	fetch(`${url}/citas/${_id}`, { method: 'GET' });
 
 export const fetchGetHorariosByDate = (date, token) =>
 	fetch(`${url}/citas/date/${encodeURIComponent(date)}`,
@@ -114,7 +98,7 @@ export const fetchGetHorariosByDate = (date, token) =>
 			}
 
 		}
-	)
+	);
 
 export const fetchPutHorarioCita = (_id, horario) =>
 	fetch(`${url}/citas/${_id}`, {
@@ -124,7 +108,7 @@ export const fetchPutHorarioCita = (_id, horario) =>
 		},
 		body: JSON.stringify({ horario })
 	}
-	)
+	);
 
 export const fetchPostReporte = (reporte, detallesFecha, token) =>
 	fetch(`${url}/reportes/${reporte}`, {
@@ -134,11 +118,11 @@ export const fetchPostReporte = (reporte, detallesFecha, token) =>
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(detallesFecha)
-	})
+	});
 
 export const fetchPutUser = (token, id, update) =>
 	fetch(`${url}/users/${id}`, {
 		method: 'POST',
 		headers: { 'Authorization': token, 'Content-Type': 'application/json' },
 		body: JSON.stringify(update)
-	})
+	});

@@ -9,6 +9,7 @@
     "chart.js": "^2.9.4",
     "file-saver": "^2.0.5",
     "node-sass": "^5.0.0",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-chartjs-2": "^2.11.2",
     "react-dom": "^17.0.2",
@@ -23,13 +24,38 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext js src",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
-    ]
+      "react-app/jest",
+      "eslint:recommended"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+      "indent": [
+        "error",
+        "tab",
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ]
+    }
   },
   "browserslist": {
     "production": [
@@ -48,6 +74,7 @@
   "devDependencies": {
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "enzyme-to-json": "^3.6.2"
+    "enzyme-to-json": "^3.6.2",
+    "husky": "^7.0.4"
   }
 }

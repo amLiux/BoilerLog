@@ -3,41 +3,41 @@ import { useDispatch } from 'react-redux';
 import { Button } from '../../Button';
 import { SelectHorario } from './SelectHorario';
 import { SelectPaciente } from './SelectPacientes';
-import { startAddingCita } from '../../../../actions/citas';
+import { startAddingAppointment } from '../../../../actions/citas';
 import { setToastActivo } from '../../../../actions/ui';
 
 
 export const CitaForm = ({ callback }) => {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    const [horario, setHorario] = useState('');
-    const [paciente, setPaciente] = useState({});
+	const [horario, setHorario] = useState('');
+	const [paciente, setPaciente] = useState({});
 
-    const handleSaveClick = () => {
-        const existeHorario = horario !== '';
-        const existeUsuario = (Object.keys(paciente).length !== 0 && paciente.constructor === Object);
+	const handleSaveClick = () => {
+		const existeHorario = horario !== '';
+		const existeUsuario = (Object.keys(paciente).length !== 0 && paciente.constructor === Object);
 
-        (existeHorario && existeUsuario)
-            ? dispatch(startAddingCita(paciente, horario))
-            : dispatch(setToastActivo('Necesitas llenar los 2 valores', false));
-    
-        callback();
-    }
+		(existeHorario && existeUsuario)
+			? dispatch(startAddingAppointment(paciente, horario))
+			: dispatch(setToastActivo('Necesitas llenar los 2 valores', false));
+	
+		callback();
+	};
 
-    return (
-        <div className="edit-form__box-container create">
-            <div className="edit-form__action-bar">
-            </div>
-            <form className="edit-form__form-container">
-                <div className="edit-form__form-container-title">
-                    <h2><i className="fas fa-edit"></i>Crear cita:</h2>
-                </div>
-                <SelectPaciente handleState={setPaciente} />
-                <SelectHorario handleState={setHorario} />
-                <div className="edit-form__action-bar-group">
-                    <Button onClick={(e) => handleSaveClick(e)} text="Guardar" />
-                </div>
-            </form>
-        </div>
-    );
-}
+	return (
+		<div className="edit-form__box-container create">
+			<div className="edit-form__action-bar">
+			</div>
+			<form className="edit-form__form-container">
+				<div className="edit-form__form-container-title">
+					<h2><i className="fas fa-edit"></i>Crear cita:</h2>
+				</div>
+				<SelectPaciente handleState={setPaciente} />
+				<SelectHorario handleState={setHorario} />
+				<div className="edit-form__action-bar-group">
+					<Button onClick={(e) => handleSaveClick(e)} text="Guardar" />
+				</div>
+			</form>
+		</div>
+	);
+};

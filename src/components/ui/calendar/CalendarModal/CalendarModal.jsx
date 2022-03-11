@@ -6,47 +6,47 @@ import { CitaForm } from './CitaForm';
 import { EditCita } from './EditCita';
 import { Sidebar } from './Sidebar';
 
-export const CalendarModal = ({ dia, modalAbierto, handleClose }) => {
+export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
 
-    const { citas } = dia;
-    const [empty, setEmpty] = useState();
-    const [create, setCreate] = useState(false);
+	const { citas } = dia;
+	const [empty, setEmpty] = useState();
+	const [create, setCreate] = useState(false);
 
-    const { isCitaActive, cita } = useSelector(state => state.citas);
-    const { contextoToast, toastAbierto } = useSelector(state => state.ui);
+	const { isCitaActive, cita } = useSelector(state => state.citas);
+	const { contextoToast, toastAbierto } = useSelector(state => state.ui);
 
-    useEffect(() =>
-        citas && citas.length === 0
-            ? setEmpty(true)
-            : setEmpty(false) && setCreate(false)
-        , [citas]);
+	useEffect(() =>
+		citas && citas.length === 0
+			? setEmpty(true)
+			: setEmpty(false) && setCreate(false)
+	, [citas]);
 
-    const handleCreateScreen = () => setCreate(!create);
+	const handleCreateScreen = () => setCreate(!create);
 
-    return (
-        <div className={`modal-background ${modalAbierto ? 'modal-showing' : ''}`}>
-            {toastAbierto && <Toast mensaje={contextoToast.mensaje} exitoso={contextoToast.exito} />}
-            <div className="modal-inner">
-                <Sidebar handleClose={handleClose} />
-                <div className="modal-form">
-                    {
-                        !empty
-                            ? isCitaActive
-                                ? <EditCita isEdit cita={cita} />
-                                : create
-                                    ? <CitaForm callback={handleCreateScreen} />
-                                    : <Banner handleCreateScreen={handleCreateScreen} simpleBanner />
-                            : 
-                            <>
-                                {
-                                    create
-                                        ? <CitaForm callback={handleCreateScreen} />
-                                        : <Banner handleCreateScreen={handleCreateScreen} />
-                                }
-                            </>
-                    }
-                </div>
-            </div>
-        </div>
-    )
-}
+	return (
+		<div className={`modal-background ${isModalOpen ? 'modal-showing' : ''}`}>
+			{toastAbierto && <Toast mensaje={contextoToast.mensaje} exitoso={contextoToast.exito} />}
+			<div className="modal-inner">
+				<Sidebar handleClose={handleClose} />
+				<div className="modal-form">
+					{
+						!empty
+							? isCitaActive
+								? <EditCita isEdit cita={cita} />
+								: create
+									? <CitaForm callback={handleCreateScreen} />
+									: <Banner handleCreateScreen={handleCreateScreen} simpleBanner />
+							: 
+							<>
+								{
+									create
+										? <CitaForm callback={handleCreateScreen} />
+										: <Banner handleCreateScreen={handleCreateScreen} />
+								}
+							</>
+					}
+				</div>
+			</div>
+		</div>
+	);
+};

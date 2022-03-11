@@ -10,6 +10,12 @@ const validHeaders = {
 	CONTENT_ATTACHMENT: { 'Content-Disposition': 'attachment' }
 };
 
+const validEndpointPaths = {
+	APPOINTMENTS: 'citas',
+	PATIENTS: '/pacientes',
+	FILES: '/files',
+};
+
 export const requestTemplates = {
 	LOGIN: {
 		path: '/login',
@@ -32,39 +38,39 @@ export const requestTemplates = {
 		requiresAuthentication: true,
 	},
 	UPLOAD_FILE: {
-		path: '/files',
+		path: validEndpointPaths.FILES,
 		method: validHTTPMethods.POST,
 		requiresAuthentication: true,
 		requiresDynamicPath: true,
 		fileUpload: true
 	},
 	GET_FILES: {
-		path: '/files',
+		path: validEndpointPaths.FILES,
 		method: validHTTPMethods.GET,
 		requiresAuthentication: true,
 		requiresDynamicPath: true
 	},
 	DELETE_FILE: {
-		path: '/files',
+		path: validEndpointPaths.FILES,
 		method: validHTTPMethods.DELETE,
 		requiresAuthentication: true,
 		includesQueryParam: true
 	},
 	DOWNLOAD_FILE: {
-		path: '/files',
+		path: validEndpointPaths.FILES,
 		method: validHTTPMethods.GET,
 		requiresAuthentication: true,
 		includesQueryParam: true,
 		headers: validHeaders.CONTENT_ATTACHMENT
 	},
 	UPDATE_PATIENT: {
-		path: '/pacientes',
+		path: validEndpointPaths.PATIENTS,
 		method: validHTTPMethods.PUT,
 		requiresAuthentication: true,
 		headers: validHeaders.APP_JSON,
 	},
 	GET_PATIENTS: {
-		path: '/pacientes',
+		path: validEndpointPaths.PATIENTS,
 		method: validHTTPMethods.GET,
 		requiresAuthentication: true,
 	},
@@ -75,15 +81,32 @@ export const requestTemplates = {
 		requiresDynamicPath: true,
 	},
 	CREATE_USER: {
-		path: '/pacientes',
+		path: validEndpointPaths.APPOINTMENTS,
 		method: validHTTPMethods.POST,
 		requiresAuthentication: true,
 		headers: validHTTPMethods.APP_JSON,
 	},
 	SEARCH_PATIENT: {
-		path: '/pacientes/search',
+		path: `${validEndpointPaths.PATIENTS}/search`,
 		method: validHTTPMethods.GET,
 		requiresAuthentication: true,
 		requiresDynamicPath: true,
-	}
+	},
+	GET_APPOINTMENTS: {
+		path: validEndpointPaths.APPOINTMENTS,
+		method: validHTTPMethods.GET,
+		requiresAuthentication: true,
+	},
+	CREATE_APPOINTMENT: {
+		path: validEndpointPaths.APPOINTMENTS,
+		method: validHTTPMethods.POST,
+		requiresAuthentication: true,
+		headers: validHeaders.APP_JSON,
+	},
+	DELETE_APPOINTMENT: {
+		path: validEndpointPaths.APPOINTMENTS,
+		method: validHTTPMethods.DELETE,
+		requiresAuthentication: true,
+		requiresDynamicPath: true,
+	},
 };
