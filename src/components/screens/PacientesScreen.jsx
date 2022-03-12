@@ -18,7 +18,7 @@ export const PacientesScreen = () => {
 	const handleAddPacientClick = () => dispatch(openModal('PACIENTES'));
 
 	const { toastContext, isToastOpen, isModalOpen } = useSelector(state => state.ui);
-	const { hasActivePacient, activePatient, totalPatients } = useSelector(state => state.pacientes);
+	const { hasActivePacient, activePatient, totalPatients } = useSelector(state => state.patients);
 
 	const [currentPacientes, currentPage, handleChangePage] = usePagination(totalPatients, 8);
 

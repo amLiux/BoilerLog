@@ -12,10 +12,9 @@ export const UserManagementScreen = () => {
 	const { toastContext, isToastOpen, isModalOpen } = useSelector(state => state.ui);
 	const [edit, setEdit] = useState(false);
 
-	const { totalUsers } = useSelector(state => state.usuarios);
+	const { totalUsers } = useSelector(state => state.users);
 
 	useEffect(() => {
-		console.log('estoy aca');
 		dispatch(startLoadingUsers());
 	}, [dispatch]);
 

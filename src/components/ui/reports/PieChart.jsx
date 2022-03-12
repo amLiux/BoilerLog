@@ -17,7 +17,7 @@ export const PieChart = ({ reporte, mes }) => {
 		fetchReport();
 	}, [reporte, mes]);
 
-	console.log(data);
+	// console.log(data);
 
 	return (
 		<div style={{ margin: 'auto' }}>

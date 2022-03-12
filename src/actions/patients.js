@@ -4,16 +4,16 @@ import { types } from '../types/types';
 import { startLoadingAppointments } from './appointments';
 import { closeModal, sendToast } from './ui';
 
-const setPatients = (pacientes) => ({
+const setPatients = (patients) => ({
 	type: types.patientsSetPatients,
 	payload: {
-		pacientes: [...pacientes],
+		patients: [...patients],
 	}
 });
 
-const refreshPatient = (paciente) => ({
+const refreshPatient = (patient) => ({
 	type: types.patientsUpdatePatient,
-	payload: paciente
+	payload: patient
 });
 
 export const startSearchingPatient = (searchString) => {
@@ -35,9 +35,9 @@ export const startSearchingPatient = (searchString) => {
 
 export const startAddingPatient = (patient) => {
 	return async (dispatch, getState) => {
-		const { totalPacients } = getState().pacientes;
+		const { totalPacients } = getState().patients;
 
-		const resp = await processRequest(requestTemplates.CREATE_USER, patient);
+		const resp = await processRequest(requestTemplates.CREATE_PATIENT, patient);
 		const { ok, msg, payload: createdPatient } = await resp.json();
 
 		if (ok) {
@@ -57,20 +57,20 @@ export const startAddingPatient = (patient) => {
 
 export const clearPatients = () => ({ type: types.patientsClearPatients });
 
-export const setPatientAppointments = (citas) => ({
+export const setPatientAppointments = (appointments) => ({
 	type: types.patientsSetPatientAppointments,
-	payload: citas
+	payload: appointments
 });
 
-export const setPatientFiles = (archivos) => ({
+export const setPatientFiles = (files) => ({
 	type: types.patientsSetPatientFiles,
-	payload: archivos
+	payload: files
 });
 
-export const startLoadingPatientAppointments = (_id) => {
+export const startLoadingPatientAppointments = (patiendId) => {
 	return async (dispatch) => {
 		const urlChangers = {
-			dynamicPath: _id,
+			dynamicPath: patiendId,
 		};
 
 		const resp = await processRequest(requestTemplates.GET_PATIENT_APPOINTMENTS, {}, urlChangers);
@@ -91,33 +91,33 @@ export const startLoadingPatients = () => {
 	};
 };
 
-export const startUpdatingPatient = (paciente) => {
+export const startUpdatingPatient = (patient) => {
 	return async (dispatch, getState) => {
 
-		let { totalPatients } = getState().pacientes;
+		let { totalPatients } = getState().patients;
 
 		totalPatients = totalPatients.map(
-			v => v._id === paciente._id
-				? paciente
+			v => v._id === patient._id
+				? patient
 				: v
 		);
 
-		const resp = await processRequest(requestTemplates.UPDATE_PATIENT, paciente);
+		const resp = await processRequest(requestTemplates.UPDATE_PATIENT, patient);
 		const { ok, msg } = await resp.json();
 
 
 		if (ok) {
 			dispatch(sendToast(msg, ok));
-			dispatch(refreshPatient(paciente));
+			dispatch(refreshPatient(patient));
 			dispatch(setPatients(totalPatients));
 		}
 
 	};
 };
 
-export const setActivePatient = (paciente) => ({
+export const setActivePatient = (patient) => ({
 	type: types.patientsSetActivePatient,
-	payload: { ...paciente }
+	payload: { ...patient }
 });
 
 export const removeActivePatient = () => ({ type: types.patientsRemoveActivePatient });
@@ -129,10 +129,10 @@ export const startLoadingPatientFiles = (patientId) => {
 			dynamicPath: patientId
 		};
 		const resp = await processRequest(requestTemplates.GET_FILES, {}, urlChangers);
-		const { ok, payload: { archivos } } = await resp.json();
+		const { ok, payload: { archivos:patientFiles } } = await resp.json();
 
 		if (ok) {
-			dispatch(setPatientFiles(archivos));
+			dispatch(setPatientFiles(patientFiles));
 		}
 	};
 };
@@ -140,7 +140,7 @@ export const startLoadingPatientFiles = (patientId) => {
 export const startUploadingFile = (file, patientId) => {
 	return async (dispatch, getState) => {
 
-		const { patientFiles } = getState().pacientes;
+		const { patientFiles } = getState().patients;
 		const urlChangers = {
 			dynamicPath: patientId
 		};
@@ -168,7 +168,7 @@ export const startDeletingFile = (fileId, fileName, patientId) => {
 		const resp = await processRequest(requestTemplates.DELETE_FILE, {}, urlChangers);
 		const { msg, ok } = await resp.json();
 
-		let { patientFiles } = getState().pacientes;
+		let { patientFiles } = getState().patients;
 		patientFiles = patientFiles.filter(v => v._id !== fileId);
 
 		if (ok) {

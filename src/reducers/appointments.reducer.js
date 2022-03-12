@@ -2,7 +2,7 @@ import { types } from '../types/types';
 
 const initialState = {
 	hasActiveAppointment: false,
-	cita: {},
+	appointment: {},
 	totalAppointments: [],
 };
 
@@ -11,14 +11,14 @@ export const appointmentsReducer = (state = initialState, action) => {
 		case types.appointmentsSetActiveAppointment:
 			return {
 				...state,
-				cita: action.payload,
+				appointment: action.payload,
 				hasActiveAppointment: true
 			};
 
 		case types.appointmentsRemoveActiveAppointment:
 			return {
 				...state,
-				cita: {},
+				appointment: {},
 				hasActiveAppointment: false
 			};
 
@@ -31,7 +31,7 @@ export const appointmentsReducer = (state = initialState, action) => {
 		case types.appointmentsRemoveAppointments: {
 			return {
 				hasActiveAppointment: false,
-				cita: {},
+				appointment: {},
 				totalAppointments: []
 			};
 		}

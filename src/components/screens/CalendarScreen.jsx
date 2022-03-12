@@ -12,7 +12,7 @@ export const CalendarScreen = () => {
 
 	const [nav, setNav] = useState(0);
 
-	const { totalAppointments } = useSelector(state => state.citas);
+	const { totalAppointments } = useSelector(state => state.appointments);
 
 	const [dias, dateDisplay] = useCalendar(totalAppointments, nav);
 
@@ -21,7 +21,6 @@ export const CalendarScreen = () => {
 	const handleDiaClick = (dia) => {
 		if (dia.value !== 'padding') {
 			dispatch(openModal('CALENDARIO'));
-			console.log(dia);
 			dispatch(setActiveDay(dia));
 		}
 	};

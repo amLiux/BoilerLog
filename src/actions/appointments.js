@@ -35,7 +35,7 @@ export const removeActiveAppointment = () => ({ type: types.appointmentsRemoveAc
 export const startUpdatingAppointment = (appointment) => {
 	return async (dispatch, getState) => {
 
-		const { patientAppointments } = getState().pacientes;
+		const { patientAppointments } = getState().patients;
 		const { activeDay } = getState().ui;
 
 		const newAppointments = patientAppointments.map(
@@ -45,7 +45,7 @@ export const startUpdatingAppointment = (appointment) => {
 		);
 
 		if (Object.keys(activeDay).length > 0) {
-			activeDay.citas = activeDay.citas.map(val => val._id === appointment._id ? appointment : val);
+			activeDay.appointments = activeDay.appointments.map(val => val._id === appointment._id ? appointment : val);
 			dispatch(setActiveDay(activeDay));
 		}
 
@@ -68,34 +68,33 @@ export const startCancelingAppointment = (appointment) => {
 			dynamicPath: appointment?._id
 		};
 		const resp = await processRequest(requestTemplates.DELETE_APPOINTMENT, {}, urlChangers);
-		const { ok, msg, payload: updatedCita } = await resp.json();
+		const { ok, msg, payload: updatedAppointment } = await resp.json();
 		const { activeDay } = getState().ui;
-
-		// revisamos en nuestras citas del dia para cambiar la cita antigua por la actualizada
-		activeDay.citas = activeDay.citas.map(
-			cita => cita._id === updatedCita._id
-				? updatedCita
-				: cita
+	
+		activeDay.appointments = activeDay.appointments.map(
+			appointment => appointment._id === updatedAppointment._id
+				? updatedAppointment
+				: appointment
 		);
 
 		if (ok) {
 			dispatch(removeActiveAppointment());
 			dispatch(sendToast(msg, ok));
-			dispatch(updateAppointments(updatedCita));
+			dispatch(updateAppointments(updatedAppointment));
 			dispatch(setActiveDay(activeDay));
 		}
 	};
 };
 
-export const startAddingAppointment = (paciente, horario) => {
+export const startAddingAppointment = (patient, schedule) => {
 	return async (dispatch, getState) => {
-		const resp = await processRequest(requestTemplates.CREATE_APPOINTMENT, { paciente, horario });
+		const resp = await processRequest(requestTemplates.CREATE_APPOINTMENT, { paciente: patient, horario: schedule });
 		const { ok, msg, payload: newAppointment } = await resp.json();
 
 		const { activeDay } = getState().ui;
 
 		if (ok) {
-			activeDay.citas = [newAppointment, ...activeDay.citas];
+			activeDay.appointments = [newAppointment, ...activeDay.appointments];
 			dispatch(sendToast(msg, ok));
 			dispatch(addAppointment(newAppointment));
 			dispatch(setActiveDay(activeDay));

@@ -6,7 +6,7 @@ import { Dashboard } from '../ui/home/Dashboard';
 
 export const HomeScreen = () => {
 	const dispatch = useDispatch();
-	const { totalAppointments } = useSelector(state => state.citas);
+	const { totalAppointments } = useSelector(state => state.appointments);
 	const dashboardsInfo = useHome(totalAppointments);
 
 	useEffect(() => dispatch(startLoadingAppointments()), [dispatch]);

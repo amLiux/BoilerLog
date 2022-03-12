@@ -7,7 +7,7 @@ export const Sidebar = ({handleClose}) => {
 
 	const {activeDay} = useSelector(state => state.ui);
 
-	const {date, citas} = activeDay;
+	const {date, appointments} = activeDay;
 
 	const dispatch = useDispatch();
 
@@ -26,8 +26,8 @@ export const Sidebar = ({handleClose}) => {
 
 			<div className="sidebar__citas mt-5">
 				{
-					citas?.map(cita => 
-						<RadioButton estado={cita.estado} date={cita.fechaDeseada} onChange={() => handleCitaChange(cita)} key={cita._id} id={cita._id} label={cita.nombre}/>
+					appointments?.map(cita => 
+						<RadioButton sidebarBtn estado={cita.estado} date={cita.fechaDeseada} onChange={() => handleCitaChange(cita)} key={cita._id} id={cita._id} label={cita.nombre}/>
 					)
 				}
 			</div>

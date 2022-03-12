@@ -14,6 +14,7 @@ const validEndpointPaths = {
 	APPOINTMENTS: '/citas',
 	PATIENTS: '/pacientes',
 	FILES: '/files',
+	USERS: '/users',
 };
 
 export const requestTemplates = {
@@ -33,7 +34,7 @@ export const requestTemplates = {
 		requiresAuthentication: true,
 	},
 	GET_USERS: {
-		path: '/users',
+		path: validEndpointPaths.USERS,
 		method: validHTTPMethods.GET,
 		requiresAuthentication: true,
 	},
@@ -80,8 +81,8 @@ export const requestTemplates = {
 		requiresAuthentication: true,
 		requiresDynamicPath: true,
 	},
-	CREATE_USER: {
-		path: validEndpointPaths.APPOINTMENTS,
+	CREATE_PATIENT: {
+		path: validEndpointPaths.PATIENTS,
 		method: validHTTPMethods.POST,
 		requiresAuthentication: true,
 		headers: validHTTPMethods.APP_JSON,
@@ -114,5 +115,35 @@ export const requestTemplates = {
 		method: validHTTPMethods.PUT,
 		requiresAuthentication: true,
 		headers: validHeaders.APP_JSON,
+	},
+	SET_APPOINTMENT_SCHEDULE: {
+		path: validEndpointPaths.APPOINTMENTS,
+		headers: validHeaders.APP_JSON,
+		requiresDynamicPath: true,
+	},
+	GET_SCHEDULES: {
+		path: validEndpointPaths.APPOINTMENTS,
+		method: validHTTPMethods.GET,
+		requiresDynamicPath: true
+	},
+	GET_SCHEDULES_BY_DATE: {
+		path: `${validEndpointPaths.APPOINTMENTS}/date`,
+		method: validHTTPMethods.GET,
+		headers: validHeaders.APP_JSON,
+		requiresAuthentication: true,
+		requiresDynamicPath: true,
+	},
+	UPDATE_USER: {
+		path: validEndpointPaths.USERS,
+		method: validHTTPMethods.POST,
+		requiresAuthentication: true,
+		headers: validHeaders.APP_JSON,
+		requiresDynamicPath: true,
+	},
+	BUILD_REPORT: {
+		path: '/reportes',
+		requiresAuthentication: true,
+		headers: validHeaders.APP_JSON,
+		method: validHTTPMethods.POST,
 	},
 };

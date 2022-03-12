@@ -1,30 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { fetchGetHorariosByDate } from '../../../../services/processRequest';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLoadingSchedulesByDate } from '../../../../actions/schedules';
 
 export const SelectHorario = ({ handleState }) => {
-
+	const dispatch = useDispatch();
 	const { date } = useSelector(state => state.ui.activeDay);
 
-	const [horarios, setHorarios] = useState([]);
+	const { schedules } = useSelector(state => state.schedules);
 	const [dropdownActive, setDropdownActive] = useState(false);
 	const [placeholder, setPlaceholder] = useState('Seleccione el horario');
 
 	useEffect(() => {
-		// estaba recibiendo este error https://stackoverflow.com/questions/53949393/cant-perform-a-react-state-update-on-an-unmounted-component y le agregue el flag isMounted, al parecer evita memory leaks por re-renders del useEffect
-		let isMounted = true;
-		async function fetchHorariosDisponibles() {
-			const token = localStorage.getItem('token');
-			const response = await fetchGetHorariosByDate(date, token);
-			const { horariosDisponibles } = await response.json();
-			horariosDisponibles.sort((a, b) => a - b);
-			if (isMounted) setHorarios(horariosDisponibles);
-		}
-		fetchHorariosDisponibles();
-		return () => { 
-			isMounted = false;
-		};
-	}, [date]);
+		dispatch(startLoadingSchedulesByDate(date));
+	}, [date, dispatch]);
 
 
 	const handleOptionClick = (horario, stringHorario) => {
@@ -45,7 +33,7 @@ export const SelectHorario = ({ handleState }) => {
 			</div>
 			<div className={`select__box-options ${dropdownActive && 'active'}`}>
 				{
-					horarios.map(
+					schedules.map(
 						(horario) => (
 							<div key={horario} onClick={() => handleOptionClick(horario, createHorario(horario))} className="select__box-option">
 								<input type="radio" className="select__box-radio" id={horario} name={horario} />

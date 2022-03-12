@@ -19,14 +19,16 @@ export const types = {
 	patientsUpdatePatient: '[Patients] Set updated patients', 
 	patientsSetActivePatient: '[Patients] Set active patient',
 	patientsRemoveActivePatient: '[Patients] Remove active patient',
-	patientsSetPatientAppointments: '[Patients] Set citas of specific patient',
+	patientsSetPatientAppointments: '[Patients] Set appointments of specific patient',
 	patientsSetPatientFiles: '[Patients] Set archivos of specific patient',
 	patientsClearPatients: '[Patients] Remove patients',
 
 	usersSetUsers: '[Users] Set all pacientes',
 	
-	horariosSetHorario: '[Horarios] Set selected horario',
-	
+	scheduleSetSchedule: '[Schedules] Set selected schedule',
+	scheduleSetSchedulesContext: '[Schedules] Set all available schedules and information',
+	scheduleSetSchedules: '[Schedules] Set all available schedules per date',
+
 	authCheckingFinished: '[Auth] Finished checking JWT state',
 	authLogin: '[Auth] Login',
 	logout: '[Auth] Logout',

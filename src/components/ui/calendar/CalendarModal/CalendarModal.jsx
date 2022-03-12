@@ -7,18 +7,18 @@ import { EditCita } from './EditCita';
 import { Sidebar } from './Sidebar';
 
 export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
-	const { citas } = dia;
+	const { appointments } = dia;
 	const [empty, setEmpty] = useState();
 	const [create, setCreate] = useState(false);
 
-	const { hasActiveAppointment, cita } = useSelector(state => state.citas);
+	const { hasActiveAppointment, appointment } = useSelector(state => state.appointments);
 	const { toastContext, isToastOpen } = useSelector(state => state.ui);
 
 	useEffect(() =>
-		citas && citas.length === 0
+		appointments && appointments.length === 0
 			? setEmpty(true)
 			: setEmpty(false) && setCreate(false)
-	, [citas]);
+	, [appointments]);
 
 	const handleCreateScreen = () => setCreate(!create);
 
@@ -31,7 +31,7 @@ export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
 					{
 						!empty
 							? hasActiveAppointment
-								? <EditCita isEdit cita={cita} />
+								? <EditCita isEdit cita={appointment} />
 								: create
 									? <CitaForm callback={handleCreateScreen} />
 									: <Banner handleCreateScreen={handleCreateScreen} simpleBanner />
