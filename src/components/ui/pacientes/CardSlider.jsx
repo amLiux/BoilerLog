@@ -7,7 +7,7 @@ import { CitasCard } from './CitasCard';
 export const CardSlider = ({paciente: {_id}}) => {
 
 	const dispatch = useDispatch();
-	const { patientAppointments } = useSelector(state => state.pacientes);
+	const { patientAppointments } = useSelector(state => state.patients);
 
 	const [currentCita, currentPage , handleChangePage, maxPage] =  usePagination(patientAppointments, 1);
 	

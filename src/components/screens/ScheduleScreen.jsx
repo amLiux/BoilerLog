@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '../ui/Button';
 import { RadioButton } from '../ui/RadioButton';
 import { useParams } from 'react-router-dom';
-import { fetchGetHorarios } from '../../services/processRequest';
-import { useDispatch } from 'react-redux';
-import { startUpdateCitaConHorario } from '../../actions/horarios';
+import { useDispatch, useSelector } from 'react-redux';
+import { startLoadingScheduleContext, startSettingAppointmentSchedule } from '../../actions/schedules';
 
 export const ScheduleScreen = () => {
 
@@ -12,23 +11,14 @@ export const ScheduleScreen = () => {
 
 	const { _id } = useParams();
 
-	const [horarios, setHorarios] = useState([]);
-	const [nombre, setNombre] = useState('');
-	const [fecha, setFecha] = useState('');
+	const { scheduleContext } = useSelector(state => state.schedules);
 
 	useEffect(() => {
-		async function fetchHorariosDisponibles() {
-			const response = await fetchGetHorarios(_id);
-			const { horariosDisponibles, nombre, fecha } = await response.json();
-			setHorarios(horariosDisponibles);
-			setNombre(nombre);
-			setFecha(fecha);
-		}
-		fetchHorariosDisponibles();
-	}, [_id]);
+		dispatch(startLoadingScheduleContext(_id));
+	}, [_id, dispatch]);
 
-	const handleAgendarClick = () => {
-		dispatch(startUpdateCitaConHorario(_id));
+	const handleScheduleClick = () => {
+		dispatch(startSettingAppointmentSchedule(_id));
 		setTimeout(() => {
 			window.location.reload();
 		}, 1000);
@@ -38,14 +28,18 @@ export const ScheduleScreen = () => {
 	return (
 		<div className="schedule__main">
 			<div className="schedule__box-container">
-				<h3 className="auth__title mb-5">Hola {nombre}!</h3>
-				<h3 className="auth__subtitle mb-5">Estos son los espacios disponibles el día {fecha}:</h3>
+				<h3 className="auth__title mb-5">Hola {scheduleContext.name}!</h3>
+				<h3 className="auth__subtitle mb-5">Estos son los espacios disponibles el día {scheduleContext.date}:</h3>
 				{
-					horarios.map(horario => (<RadioButton key={horario} horario={horario} label="Hora" />))
+					scheduleContext.schedules.map(schedule => 
+						(
+							<RadioButton key={schedule} horario={schedule} label="Hora" />
+						)
+					)
 				}
 				<div style={{ display: 'flex', justifyContent: 'space-around', paddingTop: '10px' }}>
 					<Button group={true} warning={true} text="Cambiar fecha" />
-					<Button onClick={handleAgendarClick} group={true} text="Agendar" />
+					<Button onClick={handleScheduleClick} group={true} text="Agendar" />
 				</div>
 			</div>
 		</div>

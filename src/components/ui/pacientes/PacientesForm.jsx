@@ -12,7 +12,7 @@ export const PacientesForm = ({ handleClose, isEdit }) => {
 
 	let formState;
 
-	const { pacienteActivo } = useSelector(state => state.pacientes);
+	const { pacienteActivo } = useSelector(state => state.patients);
 	const activePaciente = useRef(pacienteActivo?._id);
 
 	// si el form se renderiza desde el CalendarModal o se edita algun paciente existente ya tiene unos valores, pero si se intenta crear un paciente queremos un form limpio

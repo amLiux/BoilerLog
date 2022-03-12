@@ -8,7 +8,7 @@ export const ArchivosList = ({paciente :{_id}}) => {
 
 	const dispatch = useDispatch();
 
-	const { patientFiles } = useSelector(state => state.pacientes);
+	const { patientFiles } = useSelector(state => state.patients);
 	
 	useEffect(() => dispatch(startLoadingPatientFiles(_id)) , [_id, dispatch]);
 

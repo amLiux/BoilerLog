@@ -2,10 +2,11 @@ import { types } from '../types/types';
 
 const estadoInicial = {
 	isModalOpen: false,
-	tipoModal: '',
+	modalType: '',
 	activeDay: {},
-	toastAbierto: false,
-	mensajeToast: ''
+	isToastOpen: false,
+	toastMessage: '',
+	toastContext: {},
 };
 
 export const uiReducer = (state = estadoInicial, action) => {
@@ -14,7 +15,7 @@ export const uiReducer = (state = estadoInicial, action) => {
 			return {
 				...state,
 				isModalOpen: true,
-				tipoModal: action.payload
+				modalType: action.payload
 
 			};
 
@@ -27,24 +28,24 @@ export const uiReducer = (state = estadoInicial, action) => {
 		case types.uiShowToast:
 			return {
 				...state,
-				contextoToast: action.payload,
-				toastAbierto: true
+				toastContext: action.payload,
+				isToastOpen: true
 			};
 
 		case types.uiRemoveToast:
 			return {
 				...state,
-				toastAbierto: false,
-				mensajeToast: ''
+				isToastOpen: false,
+				toastMessage: ''
 			};
 
-		case types.uiSetDiaActivo:
+		case types.uiSetActiveDay:
 			return {
 				...state,
 				activeDay: action.payload
 			};
 
-		case types.uiRemoveDiaActivo:
+		case types.uiRemoveActiveDay:
 			return {
 				...state,
 				activeDay: {}

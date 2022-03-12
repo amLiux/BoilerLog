@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSelectedHorario } from '../../actions/horarios';
+import { setSelectedSchedule } from '../../actions/schedules';
 
-export const RadioButton = ({ estado, date, horario, label, onChange }) => {
+export const RadioButton = ({ estado, date, horario, label, onChange, sidebarBtn = false }) => {
 
 	const dispatch = useDispatch();
 	const [canceled, setCanceled] = useState(false);
@@ -17,7 +17,7 @@ export const RadioButton = ({ estado, date, horario, label, onChange }) => {
 	useEffect(() => {
 		estado === 'CANCELADA' && setCanceled(true);
 	}, [estado]);
-	
+
 	const estadoString = (estado) => {
 		switch (estado) {
 			case 'CANCELADA':
@@ -32,11 +32,11 @@ export const RadioButton = ({ estado, date, horario, label, onChange }) => {
 	};
 
 	return (
-		<div className="radio-button mb-5">
+		<div className={`radio-button ${sidebarBtn ? 'sidebarBtn' : ''} mb-5`}>
 			{
 				onChange
 					? <input disabled={canceled} className={`${!horario && new Date(date).getHours() === 0 ? 'error' : ''}`} value={horario} onChange={onChange} type="radio" name="card" />
-					: <input value={horario} onChange={e => dispatch(setSelectedHorario(e))} type="radio" name="card" />
+					: <input value={horario} onChange={e => dispatch(setSelectedSchedule(e))} type="radio" name="card" />
 			}
 			<label className="radio-button__label" htmlFor="card">
 				<h5 className={`radio-button__label-heading ${canceled ? 'canceled' : ''}`}>{label}:</h5>

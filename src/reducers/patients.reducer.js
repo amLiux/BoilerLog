@@ -13,16 +13,16 @@ export const patientsReducer = (state = initialState, action) => {
 		case types.patientsSetPatients:
 			return {
 				...state,
-				totalPatients: action.payload.pacientes
+				totalPatients: action.payload.patients
 			};
 
 		case types.patientsUpdatePatient:
 			return {
 				...state,
 				totalPatients: state.totalPatients.map(
-					paciente => paciente._id === action.payload._id
+					patient => patient._id === action.payload._id
 						? action.payload
-						: paciente
+						: patient
 				)
 			};
 

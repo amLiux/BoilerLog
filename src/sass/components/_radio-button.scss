@@ -1,7 +1,12 @@
 .radio-button{
 
     height: 75px;
-    max-width: 100%;
+    max-width: 60%;
+
+    &.sidebarBtn {
+        max-width: 95%;
+    }
+
     position: relative;
     font: inherit;
     left: -5rem;
@@ -16,8 +21,6 @@
         &:disabled{
             background-color: rgba($color-black, 0.3);
         }
-
-        
 
         -webkit-appearance: none;
         appearance: none;

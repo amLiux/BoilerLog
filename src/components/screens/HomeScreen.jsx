@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { startLoadingAppointments } from '../../actions/citas';
+import { startLoadingAppointments } from '../../actions/appointments';
 import { useHome } from '../hooks/useHome';
 import { Dashboard } from '../ui/home/Dashboard';
 
 export const HomeScreen = () => {
 	const dispatch = useDispatch();
-	const { totalCitas } = useSelector(state => state.citas);
-	const dashboardsInfo = useHome(totalCitas);
+	const { totalAppointments } = useSelector(state => state.appointments);
+	const dashboardsInfo = useHome(totalAppointments);
 
 	useEffect(() => dispatch(startLoadingAppointments()), [dispatch]);
 

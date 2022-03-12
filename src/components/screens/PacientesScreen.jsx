@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingPatients } from '../../actions/patients';
-import { setModalActivo } from '../../actions/ui';
+import { openModal } from '../../actions/ui';
 import { usePagination } from '../hooks/usePagination';
 import { Button } from '../ui/Button';
 import { InputGroup } from '../ui/InputGroup';
@@ -15,10 +15,10 @@ export const PacientesScreen = () => {
 
 	const dispatch = useDispatch();
 
-	const handleAddPacientClick = () => dispatch(setModalActivo('PACIENTES'));
+	const handleAddPacientClick = () => dispatch(openModal('PACIENTES'));
 
-	const { contextoToast, toastAbierto, isModalOpen } = useSelector(state => state.ui);
-	const { hasActivePacient, activePatient, totalPatients } = useSelector(state => state.pacientes);
+	const { toastContext, isToastOpen, isModalOpen } = useSelector(state => state.ui);
+	const { hasActivePacient, activePatient, totalPatients } = useSelector(state => state.patients);
 
 	const [currentPacientes, currentPage, handleChangePage] = usePagination(totalPatients, 8);
 
@@ -30,7 +30,7 @@ export const PacientesScreen = () => {
 
 	return (
 		<>
-			{toastAbierto && !isModalOpen && <Toast exitoso={contextoToast.exito} mensaje={contextoToast.mensaje} />}
+			{isToastOpen && !isModalOpen && <Toast success={toastContext.success} msg={toastContext.msg} />}
 			<div style={{ width: '100%', display: 'flex' }}>
 				<div className="secondary-container">
 					<div className="main-container__search-group">

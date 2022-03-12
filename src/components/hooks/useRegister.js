@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setToastActivo } from '../../actions/ui';
+import { sendToast } from '../../actions/ui';
 import { startRegularRegister } from '../../actions/users';
 import { arePacienteInputsValid } from '../controllers/pacientes.controller';
 import { useForm } from './useForm';
@@ -38,7 +38,7 @@ export const useRegister = () => {
 	useEffect(() => {
 		if (Object.keys(errors).length === 1) {
 			const errorMessage = errors[Object.keys(errors)[0]];
-			dispatch(setToastActivo(errorMessage, false));
+			dispatch(sendToast(errorMessage, false));
 		}
 	}, [errors, dispatch]);
 

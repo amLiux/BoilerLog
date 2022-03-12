@@ -17,7 +17,7 @@ export const BarChart = ({ reporte, desde, hasta }) => {
 		fetchReport();
 	}, [reporte, desde, hasta]);
 
-	console.log(data);
+	// console.log(data);
 
 	return (
 		<div style={{ margin: 'auto' }}>

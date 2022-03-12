@@ -1,6 +1,6 @@
 import { types } from '../types/types';
 import { processRequest } from '../services/processRequest';
-import { setToastActivo, setToastInactivo } from './ui';
+import { sendToast, removeToast } from './ui';
 import { setOnLocalStorage } from '../services/handleLocalStorage';
 import { requestTemplates } from '../constants/HTTP';
 
@@ -23,10 +23,10 @@ export const startLogin = (userPayload) => {
 
 		if (ok) {
 			setOnLocalStorage([{ name: 'token', value: authContext.token }, { name: 'token-init-date', value: new Date().getTime() }]);
-			dispatch(setToastInactivo());
+			dispatch(removeToast());
 			dispatch(login(authContext.uid, authContext.user, authContext.rol));
 		} else {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 		}
 
 	};

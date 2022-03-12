@@ -44,6 +44,7 @@ export const Form = ({ values, handleInputChange, errors, isAuthForm }) => {
 
 					return isAuthForm
 						? <Input
+							key={index}
 							isAuthForm
 							handleInputChange={handleInputChange}
 							placeholder={placeholderEnum[formValue]}

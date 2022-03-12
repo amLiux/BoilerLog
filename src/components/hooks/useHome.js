@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useHome = (totalCitas) => {
+export const useHome = (totalAppointments) => {
 
 	const filtrarCitas = (estado, citas, primerDiaSemana, ultimoDiaSemana, validationExtra = false) => {
 		return citas.filter(cita =>
@@ -43,20 +43,20 @@ export const useHome = (totalCitas) => {
 
 		setCitasSinConfirmar((state) => ({
 			...state,
-			citas: filtrarCitas('PENDIENTE', totalCitas, primerDiaSemana, ultimoDiaSemana)
+			citas: filtrarCitas('PENDIENTE', totalAppointments, primerDiaSemana, ultimoDiaSemana)
 		}));
 
 		setCitasCanceladas((state) => ({
 			...state,
-			citas: filtrarCitas('CANCELADA', totalCitas, primerDiaSemana, ultimoDiaSemana)
+			citas: filtrarCitas('CANCELADA', totalAppointments, primerDiaSemana, ultimoDiaSemana)
 		}));
 
 		setCitasEstaSemana((state) => ({
 			...state,
-			citas: filtrarCitas('AGENDADA', totalCitas, primerDiaSemana, ultimoDiaSemana, true)
+			citas: filtrarCitas('AGENDADA', totalAppointments, primerDiaSemana, ultimoDiaSemana, true)
 		}));
 
-	}, [totalCitas]);
+	}, [totalAppointments]);
 
 
 	return [citasCanceladas, citasEstaSemana, citasSinConfirmar];

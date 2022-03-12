@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setCitaActiva, startCancelingAppointment, startUpdateCita } from '../../../../actions/citas';
+import { setActiveAppointment, startCancelingAppointment, startUpdatingAppointment } from '../../../../actions/appointments';
 import { areCitaInputsValid } from '../../../controllers/citas.controller';
 import { useForm } from '../../../hooks/useForm';
 import { FormNoPaciente } from './FormNoPaciente';
@@ -22,10 +22,10 @@ export const EditCita = ({ cita }) => {
 			const update = cita.estado === 'PENDIENTE'
 				? { ...cita, estado: 'AGENDADA', fechaDeseada: new Date(horario).toISOString() }
 				: { ...cita, fechaDeseada: new Date(horario).toISOString() };
-			dispatch(startUpdateCita(update));
+			dispatch(startUpdatingAppointment(update));
 		} else {
 			// sino podemos actualizar literalmente cualquier valor que esté en nuestro cliente (que todavía no es paciente)
-			dispatch(startUpdateCita(values));
+			dispatch(startUpdatingAppointment(values));
 		}
 	};
 
@@ -55,7 +55,7 @@ export const EditCita = ({ cita }) => {
 	}, [cita, reset]);
 
 	useEffect(() => {
-		dispatch(setCitaActiva(values));
+		dispatch(setActiveAppointment(values));
 	}, [values, dispatch]);
 
 	return (

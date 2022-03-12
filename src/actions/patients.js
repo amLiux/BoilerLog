@@ -1,19 +1,19 @@
 import { requestTemplates } from '../constants/HTTP';
 import { processRequest } from '../services/processRequest';
 import { types } from '../types/types';
-import { startLoadingAppointments } from './citas';
-import { setModalInactivo, setToastActivo } from './ui';
+import { startLoadingAppointments } from './appointments';
+import { closeModal, sendToast } from './ui';
 
-const setPatients = (pacientes) => ({
-	type: types.pacientesSetPacientes,
+const setPatients = (patients) => ({
+	type: types.patientsSetPatients,
 	payload: {
-		pacientes: [...pacientes],
+		patients: [...patients],
 	}
 });
 
-const refreshPatient = (paciente) => ({
-	type: types.pacientesActualizarPacientes,
-	payload: paciente
+const refreshPatient = (patient) => ({
+	type: types.patientsUpdatePatient,
+	payload: patient
 });
 
 export const startSearchingPatient = (searchString) => {
@@ -26,7 +26,7 @@ export const startSearchingPatient = (searchString) => {
 		const { ok, msg, payload: { patients } } = await resp.json();
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(setPatients(patients));
 		}
 
@@ -35,41 +35,42 @@ export const startSearchingPatient = (searchString) => {
 
 export const startAddingPatient = (patient) => {
 	return async (dispatch, getState) => {
-		const { totalPacients } = getState().pacientes;
+		const { totalPacients } = getState().patients;
 
-		const resp = await processRequest(requestTemplates.CREATE_USER, patient);
+		const resp = await processRequest(requestTemplates.CREATE_PATIENT, patient);
 		const { ok, msg, payload: createdPatient } = await resp.json();
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(refreshPatient(createdPatient));
 			dispatch(setPatients([...totalPacients, createdPatient]));
 			dispatch(removeActivePatient());
-			dispatch(setModalInactivo());
+			dispatch(closeModal());
 			dispatch(startLoadingAppointments());
 		} else {
-			dispatch(setToastActivo(msg, ok));
+			// TODO do we need to handle any other error from API like this or should we do it on processResponse
+			dispatch(sendToast(msg, ok));
 		}
 
 	};
 };
 
-export const clearPatients = () => ({ type: types.pacienteClearPacientes });
+export const clearPatients = () => ({ type: types.patientsClearPatients });
 
-export const setPatientAppointments = (citas) => ({
-	type: types.pacienteSetCitasPaciente,
-	payload: citas
+export const setPatientAppointments = (appointments) => ({
+	type: types.patientsSetPatientAppointments,
+	payload: appointments
 });
 
-export const setPatientFiles = (archivos) => ({
-	type: types.pacienteSetArchivosPaciente,
-	payload: archivos
+export const setPatientFiles = (files) => ({
+	type: types.patientsSetPatientFiles,
+	payload: files
 });
 
-export const startLoadingPatientAppointments = (_id) => {
+export const startLoadingPatientAppointments = (patiendId) => {
 	return async (dispatch) => {
 		const urlChangers = {
-			dynamicPath: _id,
+			dynamicPath: patiendId,
 		};
 
 		const resp = await processRequest(requestTemplates.GET_PATIENT_APPOINTMENTS, {}, urlChangers);
@@ -90,36 +91,36 @@ export const startLoadingPatients = () => {
 	};
 };
 
-export const startUpdatingPatient = (paciente) => {
+export const startUpdatingPatient = (patient) => {
 	return async (dispatch, getState) => {
 
-		let { totalPatients } = getState().pacientes;
+		let { totalPatients } = getState().patients;
 
 		totalPatients = totalPatients.map(
-			v => v._id === paciente._id
-				? paciente
+			v => v._id === patient._id
+				? patient
 				: v
 		);
 
-		const resp = await processRequest(requestTemplates.UPDATE_PATIENT, paciente);
+		const resp = await processRequest(requestTemplates.UPDATE_PATIENT, patient);
 		const { ok, msg } = await resp.json();
 
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
-			dispatch(refreshPatient(paciente));
+			dispatch(sendToast(msg, ok));
+			dispatch(refreshPatient(patient));
 			dispatch(setPatients(totalPatients));
 		}
 
 	};
 };
 
-export const setActivePatient = (paciente) => ({
-	type: types.pacienteSetPacienteActivo,
-	payload: { ...paciente }
+export const setActivePatient = (patient) => ({
+	type: types.patientsSetActivePatient,
+	payload: { ...patient }
 });
 
-export const removeActivePatient = () => ({ type: types.pacienteRemovePacienteActivo });
+export const removeActivePatient = () => ({ type: types.patientsRemoveActivePatient });
 
 // TODO abstract this to its own action file
 export const startLoadingPatientFiles = (patientId) => {
@@ -128,10 +129,10 @@ export const startLoadingPatientFiles = (patientId) => {
 			dynamicPath: patientId
 		};
 		const resp = await processRequest(requestTemplates.GET_FILES, {}, urlChangers);
-		const { ok, payload: { archivos } } = await resp.json();
+		const { ok, payload: { archivos:patientFiles } } = await resp.json();
 
 		if (ok) {
-			dispatch(setPatientFiles(archivos));
+			dispatch(setPatientFiles(patientFiles));
 		}
 	};
 };
@@ -139,7 +140,7 @@ export const startLoadingPatientFiles = (patientId) => {
 export const startUploadingFile = (file, patientId) => {
 	return async (dispatch, getState) => {
 
-		const { patientFiles } = getState().pacientes;
+		const { patientFiles } = getState().patients;
 		const urlChangers = {
 			dynamicPath: patientId
 		};
@@ -152,7 +153,7 @@ export const startUploadingFile = (file, patientId) => {
 
 		if (ok) {
 			dispatch(setPatientFiles([...patientFiles, userFile]));
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 		}
 	};
 };
@@ -167,11 +168,11 @@ export const startDeletingFile = (fileId, fileName, patientId) => {
 		const resp = await processRequest(requestTemplates.DELETE_FILE, {}, urlChangers);
 		const { msg, ok } = await resp.json();
 
-		let { patientFiles } = getState().pacientes;
+		let { patientFiles } = getState().patients;
 		patientFiles = patientFiles.filter(v => v._id !== fileId);
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(setPatientFiles(patientFiles));
 		}
 	};

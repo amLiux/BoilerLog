@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLogout } from '../../actions/auth';
-import { clearAppointments } from '../../actions/citas';
+import { removeAppointments } from '../../actions/appointments';
 import { clearPatients } from '../../actions/patients';
 
 export const Navbar = () => {
@@ -13,7 +13,7 @@ export const Navbar = () => {
 
 	const handleLogout = (e) => {
 		e.preventDefault();
-		dispatch(clearAppointments());
+		dispatch(removeAppointments());
 		dispatch(clearPatients());
 		dispatch(startLogout());
 	};

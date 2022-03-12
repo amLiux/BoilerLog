@@ -1,6 +1,6 @@
-import { fetchPutUser, processRequest } from '../services/processRequest';
+import { processRequest } from '../services/processRequest';
 import { types } from '../types/types';
-import { setToastActivo } from './ui';
+import { sendToast } from './ui';
 import { requestTemplates } from '../constants/HTTP';
 
 export const startLoadingUsers = () => {
@@ -24,48 +24,54 @@ export const startRegularRegister = (userPayload) => {
 		const resp = await processRequest(requestTemplates.REGISTER, userPayload);
 		const { ok, payload: newUser, errors = [], msg } = await resp.json();
 
-		const { totalUsers } = getState().usuarios;
+		const { totalUsers } = getState().users;
 
 		if (ok) {
 			dispatch(setUsers([...totalUsers, newUser]));
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 		} else {
 			errors.length > 0
-				? dispatch(setToastActivo(errors[Object.keys(errors)[0]].msg))
-				: dispatch(setToastActivo(msg, ok));
+				? dispatch(sendToast(errors[Object.keys(errors)[0]].msg))
+				: dispatch(sendToast(msg, ok));
 		}
 	};
 };
 
-export const startDisablingUser = (_id) => {
+export const startDisablingUser = (userId) => {
 	return async (dispatch, getState) => {
-		const token = localStorage.getItem('token');
+		const urlChangers = {
+			dynamicPath: userId,
+		};
 
-		const response = await fetchPutUser(token, _id);
-		const { ok, msg, newUser } = await response.json();
+		const resp = await processRequest(requestTemplates.UPDATE_USER, {}, urlChangers);
+		const { ok, msg, newUser } = await resp.json();
 
-		let { totalUsers } = getState().usuarios;
+		let { totalUsers } = getState().users;
 
 		if (ok) {
 			totalUsers = totalUsers.map(user => user._id === newUser._id ? newUser : user);
 			dispatch(setUsers(totalUsers));
-			dispatch(setToastActivo(msg));
+			dispatch(sendToast(msg));
 		}
 	};
 };
 
-export const startUpdatingUser = (_id, update) => {
+export const startUpdatingUser = (userId, update) => {
 	return async (dispatch, getState) => {
-		const token = localStorage.getItem('token');
-		const response = await fetchPutUser(token, _id, update);
-		const { ok, msg, newUser } = await response.json();
+		const urlChangers = {
+			dynamicPath: userId,
+		};
 
-		let { totalUsers } = getState().usuarios;
+		const resp = await processRequest(requestTemplates.UPDATE_USER, update, urlChangers);
+
+		const { ok, msg, newUser } = await resp.json();
+
+		let { totalUsers } = getState().users;
 
 		if (ok) {
 			totalUsers = totalUsers.map(user => user._id === newUser._id ? newUser : user);
 			dispatch(setUsers(totalUsers));
-			dispatch(setToastActivo(msg));
+			dispatch(sendToast(msg));
 		}
 	};
 };

@@ -21,6 +21,7 @@ const processResponse = async (url, requestInfo) => {
 			`Error executando la petición ${url}. 
 			 Más detalles del error: ${err}.		`
 		);
+
 		// TODO default ok, msg for the front-end not to break if API is down
 	}
 };
@@ -67,49 +68,6 @@ export const processRequest = async (template, payload = {}, urlChangers = {}) =
 	return processResponse(fetchUrl, requestInfo);
 };
 
-export const fetchPutCitas = (token, cita) =>
-	fetch(`${url}/citas`, {
-		method: 'PUT',
-		headers: {
-			'Authorization': token,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(cita)
-	});
-
-export const fetchDeleteCitas = (token, id) =>
-	fetch(`${url}/citas/${id}`, {
-		method: 'DELETE',
-		headers: {
-			'Authorization': token,
-		}
-	});
-
-export const fetchGetHorarios = (_id) =>
-	fetch(`${url}/citas/${_id}`, { method: 'GET' });
-
-export const fetchGetHorariosByDate = (date, token) =>
-	fetch(`${url}/citas/date/${encodeURIComponent(date)}`,
-		{
-			method: 'GET',
-			headers: {
-				'Authorization': token,
-				'Content-Type': 'application/json'
-			}
-
-		}
-	);
-
-export const fetchPutHorarioCita = (_id, horario) =>
-	fetch(`${url}/citas/${_id}`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ horario })
-	}
-	);
-
 export const fetchPostReporte = (reporte, detallesFecha, token) =>
 	fetch(`${url}/reportes/${reporte}`, {
 		method: 'POST',
@@ -118,11 +76,4 @@ export const fetchPostReporte = (reporte, detallesFecha, token) =>
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(detallesFecha)
-	});
-
-export const fetchPutUser = (token, id, update) =>
-	fetch(`${url}/users/${id}`, {
-		method: 'POST',
-		headers: { 'Authorization': token, 'Content-Type': 'application/json' },
-		body: JSON.stringify(update)
 	});

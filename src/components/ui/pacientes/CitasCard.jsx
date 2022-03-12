@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { startUpdateCita } from '../../../actions/citas';
+import { startUpdatingAppointment } from '../../../actions/appointments';
 import { useCita } from '../../hooks/useCita';
 import { Textarea } from '../Textarea';
 
 export const CitasCard = ({ cita }) => {
 	const dispatch = useDispatch();
-	const handleHookCallback = () => dispatch(startUpdateCita({ ...cita[0], nota }));
+	const handleHookCallback = () => dispatch(startUpdatingAppointment({ ...cita[0], nota }));
 
 
 	const [editNote, handleEditClick, nota, handleInputChange, stringEstado, estado, newFecha] =
