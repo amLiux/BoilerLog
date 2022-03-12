@@ -8,8 +8,8 @@ import { HomeScreen } from '../components/screens/HomeScreen';
 import { PacientesScreen } from '../components/screens/PacientesScreen';
 import { CalendarModal } from '../components/ui/calendar/CalendarModal/CalendarModal';
 import { Navbar } from '../components/ui/Navbar';
-import { setModalInactivo, removeDiaActivo, setToastInactivo } from '../actions/ui';
-import { removeCitaActiva } from '../actions/citas';
+import { closeModal, removeActiveDay, removeToast } from '../actions/ui';
+import { removeActiveAppointment } from '../actions/appointments';
 import { PacientesModal } from '../components/ui/pacientes/PacientesModal';
 import { removeActivePatient } from '../actions/patients';
 import { ReportsScreen } from '../components/screens/ReportsScreen';
@@ -19,32 +19,32 @@ import { Toast } from '../components/ui/Toast';
 
 export const DashboardRoutes = () => {
 
-	const { isModalOpen, activeDay, tipoModal } = useSelector(state => state.ui);
+	const { isModalOpen, activeDay, modalType } = useSelector(state => state.ui);
 
 	const dispatch = useDispatch();
 
-	const {contextoToast, toastAbierto} = useSelector(state => state.ui);
+	const { toastContext, isToastOpen } = useSelector(state => state.ui);
 
 	const handleCloseCalendar = () => {
-		dispatch(setModalInactivo());
-		dispatch(removeDiaActivo());
-		dispatch(removeCitaActiva());
-		dispatch(setToastInactivo());
+		dispatch(closeModal());
+		dispatch(removeActiveDay());
+		dispatch(removeActiveAppointment());
+		dispatch(removeToast());
 	};
 
 	const handleClosePacientes = () => {
-		dispatch(setModalInactivo());
+		dispatch(closeModal());
 		dispatch(removeActivePatient());
-		dispatch(setToastInactivo());
+		dispatch(removeToast());
 	};
 
 	return (
 		<div className="main">
 			<Navbar />
-			{isModalOpen && Object.keys(activeDay).length !== 0 && tipoModal === 'CALENDARIO' && <CalendarModal dia={activeDay} handleClose={() => handleCloseCalendar()} modalAbierto={isModalOpen} />}
-			{isModalOpen && tipoModal === 'PACIENTES' && <PacientesModal handleClose={() => handleClosePacientes()} modalAbierto={isModalOpen} />}
+			{isModalOpen && Object.keys(activeDay).length !== 0 && modalType === 'CALENDARIO' && <CalendarModal dia={activeDay} handleClose={() => handleCloseCalendar()} isModalOpen={isModalOpen} />}
+			{isModalOpen && modalType === 'PACIENTES' && <PacientesModal handleClose={() => handleClosePacientes()} modalAbierto={isModalOpen} />}
 			<div className="main__main-content">
-				{toastAbierto && <Toast exitoso={contextoToast.exito} mensaje={contextoToast.mensaje} />}
+				{isToastOpen && <Toast success={toastContext.success} msg={toastContext.msg} />}
 				<Switch>
 					<Route exact path="/dentaltask/" component={HomeScreen} />
 					<Route exact path="/dentaltask/calendario" component={CalendarScreen} />

@@ -26,4 +26,8 @@ export const Button = ({ group, warning = false, success = false, text, onClick 
 
 Button.propTypes = {
 	group: PropTypes.bool,
+	warning: PropTypes.bool, 
+	success: PropTypes.bool, 
+	text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), 
+	onClick: PropTypes.func,
 };

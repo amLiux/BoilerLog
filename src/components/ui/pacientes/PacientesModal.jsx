@@ -5,11 +5,11 @@ import { PacientesForm } from './PacientesForm';
 
 export const PacientesModal = ({ isModalOpen, handleClose }) => {
 
-	const { contextoToast, toastAbierto } = useSelector(state => state.ui);
+	const { toastContext, isToastOpen } = useSelector(state => state.ui);
 
 	return (
 		<div className={`modal-background ${isModalOpen ? 'modal-showing' : ''}`}>
-			{toastAbierto && <Toast mensaje={contextoToast.mensaje} exitoso={contextoToast.exito} />}
+			{isToastOpen && <Toast msg={toastContext.msg} success={toastContext.success} />}
 			<div className="modal-inner d-flex">
 				<div className="modal-form">
 					<PacientesForm handleClose={handleClose} />

@@ -1,18 +1,18 @@
 import { fetchPutHorarioCita } from '../services/processRequest';
-import {types} from '../types/types';
+import { types } from '../types/types';
 
 
-export const setSelectedHorario = ({target}) => ({
+export const setSelectedHorario = ({ target }) => ({
 	type: types.horariosSetHorario,
-	payload:{
+	payload: {
 		horario: target.value
 	}
 });
 
 export const startUpdateCitaConHorario = (_id) => {
-	return async (dispatch, getState) => {
-		const {horarioActivo} = getState().horarios;
-		
+	return async (_, getState) => {
+		const { horarioActivo } = getState().horarios;
+
 		parseInt(horarioActivo);
 
 		const resp = await fetchPutHorarioCita(_id, horarioActivo);

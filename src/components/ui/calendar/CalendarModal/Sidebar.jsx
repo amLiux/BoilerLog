@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCitaActiva } from '../../../../actions/citas';
+import { setActiveAppointment } from '../../../../actions/appointments';
 import { RadioButton } from '../../RadioButton';
 
 export const Sidebar = ({handleClose}) => {
@@ -12,7 +12,7 @@ export const Sidebar = ({handleClose}) => {
 	const dispatch = useDispatch();
 
 	const handleCitaChange = (cita) => {
-		dispatch(setCitaActiva(cita));
+		dispatch(setActiveAppointment(cita));
 	};
 	
 	return (

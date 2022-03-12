@@ -1,28 +1,28 @@
-import {types} from '../types/types';
+import { types } from '../types/types';
 
-export const setModalActivo = (tipoModal) => ({
+export const openModal = (modalType) => ({
 	type: types.uiOpenModal,
-	payload: tipoModal
+	payload: modalType
 });
 
-export const setToastActivo = (mensaje, exito) => ({
+export const sendToast = (msg, success) => ({
 	type: types.uiShowToast,
 	payload: {
-		mensaje,
-		exito
+		msg,
+		success
 	}
 });
 
-export const setToastInactivo = () => ({type: types.uiRemoveToast});
+export const removeToast = () => ({ type: types.uiRemoveToast });
 
-export const setModalInactivo = () => ({type: types.uiCloseModal});
+export const closeModal = () => ({ type: types.uiCloseModal });
 
-export const setDiaActivo = (dia) => ({
-	type: types.uiSetDiaActivo,
-	payload:{
-		...dia
+export const setActiveDay = (day) => ({
+	type: types.uiSetActiveDay,
+	payload: {
+		...day
 	}
 });
 
-export const removeDiaActivo = () => ({type: types.uiRemoveDiaActivo});
+export const removeActiveDay = () => ({ type: types.uiRemoveActiveDay });
 

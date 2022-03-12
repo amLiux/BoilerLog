@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Button } from '../../Button';
 import { SelectHorario } from './SelectHorario';
 import { SelectPaciente } from './SelectPacientes';
-import { startAddingAppointment } from '../../../../actions/citas';
-import { setToastActivo } from '../../../../actions/ui';
+import { startAddingAppointment } from '../../../../actions/appointments';
+import { sendToast } from '../../../../actions/ui';
 
 
 export const CitaForm = ({ callback }) => {
@@ -19,7 +19,7 @@ export const CitaForm = ({ callback }) => {
 
 		(existeHorario && existeUsuario)
 			? dispatch(startAddingAppointment(paciente, horario))
-			: dispatch(setToastActivo('Necesitas llenar los 2 valores', false));
+			: dispatch(sendToast('Necesitas llenar los 2 valores', false));
 	
 		callback();
 	};

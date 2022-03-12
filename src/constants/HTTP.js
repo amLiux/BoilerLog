@@ -11,7 +11,7 @@ const validHeaders = {
 };
 
 const validEndpointPaths = {
-	APPOINTMENTS: 'citas',
+	APPOINTMENTS: '/citas',
 	PATIENTS: '/pacientes',
 	FILES: '/files',
 };
@@ -108,5 +108,11 @@ export const requestTemplates = {
 		method: validHTTPMethods.DELETE,
 		requiresAuthentication: true,
 		requiresDynamicPath: true,
+	},
+	UPDATE_APPOINTMENT: {
+		path: validEndpointPaths.APPOINTMENTS,
+		method: validHTTPMethods.PUT,
+		requiresAuthentication: true,
+		headers: validHeaders.APP_JSON,
 	},
 };

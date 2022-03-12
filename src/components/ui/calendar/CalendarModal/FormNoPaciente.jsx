@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { removeCitaActiva } from '../../../../actions/citas';
+import { removeActiveAppointment } from '../../../../actions/appointments';
 import { clearPatients, setActivePatient } from '../../../../actions/patients';
-import { setModalActivo, setModalInactivo } from '../../../../actions/ui';
+import { openModal, closeModal } from '../../../../actions/ui';
 import { Button } from '../../Button';
 import { Form } from '../../Form';
 
@@ -11,16 +11,16 @@ export const FormNoPaciente = ({ handleInputChange, errors, values, handleReset,
 
 	const handleAddPacienteClick = () => {
 		// se desactiva el modal calendario
-		dispatch(setModalInactivo());
+		dispatch(closeModal());
 		// se remueve la cita para evitar bugs
-		dispatch(removeCitaActiva());
+		dispatch(removeActiveAppointment());
 		dispatch(clearPatients());
 		delete values.estado;
 		delete values._id;
 		values.cedula = '';
 		// setteamos un paciente para que cuando se abra el modal ya tenga los valores que tenemos hasta el momento en él
 		dispatch(setActivePatient({ ...values }));
-		dispatch(setModalActivo('PACIENTES'));
+		dispatch(openModal('PACIENTES'));
 	};
 
 	return (

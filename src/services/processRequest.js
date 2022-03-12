@@ -21,6 +21,7 @@ const processResponse = async (url, requestInfo) => {
 			`Error executando la petición ${url}. 
 			 Más detalles del error: ${err}.		`
 		);
+
 		// TODO default ok, msg for the front-end not to break if API is down
 	}
 };
@@ -66,24 +67,6 @@ export const processRequest = async (template, payload = {}, urlChangers = {}) =
 
 	return processResponse(fetchUrl, requestInfo);
 };
-
-export const fetchPutCitas = (token, cita) =>
-	fetch(`${url}/citas`, {
-		method: 'PUT',
-		headers: {
-			'Authorization': token,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(cita)
-	});
-
-export const fetchDeleteCitas = (token, id) =>
-	fetch(`${url}/citas/${id}`, {
-		method: 'DELETE',
-		headers: {
-			'Authorization': token,
-		}
-	});
 
 export const fetchGetHorarios = (_id) =>
 	fetch(`${url}/citas/${_id}`, { method: 'GET' });

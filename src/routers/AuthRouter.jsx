@@ -7,11 +7,11 @@ import { Toast } from '../components/ui/Toast';
 
 export const AuthRouter = () => {
 	
-	const {contextoToast, toastAbierto} = useSelector(state => state.ui);
+	const {toastContext, isToastOpen} = useSelector(state => state.ui);
 
 	return (
 		<div className="auth__main">
-			{toastAbierto && <Toast mensaje={contextoToast.mensaje} exitoso={contextoToast.exito} />}
+			{isToastOpen && <Toast msg={toastContext.msg} success={toastContext.success} />}
 			<div className="auth__box-container">
 				<Switch>
 					<Route exact path="/auth/login" component={LoginScreen}/>

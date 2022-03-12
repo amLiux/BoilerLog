@@ -19,7 +19,7 @@ export const ConfigScreen = () => {
 
 	const dispatch = useDispatch();
 
-	const { mensajeToast, toastAbierto, isModalOpen } = useSelector(state => state.ui);
+	const { toastContext, isToastOpen, isModalOpen } = useSelector(state => state.ui);
 
 	const handleKeyDown = (e) => {
 		e.key === 'Enter' && dispatch(startUpdatingUser(uid, { pwd }));
@@ -47,7 +47,7 @@ export const ConfigScreen = () => {
 
 	return (
 		<>
-			{toastAbierto && !isModalOpen && <Toast context="screen" success={true} error={mensajeToast.error} />}
+			{isToastOpen && !isModalOpen && <Toast success={toastContext.success} msg={toastContext.msg} />}
 			<div className="main-container">
 				<div style={{ display: 'flex', width: '50%', margin: '0 auto', flexDirection: 'column', height: '100%' }}>
 					<div className="mt-10" style={{ marginBottom: 'auto' }}>

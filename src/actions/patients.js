@@ -1,18 +1,18 @@
 import { requestTemplates } from '../constants/HTTP';
 import { processRequest } from '../services/processRequest';
 import { types } from '../types/types';
-import { startLoadingAppointments } from './citas';
-import { setModalInactivo, setToastActivo } from './ui';
+import { startLoadingAppointments } from './appointments';
+import { closeModal, sendToast } from './ui';
 
 const setPatients = (pacientes) => ({
-	type: types.pacientesSetPacientes,
+	type: types.patientsSetPatients,
 	payload: {
 		pacientes: [...pacientes],
 	}
 });
 
 const refreshPatient = (paciente) => ({
-	type: types.pacientesActualizarPacientes,
+	type: types.patientsUpdatePatient,
 	payload: paciente
 });
 
@@ -26,7 +26,7 @@ export const startSearchingPatient = (searchString) => {
 		const { ok, msg, payload: { patients } } = await resp.json();
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(setPatients(patients));
 		}
 
@@ -41,28 +41,29 @@ export const startAddingPatient = (patient) => {
 		const { ok, msg, payload: createdPatient } = await resp.json();
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(refreshPatient(createdPatient));
 			dispatch(setPatients([...totalPacients, createdPatient]));
 			dispatch(removeActivePatient());
-			dispatch(setModalInactivo());
+			dispatch(closeModal());
 			dispatch(startLoadingAppointments());
 		} else {
-			dispatch(setToastActivo(msg, ok));
+			// TODO do we need to handle any other error from API like this or should we do it on processResponse
+			dispatch(sendToast(msg, ok));
 		}
 
 	};
 };
 
-export const clearPatients = () => ({ type: types.pacienteClearPacientes });
+export const clearPatients = () => ({ type: types.patientsClearPatients });
 
 export const setPatientAppointments = (citas) => ({
-	type: types.pacienteSetCitasPaciente,
+	type: types.patientsSetPatientAppointments,
 	payload: citas
 });
 
 export const setPatientFiles = (archivos) => ({
-	type: types.pacienteSetArchivosPaciente,
+	type: types.patientsSetPatientFiles,
 	payload: archivos
 });
 
@@ -106,7 +107,7 @@ export const startUpdatingPatient = (paciente) => {
 
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(refreshPatient(paciente));
 			dispatch(setPatients(totalPatients));
 		}
@@ -115,11 +116,11 @@ export const startUpdatingPatient = (paciente) => {
 };
 
 export const setActivePatient = (paciente) => ({
-	type: types.pacienteSetPacienteActivo,
+	type: types.patientsSetActivePatient,
 	payload: { ...paciente }
 });
 
-export const removeActivePatient = () => ({ type: types.pacienteRemovePacienteActivo });
+export const removeActivePatient = () => ({ type: types.patientsRemoveActivePatient });
 
 // TODO abstract this to its own action file
 export const startLoadingPatientFiles = (patientId) => {
@@ -152,7 +153,7 @@ export const startUploadingFile = (file, patientId) => {
 
 		if (ok) {
 			dispatch(setPatientFiles([...patientFiles, userFile]));
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 		}
 	};
 };
@@ -171,7 +172,7 @@ export const startDeletingFile = (fileId, fileName, patientId) => {
 		patientFiles = patientFiles.filter(v => v._id !== fileId);
 
 		if (ok) {
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 			dispatch(setPatientFiles(patientFiles));
 		}
 	};

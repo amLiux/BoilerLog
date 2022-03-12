@@ -3,8 +3,8 @@ import { useCalendar } from '../hooks/useCalendar';
 import { CalendarHeader } from '../ui/calendar/CalendarHeader';
 import { Dia } from '../ui/calendar/Dia';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDiaActivo, setModalActivo } from '../../actions/ui';
-import { startLoadingAppointments } from '../../actions/citas';
+import { setActiveDay, openModal } from '../../actions/ui';
+import { startLoadingAppointments } from '../../actions/appointments';
 
 export const CalendarScreen = () => {
 
@@ -12,16 +12,17 @@ export const CalendarScreen = () => {
 
 	const [nav, setNav] = useState(0);
 
-	const { totalCitas } = useSelector(state => state.citas);
+	const { totalAppointments } = useSelector(state => state.citas);
 
-	const [dias, dateDisplay] = useCalendar(totalCitas, nav);
+	const [dias, dateDisplay] = useCalendar(totalAppointments, nav);
 
 	useEffect(() => dispatch(startLoadingAppointments()), [dispatch]);
 
 	const handleDiaClick = (dia) => {
 		if (dia.value !== 'padding') {
-			dispatch(setModalActivo('CALENDARIO'));
-			dispatch(setDiaActivo(dia));
+			dispatch(openModal('CALENDARIO'));
+			console.log(dia);
+			dispatch(setActiveDay(dia));
 		}
 	};
 

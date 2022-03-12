@@ -7,13 +7,12 @@ import { EditCita } from './EditCita';
 import { Sidebar } from './Sidebar';
 
 export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
-
 	const { citas } = dia;
 	const [empty, setEmpty] = useState();
 	const [create, setCreate] = useState(false);
 
-	const { isCitaActive, cita } = useSelector(state => state.citas);
-	const { contextoToast, toastAbierto } = useSelector(state => state.ui);
+	const { hasActiveAppointment, cita } = useSelector(state => state.citas);
+	const { toastContext, isToastOpen } = useSelector(state => state.ui);
 
 	useEffect(() =>
 		citas && citas.length === 0
@@ -25,13 +24,13 @@ export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
 
 	return (
 		<div className={`modal-background ${isModalOpen ? 'modal-showing' : ''}`}>
-			{toastAbierto && <Toast mensaje={contextoToast.mensaje} exitoso={contextoToast.exito} />}
+			{isToastOpen && <Toast msg={toastContext.msg} success={toastContext.success} />}
 			<div className="modal-inner">
 				<Sidebar handleClose={handleClose} />
 				<div className="modal-form">
 					{
 						!empty
-							? isCitaActive
+							? hasActiveAppointment
 								? <EditCita isEdit cita={cita} />
 								: create
 									? <CitaForm callback={handleCreateScreen} />

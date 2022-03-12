@@ -4,7 +4,7 @@ import { fetchGetHorariosByDate } from '../../../../services/processRequest';
 
 export const SelectHorario = ({ handleState }) => {
 
-	const { date } = useSelector(state => state.ui.diaActivo);
+	const { date } = useSelector(state => state.ui.activeDay);
 
 	const [horarios, setHorarios] = useState([]);
 	const [dropdownActive, setDropdownActive] = useState(false);
@@ -21,7 +21,9 @@ export const SelectHorario = ({ handleState }) => {
 			if (isMounted) setHorarios(horariosDisponibles);
 		}
 		fetchHorariosDisponibles();
-		return () => { isMounted = false;};
+		return () => { 
+			isMounted = false;
+		};
 	}, [date]);
 
 

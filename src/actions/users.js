@@ -1,6 +1,6 @@
 import { fetchPutUser, processRequest } from '../services/processRequest';
 import { types } from '../types/types';
-import { setToastActivo } from './ui';
+import { sendToast } from './ui';
 import { requestTemplates } from '../constants/HTTP';
 
 export const startLoadingUsers = () => {
@@ -28,11 +28,11 @@ export const startRegularRegister = (userPayload) => {
 
 		if (ok) {
 			dispatch(setUsers([...totalUsers, newUser]));
-			dispatch(setToastActivo(msg, ok));
+			dispatch(sendToast(msg, ok));
 		} else {
 			errors.length > 0
-				? dispatch(setToastActivo(errors[Object.keys(errors)[0]].msg))
-				: dispatch(setToastActivo(msg, ok));
+				? dispatch(sendToast(errors[Object.keys(errors)[0]].msg))
+				: dispatch(sendToast(msg, ok));
 		}
 	};
 };
@@ -49,7 +49,7 @@ export const startDisablingUser = (_id) => {
 		if (ok) {
 			totalUsers = totalUsers.map(user => user._id === newUser._id ? newUser : user);
 			dispatch(setUsers(totalUsers));
-			dispatch(setToastActivo(msg));
+			dispatch(sendToast(msg));
 		}
 	};
 };
@@ -65,7 +65,7 @@ export const startUpdatingUser = (_id, update) => {
 		if (ok) {
 			totalUsers = totalUsers.map(user => user._id === newUser._id ? newUser : user);
 			dispatch(setUsers(totalUsers));
-			dispatch(setToastActivo(msg));
+			dispatch(sendToast(msg));
 		}
 	};
 };

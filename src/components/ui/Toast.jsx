@@ -1,28 +1,28 @@
 import React from 'react';
 
-import {useDispatch} from 'react-redux';
-import { setToastInactivo } from '../../actions/ui';
+import { useDispatch } from 'react-redux';
+import { removeToast } from '../../actions/ui';
 
-export const Toast = ({ mensaje, exitoso}) => {
+export const Toast = ({ msg, success }) => {
 
 	const dispatch = useDispatch();
 
 	return (
 		<div className="wrapper">
-			<div className={`toast ${exitoso && 'toast-success'}`}>
+			<div className={`toast ${success && 'toast-success'}`}>
 				<div className="content">
-					<div className={`icon ${exitoso && 'icon-success'}`} >
-						{exitoso 
+					<div className={`icon ${success && 'icon-success'}`} >
+						{success
 							? <i className="fas fa-check"></i>
-							: <i className="fas fa-exclamation"></i> 
+							: <i className="fas fa-exclamation"></i>
 						}
 					</div>
 					<div className="details">
-						<span>{ exitoso ? 'Completado!' : 'Error!'}</span>
-						<p>{mensaje}</p>
+						<span>{success ? 'Completado!' : 'Error!'}</span>
+						<p>{msg}</p>
 					</div>
 				</div>
-				<div onClick={() => dispatch(setToastInactivo())} className="close-icon"><i className="fas fa-times"></i></div>
+				<div onClick={() => dispatch(removeToast())} className="close-icon"><i className="fas fa-times"></i></div>
 			</div>
 		</div>
 

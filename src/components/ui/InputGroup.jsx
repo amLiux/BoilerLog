@@ -67,7 +67,7 @@ export const InputGroup = ({ isEdit, search = false, value, label, handleInputCh
 InputGroup.propTypes = {
 	isEdit: PropTypes.bool,
 	search: PropTypes.bool,
-	value: PropTypes.string.isRequired, 
+	value: PropTypes.string, 
 	label: PropTypes.string, 
 	handleInputChange: PropTypes.func, 
 	name: PropTypes.string.isRequired,
