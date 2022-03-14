@@ -16,8 +16,8 @@ export const HomeScreen = () => {
 			<h1 style={{ textAlign: 'center', marginTop: '1.5rem', marginBottom: '-3rem', fontWeight: '500', fontSize: '3rem' }}>Información importante: </h1>
 			<div className="dashboard-home">
 				{
-					dashboardsInfo.map(({ heading, time, text, citas }, ind) =>
-						<Dashboard key={ind} data={citas} heading={heading} time={time} text={text} />
+					dashboardsInfo.map(({ heading, time, text, appointments }, ind) =>
+						<Dashboard key={ind} appointments={appointments} heading={heading} time={time} text={text} />
 					)
 				}
 			</div>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Form } from '../ui/Form';
 import { useRegister } from '../hooks/useRegister';
 
-export const RegisterScreen = ({ isEdit }) => {
+export const RegisterScreen = ({ isEdit = false }) => {
 
 	const [values, errors, handleInputChange, handleSubmit, setAdmin, admin] = useRegister();
 

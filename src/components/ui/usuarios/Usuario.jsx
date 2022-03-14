@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { startDisablingUser } from '../../../actions/users';
+import { UserShape } from '../../../constants/propTypes';
 
 export const Usuario = ({usuario, email, nombre, rol, estado, id, handleEdit}) => {
 	const dispatch = useDispatch();
@@ -25,3 +26,5 @@ export const Usuario = ({usuario, email, nombre, rol, estado, id, handleEdit}) =
 	);
 
 };
+
+Usuario.propTypes = UserShape;

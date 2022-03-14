@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSelectedSchedule } from '../../actions/schedules';
+import { RadioButtonProps } from '../../constants/propTypes';
 
 export const RadioButton = ({ estado, date, horario, label, onChange, sidebarBtn = false }) => {
 
@@ -53,3 +54,5 @@ export const RadioButton = ({ estado, date, horario, label, onChange, sidebarBtn
 		</div>
 	);
 };
+
+RadioButton.propTypes = RadioButtonProps;

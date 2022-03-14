@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingUsers } from '../../actions/users';
 import { Toast } from '../ui/Toast';
-import { UsuariosList } from '../ui/usuarios/UsuariosList';
+import { UsersList } from '../ui/usuarios/UsersList';
 import { RegisterScreen } from './RegisterScreen';
 
 
@@ -29,7 +29,7 @@ export const UserManagementScreen = () => {
 
 				</div>
 				<div className="main-container" style={{ width: '65%', minHeight: '100%', overflow: 'auto' }}>
-					<UsuariosList handleEdit={() => setEdit(!edit)} totalUsers={totalUsers} />
+					<UsersList handleEdit={() => setEdit(!edit)} totalUsers={totalUsers} />
 				</div>
 			</div>
 		</>

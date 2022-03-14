@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { CalendarModalProps } from '../../../../constants/propTypes';
 import { Toast } from '../../Toast';
 import { Banner } from './Banner';
-import { CitaForm } from './CitaForm';
-import { EditCita } from './EditCita';
+import { NewAppointmentForm } from './NewAppointmentForm';
 import { Sidebar } from './Sidebar';
+import { AppointmentForm } from './AppointmentForm';
 
-export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
-	const { appointments } = dia;
+export const CalendarModal = ({ day, isModalOpen, handleClose }) => {
+	const { appointments } = day;
 	const [empty, setEmpty] = useState();
 	const [create, setCreate] = useState(false);
 
@@ -31,15 +32,15 @@ export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
 					{
 						!empty
 							? hasActiveAppointment
-								? <EditCita isEdit cita={appointment} />
+								? <AppointmentForm appointment={appointment} />
 								: create
-									? <CitaForm callback={handleCreateScreen} />
+									? <NewAppointmentForm callback={handleCreateScreen} />
 									: <Banner handleCreateScreen={handleCreateScreen} simpleBanner />
-							: 
+							:
 							<>
 								{
 									create
-										? <CitaForm callback={handleCreateScreen} />
+										? <NewAppointmentForm callback={handleCreateScreen} />
 										: <Banner handleCreateScreen={handleCreateScreen} />
 								}
 							</>
@@ -49,3 +50,5 @@ export const CalendarModal = ({ dia, isModalOpen, handleClose }) => {
 		</div>
 	);
 };
+
+CalendarModal.propTypes = CalendarModalProps;

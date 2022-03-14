@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingSchedulesByDate } from '../../../../actions/schedules';
+import { SelectScheduleProps } from '../../../../constants/propTypes';
 
-export const SelectHorario = ({ handleState }) => {
+export const SelectSchedule = ({ handleState }) => {
 	const dispatch = useDispatch();
 	const { date } = useSelector(state => state.ui.activeDay);
 
@@ -46,3 +47,5 @@ export const SelectHorario = ({ handleState }) => {
 		</div>
 	);
 };
+
+SelectSchedule.propTypes = SelectScheduleProps;

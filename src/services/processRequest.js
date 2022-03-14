@@ -64,16 +64,5 @@ export const processRequest = async (template, payload = {}, urlChangers = {}) =
 		requestInfo.body = payload;
 	}
 
-
 	return processResponse(fetchUrl, requestInfo);
 };
-
-export const fetchPostReporte = (reporte, detallesFecha, token) =>
-	fetch(`${url}/reportes/${reporte}`, {
-		method: 'POST',
-		headers: {
-			'Authorization': token,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(detallesFecha)
-	});
