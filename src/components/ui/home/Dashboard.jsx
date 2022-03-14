@@ -1,13 +1,14 @@
 import React from 'react';
+import { DashboardProps } from '../../../constants/propTypes';
 
-export const Dashboard = ({data, heading, time, text}) => {
-
+export const Dashboard = ({ appointments, heading, time, text }) => {
+	// TODO this needs some more styling and functionality, too
 	return (
 		<div className="dashboard-table">
 			<div className="dashboard-table__content">
 				<h3>{heading}:</h3>
 				<div className="dashboard-table__heading">
-					<span className="big">{` ${data?.length} `}</span>
+					<span className="big">{` ${appointments?.length} `}</span>
 					{
 						time && <span className="monthly">/ {time}.</span>
 					}
@@ -19,7 +20,7 @@ export const Dashboard = ({data, heading, time, text}) => {
 					<ul>
 
 						{
-							data.map((cita, ind) => <li key={ind}>{`${new Date(cita.fechaDeseada).toLocaleDateString('es-us')} - ${cita.nombre} ${cita.apellido}` }</li> )
+							appointments.map((cita, ind) => <li key={ind}>{`${new Date(cita.fechaDeseada).toLocaleDateString('es-us')} - ${cita.nombre} ${cita.apellido}`}</li>)
 						}
 					</ul>
 				</div>
@@ -27,3 +28,5 @@ export const Dashboard = ({data, heading, time, text}) => {
 		</div>
 	);
 };
+
+Dashboard.propTypes = DashboardProps;

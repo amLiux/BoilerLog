@@ -1,26 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button } from '../../Button';
-import { SelectHorario } from './SelectHorario';
-import { SelectPaciente } from './SelectPacientes';
+import { SelectSchedule } from './SelectSchedule';
+import { SelectPatient } from './SelectPatient';
 import { startAddingAppointment } from '../../../../actions/appointments';
 import { sendToast } from '../../../../actions/ui';
+import { NewAppointmentFormProps } from '../../../../constants/propTypes';
 
-
-export const CitaForm = ({ callback }) => {
+export const NewAppointmentForm = ({ callback }) => {
 	const dispatch = useDispatch();
 
-	const [horario, setHorario] = useState('');
-	const [paciente, setPaciente] = useState({});
+	const [schedule, setSchedule] = useState('');
+	const [patient, setPatient] = useState({});
 
 	const handleSaveClick = () => {
-		const existeHorario = horario !== '';
-		const existeUsuario = (Object.keys(paciente).length !== 0 && paciente.constructor === Object);
+		const scheduleExists = schedule !== '';
+		const patientExists = (Object.keys(patient).length !== 0 && patient.constructor === Object);
 
-		(existeHorario && existeUsuario)
-			? dispatch(startAddingAppointment(paciente, horario))
+		(scheduleExists && patientExists)
+			? dispatch(startAddingAppointment(patient, schedule))
 			: dispatch(sendToast('Necesitas llenar los 2 valores', false));
-	
+
 		callback();
 	};
 
@@ -32,8 +32,8 @@ export const CitaForm = ({ callback }) => {
 				<div className="edit-form__form-container-title">
 					<h2><i className="fas fa-edit"></i>Crear cita:</h2>
 				</div>
-				<SelectPaciente handleState={setPaciente} />
-				<SelectHorario handleState={setHorario} />
+				<SelectPatient handleState={setPatient} />
+				<SelectSchedule handleState={setSchedule} />
 				<div className="edit-form__action-bar-group">
 					<Button onClick={(e) => handleSaveClick(e)} text="Guardar" />
 				</div>
@@ -41,3 +41,5 @@ export const CitaForm = ({ callback }) => {
 		</div>
 	);
 };
+
+NewAppointmentForm.propTypes = NewAppointmentFormProps;

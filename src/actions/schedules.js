@@ -67,6 +67,7 @@ export const startLoadingSchedulesByDate = (date) => {
 		const { ok, payload: { horariosDisponibles: availableSchedules } } = await resp.json();
 
 		if (ok) {
+			availableSchedules.sort((a, b) => a - b);
 			dispatch(setSchedules(availableSchedules));
 		}
 	};

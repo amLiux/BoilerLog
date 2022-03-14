@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingPatients } from '../../../../actions/patients';
+import { SelectPatientProps } from '../../../../constants/propTypes';
 
-export const SelectPaciente = ({ handleState }) => {
+export const SelectPatient = ({ handleState }) => {
 
 	const dispatch = useDispatch();
 
@@ -42,3 +43,5 @@ export const SelectPaciente = ({ handleState }) => {
 		</div>
 	);
 };
+
+SelectPatient.propTypes = SelectPatientProps;

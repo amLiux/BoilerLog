@@ -1,16 +1,17 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { startUpdatingAppointment } from '../../../actions/appointments';
+import { AppointmentCardProps } from '../../../constants/propTypes';
 import { useCita } from '../../hooks/useCita';
 import { Textarea } from '../Textarea';
 
-export const CitasCard = ({ cita }) => {
+export const AppointmentCard = ({ appointment }) => {
 	const dispatch = useDispatch();
-	const handleHookCallback = () => dispatch(startUpdatingAppointment({ ...cita[0], nota }));
+	const handleHookCallback = () => dispatch(startUpdatingAppointment({ ...appointment[0], nota }));
 
 
 	const [editNote, handleEditClick, nota, handleInputChange, stringEstado, estado, newFecha] =
-		useCita(cita, handleHookCallback);
+		useCita(appointment, handleHookCallback);
 
 	return (
 		<div className="card-container">
@@ -34,3 +35,5 @@ export const CitasCard = ({ cita }) => {
 		</div>
 	);
 };
+
+AppointmentCard.propTypes = AppointmentCardProps;

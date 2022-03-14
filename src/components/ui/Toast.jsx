@@ -2,6 +2,7 @@ import React from 'react';
 
 import { useDispatch } from 'react-redux';
 import { removeToast } from '../../actions/ui';
+import { ToastProps } from '../../constants/propTypes';
 
 export const Toast = ({ msg, success }) => {
 
@@ -28,3 +29,5 @@ export const Toast = ({ msg, success }) => {
 
 	);
 };
+
+Toast.propTypes = ToastProps;

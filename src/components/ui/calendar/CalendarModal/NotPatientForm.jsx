@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux';
 import { removeActiveAppointment } from '../../../../actions/appointments';
 import { clearPatients, setActivePatient } from '../../../../actions/patients';
 import { openModal, closeModal } from '../../../../actions/ui';
+import { NotPatientFormProps } from '../../../../constants/propTypes';
 import { Button } from '../../Button';
 import { Form } from '../../Form';
 
-export const FormNoPaciente = ({ handleInputChange, errors, values, handleReset, handleSubmit }) => {
+export const NotPatientForm = ({ handleInputChange, errors, values, handleReset, handleSubmit }) => {
 	const dispatch = useDispatch();
 
 	const handleAddPacienteClick = () => {
@@ -41,3 +42,5 @@ export const FormNoPaciente = ({ handleInputChange, errors, values, handleReset,
 		</>
 	);
 };
+
+NotPatientForm.propTypes = NotPatientFormProps;

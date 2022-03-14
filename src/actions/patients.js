@@ -35,15 +35,14 @@ export const startSearchingPatient = (searchString) => {
 
 export const startAddingPatient = (patient) => {
 	return async (dispatch, getState) => {
-		const { totalPacients } = getState().patients;
-
+		const { totalPatients } = getState().patients;
 		const resp = await processRequest(requestTemplates.CREATE_PATIENT, patient);
 		const { ok, msg, payload: createdPatient } = await resp.json();
 
 		if (ok) {
 			dispatch(sendToast(msg, ok));
 			dispatch(refreshPatient(createdPatient));
-			dispatch(setPatients([...totalPacients, createdPatient]));
+			dispatch(setPatients([...totalPatients, createdPatient]));
 			dispatch(removeActivePatient());
 			dispatch(closeModal());
 			dispatch(startLoadingAppointments());

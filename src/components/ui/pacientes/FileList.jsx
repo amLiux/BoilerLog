@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingPatientFiles, startUploadingFile } from '../../../actions/patients';
-import { Archivo } from './Archivo';
+import { FileListProps } from '../../../constants/propTypes';
+import { File } from './File';
 
 
-export const ArchivosList = ({paciente :{_id}}) => {
+export const FileList = ({patientId}) => {
 
 	const dispatch = useDispatch();
 
 	const { patientFiles } = useSelector(state => state.patients);
 	
-	useEffect(() => dispatch(startLoadingPatientFiles(_id)) , [_id, dispatch]);
+	useEffect(() => dispatch(startLoadingPatientFiles(patientId)) , [patientId, dispatch]);
 
 	const [file, setFile] = useState('');
 	const [filename, setFilename] = useState('');
@@ -22,7 +23,7 @@ export const ArchivosList = ({paciente :{_id}}) => {
 	};
 
 	const handleSubmit = () => {
-		dispatch(startUploadingFile(file, _id));
+		dispatch(startUploadingFile(file, patientId));
 		setFilename('');
 	};
 
@@ -35,7 +36,7 @@ export const ArchivosList = ({paciente :{_id}}) => {
 				</div>
 				<div className="grid__body">
 					{
-						patientFiles.length > 0 && patientFiles.map( ({nombreArchivo, fechaCreado,  idPaciente, _id}) => <Archivo key={_id} fileId={_id} pacienteId={idPaciente} nombre={nombreArchivo} fecha={fechaCreado}/> )
+						patientFiles.length > 0 && patientFiles.map( ({nombreArchivo, fechaCreado,  idPaciente, _id}) => <File key={_id} fileId={_id} patientId={idPaciente} name={nombreArchivo} date={fechaCreado}/> )
 					}
 					
 				</div>
@@ -53,3 +54,5 @@ export const ArchivosList = ({paciente :{_id}}) => {
 		</div>
 	);
 };
+
+FileList.propTypes = FileListProps;

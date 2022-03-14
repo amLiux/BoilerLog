@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckboxProps } from '../../constants/propTypes';
 
 export const Checkbox = ({handleCheck, setting, helpMessage, checked}) => {
 	return (
@@ -12,3 +13,5 @@ export const Checkbox = ({handleCheck, setting, helpMessage, checked}) => {
 		</div>
 	);
 };
+
+Checkbox.propTypes = CheckboxProps;

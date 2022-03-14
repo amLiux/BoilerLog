@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCalendar } from '../hooks/useCalendar';
 import { CalendarHeader } from '../ui/calendar/CalendarHeader';
-import { Dia } from '../ui/calendar/Dia';
+import { Day } from '../ui/calendar/Day';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveDay, openModal } from '../../actions/ui';
 import { startLoadingAppointments } from '../../actions/appointments';
@@ -18,13 +18,14 @@ export const CalendarScreen = () => {
 
 	useEffect(() => dispatch(startLoadingAppointments()), [dispatch]);
 
-	const handleDiaClick = (dia) => {
-		if (dia.value !== 'padding') {
+	const handleDiaClick = (day) => {
+		if (day.value !== 'padding') {
 			dispatch(openModal('CALENDARIO'));
-			dispatch(setActiveDay(dia));
+			dispatch(setActiveDay(day));
 		}
 	};
 
+	// TODO maybe create a localization file to add multilanguage support
 	const weekDays = [
 		{ fullDay: 'Domingo', letter: 'D' },
 		{ fullDay: 'Lunes', letter: 'L' },
@@ -49,7 +50,7 @@ export const CalendarScreen = () => {
 				}
 			</div>
 			<div className="calendar__content">
-				{ dias.map((dia, i) => <Dia key={i} day={dia}onClick={() => handleDiaClick(dia)} />) }
+				{ dias.map((dia, i) => <Day key={i} day={dia}onClick={() => handleDiaClick(dia)} />) }
 			</div>
 		</div>
 	);

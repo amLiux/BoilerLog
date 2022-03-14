@@ -1,7 +1,8 @@
 import React from 'react';
+import { UsersListProps } from '../../../constants/propTypes';
 import { Usuario } from './Usuario';
 
-export const UsuariosList = ({ totalUsers, handleEdit }) => {
+export const UsersList = ({ totalUsers, handleEdit }) => {
 	return (
 		<div className="grid">
 			<div className="grid__header" style={{ width: '98%' }}>
@@ -19,3 +20,5 @@ export const UsuariosList = ({ totalUsers, handleEdit }) => {
 		</div>
 	);
 };
+
+UsersList.propTypes = UsersListProps;

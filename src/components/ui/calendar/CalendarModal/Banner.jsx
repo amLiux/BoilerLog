@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from '../../Spinner';
+import { BannerProps, SimpleBannerProps } from '../../../../constants/propTypes';
 
 const SimpleBanner = ({ handleCreateScreen }) => {
 	return (
@@ -9,6 +10,8 @@ const SimpleBanner = ({ handleCreateScreen }) => {
 		</div>
 	);
 };
+
+SimpleBanner.propTypes = SimpleBannerProps;
 
 export const Banner = ({ handleCreateScreen, simpleBanner = false }) => {
 
@@ -28,3 +31,5 @@ export const Banner = ({ handleCreateScreen, simpleBanner = false }) => {
 			</div>
 	);
 };
+
+Banner.propTypes = BannerProps;

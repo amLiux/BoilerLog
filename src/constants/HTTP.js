@@ -84,8 +84,8 @@ export const requestTemplates = {
 	CREATE_PATIENT: {
 		path: validEndpointPaths.PATIENTS,
 		method: validHTTPMethods.POST,
+		headers: validHeaders.APP_JSON,
 		requiresAuthentication: true,
-		headers: validHTTPMethods.APP_JSON,
 	},
 	SEARCH_PATIENT: {
 		path: `${validEndpointPaths.PATIENTS}/search`,
@@ -145,5 +145,6 @@ export const requestTemplates = {
 		requiresAuthentication: true,
 		headers: validHeaders.APP_JSON,
 		method: validHTTPMethods.POST,
+		requiresDynamicPath: true,
 	},
 };

@@ -1,7 +1,8 @@
 import React from 'react';
+import { InputProps } from '../../constants/propTypes';
 import { ErrorHelp } from './ErrorHelp';
 
-export const Input = ({ type, handleInputChange, errors, value, name, placeholder, onKeyDown, isAuthForm = false }) => {
+export const Input = ({ type, handleInputChange, errors = {}, value, name, placeholder, onKeyDown, isAuthForm = false }) => {
 	const hasError = errors[name];
 
 	return (
@@ -20,3 +21,5 @@ export const Input = ({ type, handleInputChange, errors, value, name, placeholde
 		</>
 	);
 };
+
+Input.propTypes = InputProps;

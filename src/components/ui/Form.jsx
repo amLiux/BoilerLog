@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { capitalizeFistLetter } from '../../services/capitalizeFirstLetter';
 import { InputGroup } from './InputGroup';
-import PropTypes from 'prop-types';
 import { Input } from './Input';
+import { FormProps } from '../../constants/propTypes';
 
 export const Form = ({ values, handleInputChange, errors, isAuthForm }) => {
 	const [formValues, setFormValues] = useState([]);
@@ -68,9 +68,4 @@ export const Form = ({ values, handleInputChange, errors, isAuthForm }) => {
 	);
 };
 
-Form.propTypes = {
-	values: PropTypes.object.isRequired,
-	handleInputChange: PropTypes.func.isRequired,
-	errors: PropTypes.object.isRequired,
-	isAuthForm: PropTypes.bool,
-};
+Form.propTypes = FormProps;

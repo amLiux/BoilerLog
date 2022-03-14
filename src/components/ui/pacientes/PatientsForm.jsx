@@ -1,22 +1,23 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startAddingPatient, startUpdatingPatient, setActivePatient } from '../../../actions/patients';
+import { PatientsFormProps } from '../../../constants/propTypes';
 import { arePacienteInputsValid } from '../../controllers/pacientes.controller';
 import { useForm } from '../../hooks/useForm';
 import { Button } from '../Button';
 import { Form } from '../Form';
 
-export const PacientesForm = ({ handleClose, isEdit }) => {
+export const PatientsForm = ({ handleClose, isEdit }) => {
 
 	const dispatch = useDispatch();
 
 	let formState;
 
-	const { pacienteActivo } = useSelector(state => state.patients);
-	const activePaciente = useRef(pacienteActivo?._id);
+	const { activePatient } = useSelector(state => state.patients);
+	const activePatientRef = useRef(activePatient?._id);
 
 	// si el form se renderiza desde el CalendarModal o se edita algun paciente existente ya tiene unos valores, pero si se intenta crear un paciente queremos un form limpio
-	pacienteActivo ? formState = pacienteActivo : formState = {
+	activePatient ? formState = activePatient : formState = {
 		nombre: '',
 		apellido: '',
 		cedula: '',
@@ -37,11 +38,11 @@ export const PacientesForm = ({ handleClose, isEdit }) => {
 	}, [values, dispatch]);
 
 	useEffect(() => {
-		if (activePaciente?.current !== pacienteActivo?._id) {
-			reset({ ...pacienteActivo });
-			activePaciente.current = pacienteActivo?._id;
+		if (activePatientRef?.current !== activePatient?._id) {
+			reset({ ...activePatient });
+			activePatientRef.current = activePatient?._id;
 		}
-	}, [pacienteActivo, reset]);
+	}, [activePatient, reset]);
 
 	return (
 		<div className={`edit-form__box-container ${isEdit ? 'edit' : ''} `}>
@@ -68,3 +69,5 @@ export const PacientesForm = ({ handleClose, isEdit }) => {
 		</div>
 	);
 };
+
+PatientsForm.propTypes = PatientsFormProps;

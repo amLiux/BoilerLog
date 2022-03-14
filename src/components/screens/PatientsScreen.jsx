@@ -1,32 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingPatients } from '../../actions/patients';
 import { openModal } from '../../actions/ui';
 import { usePagination } from '../hooks/usePagination';
 import { Button } from '../ui/Button';
 import { InputGroup } from '../ui/InputGroup';
-import { PacientesDashboard } from '../ui/pacientes/PacientesDashboard';
-import { PacientesForm } from '../ui/pacientes/PacientesForm';
-import { PacientesList } from '../ui/pacientes/PacientesList';
+import { PatientsDashboard } from '../ui/pacientes/PatientsDashboard';
+import { PatientsForm } from '../ui/pacientes/PatientsForm';
+import { PatientsList } from '../ui/pacientes/PatientsList';
 import { Spinner } from '../ui/Spinner';
 import { Toast } from '../ui/Toast';
 
-export const PacientesScreen = () => {
-
+export const PatientsScreen = () => {
 	const dispatch = useDispatch();
-
 	const handleAddPacientClick = () => dispatch(openModal('PACIENTES'));
 
 	const { toastContext, isToastOpen, isModalOpen } = useSelector(state => state.ui);
 	const { hasActivePacient, activePatient, totalPatients } = useSelector(state => state.patients);
-
+	const [patientId, setPatientId] = useState('');
 	const [currentPacientes, currentPage, handleChangePage] = usePagination(totalPatients, 8);
+	const firstUpdate = useRef(true);
 
 	const style2 = currentPacientes.length < 8 ? { marginBottom: 'auto' } : {};
 
 	useEffect(() => {
-		dispatch(startLoadingPatients());
-	}, [dispatch]);
+		if (firstUpdate.current) {
+			firstUpdate.current = false;
+			dispatch(startLoadingPatients());
+		}
+		if (hasActivePacient) setPatientId(activePatient._id);
+	}, [dispatch, hasActivePacient, activePatient]);
 
 	return (
 		<>
@@ -38,7 +41,7 @@ export const PacientesScreen = () => {
 							<InputGroup name="busqueda" search={true} />
 						</form>
 					</div>
-					<PacientesList style={style2} pacientes={currentPacientes} />
+					<PatientsList style={style2} patients={currentPacientes} />
 					{
 						totalPatients.length > 8 &&
 						<div style={{ marginTop: '-3rem' }} className="calendar__header">
@@ -50,10 +53,10 @@ export const PacientesScreen = () => {
 				</div>
 				<div style={{ width: '60%' }} className="main-container">
 					{
-						hasActivePacient
+						hasActivePacient && patientId !== ''
 							? <div className="d-flex" style={{ justifyContent: 'flex-start', alignItems: 'center', height: '100%' }} >
-								<PacientesForm isEdit={hasActivePacient} />
-								<PacientesDashboard paciente={activePatient} />
+								<PatientsForm isEdit={hasActivePacient} />
+								<PatientsDashboard patientId={patientId} />
 							</div>
 							: <div className="d-flex">
 								<div className="main-container__banner">

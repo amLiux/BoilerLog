@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CitasScreen = () => {
+export const AppointmentsScreen = () => {
 	return (
 		<h1>Soy las citas</h1>
 	);

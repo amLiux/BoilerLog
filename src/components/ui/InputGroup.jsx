@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { startSearchingPatient } from '../../actions/patients';
-import PropTypes from 'prop-types';
+import { InputGroupProps } from '../../constants/propTypes';
 
 export const InputGroup = ({ isEdit, search = false, value, label, handleInputChange, name }) => {
 
@@ -64,11 +64,4 @@ export const InputGroup = ({ isEdit, search = false, value, label, handleInputCh
 	);
 };
 
-InputGroup.propTypes = {
-	isEdit: PropTypes.bool,
-	search: PropTypes.bool,
-	value: PropTypes.string, 
-	label: PropTypes.string, 
-	handleInputChange: PropTypes.func, 
-	name: PropTypes.string.isRequired,
-};
+InputGroup.propTypes = InputGroupProps;

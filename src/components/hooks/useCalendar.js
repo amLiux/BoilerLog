@@ -7,7 +7,6 @@ export const useCalendar = (appointments, nav) => {
 	const [days, setDays] = useState([]);
 
 	useEffect(() => {
-
 		const appointmentsPerDay = (day) =>
 			appointments.filter(appointment => new Date(appointment.fechaDeseada).toDateString() === new Date(day).toDateString() && appointment);
 
@@ -44,14 +43,14 @@ export const useCalendar = (appointments, nav) => {
 				daysArr.push({
 					value: i - diasComodinInicio,
 					appointments: appointmentsPerDay(diaActual),
-					esHoy: diaActual.split('/')[1] === dia.toString() && nav === 0 ? true : false,
+					isToday: diaActual.split('/')[1] === dia.toString() && nav === 0 ? true : false,
 					date: diaActual
 				});
 			} else {
 				daysArr.push({
 					value: 'padding',
 					appointments: null,
-					esHoy: false,
+					isToday: false,
 					date: ''
 				});
 			}
@@ -64,7 +63,7 @@ export const useCalendar = (appointments, nav) => {
 			daysArr.push({
 				value: 'padding',
 				appointments: null,
-				esHoy: false,
+				isToday: false,
 				date: ''
 			});
 		}
