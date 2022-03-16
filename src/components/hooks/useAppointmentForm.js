@@ -9,26 +9,48 @@ export const useAppointmentForm = (appointment) => {
 
 	const [isPatient, setIsPatient] = useState(true);
 	const [schedule, setSchedule] = useState('');
-
-	const citaAntesDeCambios = useRef(appointment);
+	const [hasChanged, setHasChanged] = useState(false);
+	const appointmentBeforeChanges = useRef(appointment);
 
 	const handleUpdate = () => {
-		// si existe un horario quiere decir que ya existe un paciente y lo único que podemos actualizar es dicho horario
+		let updatedAppointment;
+		// si existe un horario quiere decir que ya existe un paciente y lo único que podemos actualizar es dicho horario o completar la cita
+
 		if (schedule !== '') {
-			const update = appointment.estado === 'PENDIENTE'
-				? { ...appointment, estado: 'AGENDADA', fechaDeseada: new Date(schedule).toISOString() }
-				: { ...appointment, fechaDeseada: new Date(schedule).toISOString() };
-			dispatch(startUpdatingAppointment(update));
+			const appointmentState = `${appointment.estado}_${String(hasChanged).toUpperCase()}`;
+
+			switch (appointmentState) {
+				case 'PENDIENTE_TRUE': {
+					updatedAppointment = { ...appointment, estado: 'AGENDADA', fechaDeseada: new Date(schedule).toISOString() };
+					break;
+				}
+				case 'AGENDADA_FALSE': {
+					updatedAppointment = { ...appointment, estado: 'COMPLETADA' };
+					break;
+				}
+				case 'AGENDADA_TRUE': {
+					updatedAppointment = { ...appointment, estado: 'AGENDADA', fechaDeseada: new Date(schedule).toISOString() };
+					break;
+				}
+				default: {
+					updatedAppointment = { ...appointment, fechaDeseada: new Date(schedule).toISOString() };
+					break;
+				}
+			}
+
 		} else {
 			// sino podemos actualizar literalmente cualquier valor que esté en nuestro cliente (que todavía no es paciente)
-			dispatch(startUpdatingAppointment(values));
+			updatedAppointment = values;
 		}
+
+		dispatch(startUpdatingAppointment(updatedAppointment));
 	};
 
 	const handleReset = (e) => {
 		e.preventDefault();
-		if (citaAntesDeCambios !== appointment)
-			reset({ ...citaAntesDeCambios.current });
+		if (appointmentBeforeChanges !== appointment) {
+			reset({ ...appointmentBeforeChanges.current });
+		}
 	};
 
 	const handleDelete = (e) => {
@@ -38,21 +60,18 @@ export const useAppointmentForm = (appointment) => {
 
 	const [values, handleInputChange, handleSubmit, errors, reset] = useForm({ ...appointment }, areCitaInputsValid, handleUpdate);
 
-	const activeCita = useRef(appointment._id);
-
-	useEffect(() => {
-		setIsPatient(Object.prototype.hasOwnProperty.call(appointment, 'idPaciente'));
-		if (activeCita.current !== appointment._id) {
-			citaAntesDeCambios.current = appointment;
-			reset({ ...appointment });
-			activeCita.current = appointment._id;
-		}
-
-	}, [appointment, reset]);
-
 	useEffect(() => {
 		dispatch(setActiveAppointment(values));
 	}, [values, dispatch]);
 
-	return [isPatient, setSchedule, handleDelete, handleSubmit, values, handleInputChange, errors, handleReset];
+	useEffect(() => {
+		//TODO check why this one is double rendering
+		setIsPatient(Object.prototype.hasOwnProperty.call(appointment, 'idPaciente'));
+		if (appointmentBeforeChanges.current._id !== appointment._id) {
+			appointmentBeforeChanges.current = appointment;
+			reset({ ...appointment });
+		}
+	}, [reset, appointment]);
+
+	return [isPatient, setSchedule, handleDelete, handleSubmit, values, handleInputChange, errors, handleReset, hasChanged, setHasChanged];
 };

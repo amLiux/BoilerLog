@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveAppointment } from '../../../../actions/appointments';
 import { SidebarProps } from '../../../../constants/propTypes';
@@ -12,8 +12,13 @@ export const Sidebar = ({ handleClose }) => {
 
 	const dispatch = useDispatch();
 
-	const handleCitaChange = (cita) => {
-		dispatch(setActiveAppointment(cita));
+	let appointmentRef = useRef({});
+
+	const handleAppointmentChange = (appointment) => {
+		if (appointmentRef.current !== appointment) {
+			dispatch(setActiveAppointment(appointment));
+			appointmentRef.current = appointment;
+		}
 	};
 
 	return (
@@ -28,7 +33,7 @@ export const Sidebar = ({ handleClose }) => {
 			<div className="sidebar__citas mt-5">
 				{
 					appointments?.map(cita =>
-						<RadioButton sidebarBtn estado={cita.estado} date={cita.fechaDeseada} onChange={() => handleCitaChange(cita)} key={cita._id} id={cita._id} label={cita.nombre} />
+						<RadioButton sidebarBtn estado={cita.estado} date={cita.fechaDeseada} onChange={() => handleAppointmentChange(cita)} key={cita._id} id={cita._id} label={cita.nombre} />
 					)
 				}
 			</div>

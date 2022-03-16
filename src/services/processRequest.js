@@ -1,12 +1,4 @@
-// Prod
-// const url = `https://drsmaroto.com`;
-
-//staging
-// const url = `https://boiler-log-be.herokuapp.com`;
-
-//dev
-// TODO we want to pull this from process.env.URL
-const url = 'http://192.168.100.95:3000';
+const url = process.env.REACT_APP_BE_URL;
 
 const processPayload = (payload) => JSON.stringify(payload);
 

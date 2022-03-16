@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const Button = ({ group, warning = false, success = false, text, onClick }) => {
+export const Button = ({ group, warning = false, success = false, text, onClick, disabled }) => {
 
 	let props;
 
 	if (onClick) {
 		props = {
 			onClick
+		};
+	}
+
+	if(disabled) {
+		props = {
+			...props,
+			disabled,
 		};
 	}
 
@@ -30,4 +37,5 @@ Button.propTypes = {
 	success: PropTypes.bool, 
 	text: PropTypes.oneOfType([PropTypes.string, PropTypes.object]), 
 	onClick: PropTypes.func,
+	disabled: PropTypes.bool,
 };
