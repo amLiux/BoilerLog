@@ -13,7 +13,9 @@ export const AppointmentForm = ({ appointment }) => {
 		values,
 		handleInputChange,
 		errors,
-		handleReset
+		handleReset,
+		hasChanged,
+		setHasChanged
 	] = useAppointmentForm(appointment);
 
 	return (
@@ -29,6 +31,8 @@ export const AppointmentForm = ({ appointment }) => {
 							setSchedule={setSchedule}
 							handleDelete={handleDelete}
 							handleSubmit={handleSubmit}
+							hasChanged={hasChanged}
+							setHasChanged={setHasChanged}
 						/>
 						:
 						<NotPatientForm

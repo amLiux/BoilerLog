@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { startLoadingSchedulesByDate } from '../../../../actions/schedules';
 import { SelectScheduleProps } from '../../../../constants/propTypes';
 
-export const SelectSchedule = ({ handleState }) => {
+export const SelectSchedule = ({ handleState, hours, setHasChanged }) => {
 	const dispatch = useDispatch();
 	const { date } = useSelector(state => state.ui.activeDay);
 
@@ -12,8 +12,14 @@ export const SelectSchedule = ({ handleState }) => {
 	const [placeholder, setPlaceholder] = useState('Seleccione el horario');
 
 	useEffect(() => {
+		if(hours !== '') {
+			setPlaceholder(createHorario(hours));
+			const scheduled = new Date(date);
+			scheduled.setHours(hours);
+			handleState(scheduled);
+		}
 		dispatch(startLoadingSchedulesByDate(date));
-	}, [date, dispatch]);
+	}, [date, dispatch, hours, handleState]);
 
 
 	const handleOptionClick = (horario, stringHorario) => {
@@ -21,6 +27,7 @@ export const SelectSchedule = ({ handleState }) => {
 		setPlaceholder(stringHorario);
 		const date2 = new Date(date);
 		date2.setHours(horario);
+		setHasChanged(true);
 		handleState(date2);
 	};
 

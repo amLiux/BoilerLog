@@ -104,6 +104,9 @@ export const UpdateAppointmentFormProps = {
 	setHorario: func,
 	handleDelete: func.isRequired,
 	handleSubmit: func.isRequired,
+	hasChanged: bool.isRequired,
+	setHasChanged: func.isRequired,
+	hours: oneOfType([number, string]),
 };
 
 export const SelectPatientProps = {
@@ -112,6 +115,7 @@ export const SelectPatientProps = {
 
 export const SelectScheduleProps = {
 	handleState: func.isRequired,
+	hours: oneOfType([number, string]),
 };
 
 export const SidebarProps = {
