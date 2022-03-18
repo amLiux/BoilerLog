@@ -247,8 +247,8 @@ export const ErrorHelpProps = {
 };
 
 export const CheckboxProps = {
-	handleCheck: func.isRequired, 
+	handleCheck: func, 
 	setting: string.isRequired, 
-	helpMessage: string.isRequired, 
+	helpMessage: string, 
 	checked: bool.isRequired
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { sendToast } from '../../actions/ui';
 import { startRegularRegister } from '../../actions/users';
-import { arePacienteInputsValid } from '../controllers/pacientes.controller';
+import { areInputsValid } from '../controllers/auth.controller';
 import { useForm } from './useForm';
 
 export const useRegister = () => {
@@ -32,7 +32,7 @@ export const useRegister = () => {
 		lastName: '',
 		pwd: '',
 		confPwd: '',
-	}, arePacienteInputsValid, handleRegister);
+	}, areInputsValid, handleRegister);
 
 
 	useEffect(() => {

@@ -22,7 +22,7 @@ export const UserManagementScreen = () => {
 		<>
 			{isToastOpen && !isModalOpen && <Toast exitoso={toastContext.success} error={toastContext.msg} />}
 			<div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-				<div className="main-container" style={{ width: '25%', height: '77%' }}>
+				<div className="main-container" style={{ width: '25%', height: '83%' }}>
 					<div style={{ width: '90%', margin: '2.2rem auto' }}>
 						<RegisterScreen isEdit={edit} />
 					</div>

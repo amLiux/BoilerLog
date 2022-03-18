@@ -2,7 +2,7 @@ import { types } from '../types/types';
 
 const initialState = {
 	hasActivePacient: false,
-	activePatient: {},
+	activePatient: null,
 	totalPatients: [],
 	patientAppointments: [],
 	patientFiles: []
