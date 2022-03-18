@@ -23,7 +23,7 @@ export const RegisterScreen = ({ isEdit = false }) => {
 				/>
 				<Checkbox 
 					setting="Administrador?" 
-					checked={setAdmin} 
+					checked={admin} 
 					handleCheck={() => setAdmin(!admin)} 
 				/>
 				<Button text="Crear" />

@@ -86,7 +86,7 @@ export const startLoadingPatients = () => {
 		const resp = await processRequest(requestTemplates.GET_PATIENTS);
 		const { payload: patients } = await resp.json();
 
-		patients.length > 0 ? dispatch(setPatients(patients)) : dispatch(setPatients([]));
+		patients?.length > 0 ? dispatch(setPatients(patients)) : dispatch(setPatients([]));
 	};
 };
 
