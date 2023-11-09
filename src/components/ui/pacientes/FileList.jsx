@@ -36,7 +36,7 @@ export const FileList = ({patientId}) => {
 				</div>
 				<div className="grid__body">
 					{
-						patientFiles.length > 0 && patientFiles.map( ({nombreArchivo, fechaCreado,  idPaciente, _id}) => <File key={_id} fileId={_id} patientId={idPaciente} name={nombreArchivo} date={fechaCreado}/> )
+						patientFiles.length > 0 && patientFiles.map( ({nombreArchivo, fechaCreado,  idPaciente, _id}) => <File key={_id} fileId={_id} patientId={idPaciente} name={nombreArchivo} uploadDate={fechaCreado}/> )
 					}
 					
 				</div>

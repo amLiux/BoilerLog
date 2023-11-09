@@ -27,7 +27,7 @@ export const SelectSchedule = ({ handleState, hours, setHasChanged }) => {
 		setPlaceholder(stringHorario);
 		const date2 = new Date(date);
 		date2.setHours(horario);
-		setHasChanged(true);
+		setHasChanged && setHasChanged(true);
 		handleState(date2);
 	};
 
